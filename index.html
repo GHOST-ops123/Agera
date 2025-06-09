@@ -1,0 +1,2020 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agera - Farm Fresh Direct</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <style>
+        :root {
+            --primary: #3c8f5d;
+            --secondary: #f7b538;
+            --dark: #1f3d2c;
+            --light: #f9f7f3;
+            --accent: #e85d04;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+        
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            background-color: rgba(255, 255, 255, 0.95);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            flex: 1;
+        }
+        
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            justify-content: center;
+            flex: 2;
+            margin: 0;
+        }
+        
+        .nav-links li {
+            margin: 0 1.2rem;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            flex: 1;
+            justify-content: flex-end;
+        }
+        
+        .language-selector {
+            display: flex;
+            align-items: center;
+        }
+        
+        .language-selector select {
+            padding: 0.4rem 1.2rem;
+            border-radius: 20px;
+            border: 1px solid #ddd;
+            font-size: 0.95rem;
+            color: var(--dark);
+            background: #fff;
+            outline: none;
+            transition: border 0.3s;
+            margin: 0;
+        }
+        
+        .language-selector select:focus {
+            border-color: var(--primary);
+        }
+        
+        .auth-buttons {
+            display: flex;
+            gap: 0.7rem;
+            align-items: center;
+        }
+        
+        .auth-button {
+            padding: 0.45rem 1.1rem;
+            font-size: 0.95rem;
+        }
+        
+        .search-bar {
+            position: relative;
+            margin-right: 1rem;
+        }
+        
+        .search-bar input {
+            padding: 0.6rem 1rem;
+            padding-right: 2.5rem;
+            border-radius: 50px;
+            border: 1px solid #ddd;
+            outline: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            width: 200px;
+        }
+        
+        .search-bar input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(60, 143, 93, 0.2);
+        }
+        
+        .search-icon {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #888;
+        }
+        
+        .account-icon {
+            font-size: 1.3rem;
+            margin-left: 1.5rem;
+            cursor: pointer;
+            color: var(--dark);
+            transition: color 0.3s ease;
+        }
+        
+        .cart-icon {
+            font-size: 1.3rem;
+            margin-left: 1.5rem;
+            cursor: pointer;
+            color: var(--dark);
+            transition: color 0.3s ease;
+        }
+        
+        .cart-icon:hover, .account-icon:hover {
+            color: var(--primary);
+        }
+        
+        .auth-button {
+            background-color: transparent;
+            color: var(--dark);
+            border: 2px solid var(--primary);
+            padding: 0.5rem 1.2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .auth-button:hover {
+            background-color: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .auth-button svg {
+            width: 16px;
+            height: 16px;
+        }
+        
+        .auth-button.login {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .auth-button.login:hover {
+            background-color: #326d4a;
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://images.unsplash.com/photo-1495107334309-fcf85d2eba18?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80') no-repeat center center;
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            z-index: 1;
+            padding: 0 20px;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: var(--dark);
+            font-weight: 600;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            box-shadow: 0 4px 15px rgba(247, 181, 56, 0.3);
+        }
+        
+        .cta-button:hover {
+            background-color: #e6a82a;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(247, 181, 56, 0.4);
+        }
+        
+        .hero-leaf {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%233c8f5d'%3E%3Cpath d='M17,8C8,10,5.9,16.17,3.82,21.34L5.71,22l1-2.3A12.08,12.08,0,0,0,19,11.5V8H17M21,4.45v5.3A14.06,14.06,0,0,1,10,20.84L8.31,24,6.9,23.13C7.86,21.21,9.81,16.76,11.4,13.4c-4.17,2-5.08,6.61-5.36,10l-2-1A18.83,18.83,0,0,1,8.14,10C10.6,7.55,14.56,4.88,21,4V2l3,1.45L21,4.45Z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            opacity: 0.6;
+            animation: falling linear infinite;
+        }
+        
+        @keyframes falling {
+            from {
+                transform: translateY(-20vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+            }
+            90% {
+                opacity: 0.8;
+            }
+            to {
+                transform: translateY(120vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        /* Featured Products */
+        .featured-products {
+            padding: 5rem 0;
+            background-color: white;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+            position: relative;
+            padding-bottom: 1rem;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--primary);
+            border-radius: 3px;
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .product-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .product-image {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+            background-color: #f0f0f0;
+        }
+        
+        .product-details {
+            padding: 1.5rem;
+        }
+        
+        .product-category {
+            color: var(--primary);
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+        
+        .product-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+        
+        .product-price {
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+        }
+        
+        .add-to-cart {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.6rem 1rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+        
+        .add-to-cart:hover {
+            background-color: #326d4a;
+        }
+        
+        /* How It Works */
+        .how-it-works {
+            padding: 5rem 0;
+            background-color: #f6f9f7;
+        }
+        
+        .steps-container {
+            display: flex;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            gap: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .step-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            flex: 1;
+            min-width: 250px;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .step-icon {
+            background-color: var(--secondary);
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: white;
+            font-size: 2rem;
+            box-shadow: 0 5px 15px rgba(247, 181, 56, 0.3);
+        }
+        
+        .step-title {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        
+        .step-description {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        /* Testimonials */
+        .testimonials {
+            padding: 5rem 0;
+            background-color: #f6f9f7;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .testimonials-container {
+            display: flex;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+            gap: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .testimonial-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            flex: 1;
+            min-width: 300px;
+            position: relative;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            font-size: 5rem;
+            color: rgba(60, 143, 93, 0.1);
+            font-family: Georgia, serif;
+            line-height: 1;
+        }
+        
+        .testimonial-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 1rem;
+            border: 3px solid var(--primary);
+        }
+        
+        .testimonial-text {
+            font-style: italic;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        
+        .testimonial-name {
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 0.3rem;
+        }
+        
+        .testimonial-location {
+            font-size: 0.85rem;
+            color: #777;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 4rem 0 2rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+        }
+        
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: white;
+        }
+        
+        .footer-description {
+            color: #ccc;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .social-icon {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .footer-heading {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.8rem;
+        }
+        
+        .footer-heading::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--primary);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+        
+        .contact-info p {
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: flex-start;
+            color: #ccc;
+        }
+        
+        .contact-icon {
+            margin-right: 10px;
+            color: var(--primary);
+        }
+        
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 20px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 3rem;
+            text-align: center;
+            color: #999;
+            font-size: 0.9rem;
+        }
+        
+        /* Media Queries */
+        @media screen and (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+        }
+
+        /* Animation Classes */
+        .fade-in {
+            animation: fadeIn 1s ease forwards;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Ripple effect for buttons */
+        .ripple {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .ripple::after {
+            content: "";
+            display: block;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            background-image: radial-gradient(circle, white 10%, transparent 10%);
+            background-repeat: no-repeat;
+            background-position: 50%;
+            transform: scale(10, 10);
+            opacity: 0;
+            transition: transform 0.5s, opacity 0.5s;
+        }
+        
+        .ripple:active::after {
+            transform: scale(0, 0);
+            opacity: 0.3;
+            transition: 0s;
+        }
+
+        /* Loader */
+        .loader {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 4px solid var(--primary);
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .welcome-banner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: #f5f5f5;
+            color: #000;
+            padding: 1rem;
+            text-align: center;
+            font-size: 1rem;
+            border-bottom: 1px solid #ddd;
+            z-index: 10000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            animation: slideDown 0.5s ease-out;
+        }
+
+        .welcome-banner p {
+            margin: 0;
+            font-size: 16px;
+        }
+
+        .welcome-banner button {
+            background: #000;
+            color: #fff;
+            border: none;
+            padding: 0.4rem 0.8rem;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+            border-radius: 20px;
+        }
+
+        .welcome-banner button:hover {
+            background: #333;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+            }
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        .start-tour {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 0.6rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 1000;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .start-tour:hover {
+            background: #0056b3;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Partners Section */
+        .partners {
+            padding: 8rem 0 5rem 0;
+            background-color: white;
+            margin-top: -3rem;
+        }
+        
+        .partners-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .partner-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .partner-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 0;
+        }
+        
+        .partner-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .partner-card:hover::before {
+            opacity: 0.05;
+        }
+        
+        .partner-card:hover .partner-logo {
+            transform: scale(1.1);
+            border-color: var(--secondary);
+        }
+        
+        .partner-card:hover .partner-name {
+            color: var(--primary);
+            transform: translateY(-5px);
+        }
+        
+        .partner-card:hover .partner-description {
+            transform: translateY(-5px);
+        }
+        
+        .partner-logo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 1.5rem;
+            border: 3px solid var(--primary);
+            padding: 0.5rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .partner-name {
+            font-size: 1.3rem;
+            color: var(--dark);
+            margin-bottom: 0.8rem;
+            transition: all 0.4s ease;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .partner-description {
+            color: #666;
+            line-height: 1.6;
+            transition: all 0.4s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* App Preview Section */
+        .app-preview {
+            padding: 5rem 0 8rem 0;
+            background-color: #f6f9f7;
+        }
+        
+        .app-preview-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .app-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .feature-item {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 0;
+        }
+        
+        .feature-item:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-item:hover::before {
+            opacity: 0.05;
+        }
+        
+        .feature-item:hover .feature-icon {
+            transform: scale(1.1) rotate(5deg);
+            background-color: var(--secondary);
+        }
+        
+        .feature-item:hover h3,
+        .feature-item:hover p {
+            transform: translateX(10px);
+        }
+        
+        .feature-icon {
+            background-color: var(--primary);
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            flex-shrink: 0;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .feature-item h3 {
+            font-size: 1.3rem;
+            color: var(--dark);
+            margin: 0;
+            transition: transform 0.4s ease;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .feature-item p {
+            color: #666;
+            line-height: 1.6;
+            margin: 0;
+            transition: transform 0.4s ease;
+            position: relative;
+            z-index: 1;
+        }
+        
+        @media screen and (max-width: 768px) {
+            .app-features {
+                grid-template-columns: 1fr;
+            }
+            
+            .feature-item {
+                padding: 1.5rem;
+            }
+        }
+
+        /* Add these styles to your existing CSS */
+        .download-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .download-modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark);
+        }
+
+        .store-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .store-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.8rem;
+            border-radius: 10px;
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            transition: transform 0.3s ease;
+        }
+
+        .store-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .app-store {
+            background: #000;
+        }
+
+        .play-store {
+            background: #01875f;
+        }
+
+        .store-button img {
+            height: 24px;
+            width: auto;
+        }
+
+        /* About Us Section Styles */
+        .about-us {
+            padding: 5rem 0;
+            background-color: white;
+        }
+
+        .about-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 4rem;
+            align-items: center;
+        }
+
+        .about-text h3 {
+            font-size: 1.8rem;
+            color: var(--dark);
+            margin-bottom: 1rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .about-text h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--primary);
+        }
+
+        .about-text p {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .mission-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            display: block;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .about-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .value-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .value-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .value-icon {
+            width: 60px;
+            height: 60px;
+            background-color: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: white;
+        }
+
+        .value-card h4 {
+            font-size: 1.3rem;
+            color: var(--dark);
+            margin-bottom: 1rem;
+        }
+
+        .value-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        @media screen and (max-width: 768px) {
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .mission-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .values-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Add these styles to your existing CSS */
+        .founders-list {
+            list-style: none;
+            padding: 0;
+            margin: 1.5rem 0;
+        }
+
+        .founders-list li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            color: #666;
+            transition: all 0.3s ease;
+        }
+
+        .founders-list li:last-child {
+            border-bottom: none;
+        }
+
+        .founders-list li:hover {
+            transform: translateX(10px);
+            color: var(--primary);
+        }
+
+        .founders-list strong {
+            color: var(--dark);
+            font-weight: 600;
+        }
+
+        .about-text p {
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .about-text h3 {
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+            font-size: 1.5rem;
+        }
+
+        .about-text h3:first-of-type {
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Welcome Banner -->
+    <div id="welcome-banner" class="welcome-banner" style="display: none;">
+        <p>👋 Welcome to our store! Discover amazing products curated just for you.</p>
+        <button id="close-welcome">Got it</button>
+    </div>
+
+    <div class="custom-cursor"></div>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="logo">
+            <a href="#home" style="text-decoration: none; color: inherit;">Agera</a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#home" data-i18n="home">Home</a></li>
+            <li><a href="#partners" data-i18n="partners">Partners</a></li>
+            <li><a href="#how-it-works" data-i18n="howItWorks">How It Works</a></li>
+            <li><a href="#app-preview" data-i18n="appPreview">App Preview</a></li>
+            <li><a href="#about" data-i18n="about">About Us</a></li>
+            <li><a href="#contact" data-i18n="contact">Contact</a></li>
+        </ul>
+        <div class="nav-actions">
+            <div class="language-selector">
+                <select id="language-select" aria-label="Select language">
+                    <option value="en">English</option>
+                    <option value="sw">Swahili</option>
+                </select>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Farm Fresh Delivered To Your Door Step</h1>
+            <p>Experience the freshest organic produce and premium agricultural products, sourced directly from local farmers and delivered straight to your doorstep.</p>
+            <a href="market://details?id=com.android.vending&hl=en_US" class="cta-button ripple" onclick="window.location.href='https://play.google.com/store/apps?hl=en_US'; return false;">Download App</a>
+        </div>
+        <!-- Dynamic falling leaves effect -->
+        <div id="leaves-container"></div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works" id="how-it-works">
+        <h2 class="section-title">How It Works</h2>
+        <p class="section-subtitle">Simple steps to get fresh produce delivered to your doorstep</p>
+        <div class="steps-container">
+            <!-- Step 1 -->
+            <div class="step-card">
+                <div class="step-icon">1</div>
+                <h3 class="step-title">Browse & Select</h3>
+                <p class="step-description">Explore our wide range of fresh produce and agricultural products sourced from local farmers.</p>
+            </div>
+            <!-- Step 2 -->
+            <div class="step-card">
+                <div class="step-icon">2</div>
+                <h3 class="step-title">Place Your Order</h3>
+                <p class="step-description">Add items to your cart and check out securely with various payment options.</p>
+            </div>
+            <!-- Step 3 -->
+            <div class="step-card">
+                <div class="step-icon">3</div>
+                <h3 class="step-title">Fast Delivery</h3>
+                <p class="step-description">Receive your fresh products directly to your doorstep.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- App Preview Section -->
+    <section class="app-preview" id="app-preview">
+        <h2 class="section-title">App Preview</h2>
+        <p class="section-subtitle">Experience the convenience of ordering fresh produce with our mobile app</p>
+        <div class="app-preview-container">
+            <div class="app-features">
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                            <path d="M2 17l10 5 10-5"></path>
+                            <path d="M2 12l10 5 10-5"></path>
+                        </svg>
+                    </div>
+                    <h3>Easy Ordering</h3>
+                    <p>Browse and order fresh produce with just a few taps</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                    </div>
+                    <h3>Real-time Tracking</h3>
+                    <p>Track your delivery in real-time from farm to doorstep</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 20V10"></path>
+                            <path d="M18 20V4"></path>
+                            <path d="M6 20v-6"></path>
+                        </svg>
+                    </div>
+                    <h3>Smart Analytics</h3>
+                    <p>Track your orders and get insights about your shopping habits</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partners Section -->
+    <section class="partners" id="partners">
+        <h2 class="section-title">Our Partners</h2>
+        <p class="section-subtitle">Working together with local farmers and producers to bring you the best quality products</p>
+        <div class="partners-grid">
+            <div class="partner-card">
+                <img src="https://picsum.photos/200/200" alt="Transu Limited" class="partner-logo">
+                <h3 class="partner-name">Transu Limited</h3>
+                <p class="partner-description">Empowering farmers through integrated cereal value chains.
+
+
+
+
+
+
+
+
+
+                </p>
+            </div>
+            <div class="partner-card">
+                <img src="https://picsum.photos/200/200" alt="Farm Africa" class="partner-logo">
+                <h3 class="partner-name">Farm Africa</h3>
+                <p class="partner-description">Transforming rural lives through sustainable agriculture.
+
+
+
+
+                </p>
+            </div>
+            <div class="partner-card">
+                <img src="https://picsum.photos/200/200" alt="Regis innovation challenge" class="partner-logo">
+                <h3 class="partner-name">Regis innovation challenge</h3>
+                <p class="partner-description">Startup Incubator in Denver, CO funded by Regis University</p>
+            </div>
+            <div class="partner-card">
+                <img src="https://picsum.photos/200/200" alt="Shamba Kifili project" class="partner-logo">
+                <h3 class="partner-name">Shamba Kifili project</h3>
+                <p class="partner-description">Empowering Kilifi farmers through modern, market-driven agriculture.
+
+
+
+
+
+
+
+
+
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials" id="testimonials">
+        <h2 class="section-title">What Our Customers Say</h2>
+        <p class="section-subtitle">Hear from our satisfied customers</p>
+        <div class="testimonials-container">
+            <!-- Testimonial 1 -->
+            <div class="testimonial-card">
+                <img src="/api/placeholder/80/80" alt="Customer 1" class="testimonial-image">
+                <p class="testimonial-text">"The quality of the produce is outstanding! I love knowing that I'm supporting local farmers."</p>
+                <h3 class="testimonial-name">Jane Doe</h3>
+                <p class="testimonial-location">New York, NY</p>
+            </div>
+            <!-- Testimonial 2 -->
+            <div class="testimonial-card">
+                <img src="/api/placeholder/80/80" alt="Customer 2" class="testimonial-image">
+                <p class="testimonial-text">"Fast delivery and fresh products every time. Highly recommend!"</p>
+                <h3 class="testimonial-name">John Smith</h3>
+                <p class="testimonial-location">Los Angeles, CA</p>
+            </div>
+            <!-- Testimonial 3 -->
+            <div class="testimonial-card">
+                <img src="/api/placeholder/80/80" alt="Customer 3" class="testimonial-image">
+                <p class="testimonial-text">"Agera has made it so easy to get fresh, organic produce delivered to my door. Love it!"</p>
+                <h3 class="testimonial-name">Emily Johnson</h3>
+                <p class="testimonial-location">Chicago, IL</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Us Section -->
+    <section class="about-us" id="about">
+        <h2 class="section-title">About Us</h2>
+        <p class="section-subtitle">Smart farming for a healthier world</p>
+        <div class="about-container">
+            <div class="about-content">
+                <div class="about-text">
+                    <p>
+                        At <strong>Agera Technologies</strong>, we're on a mission to revolutionize agriculture through smart, accessible technology. Our goal is to empower farmers—especially smallholders—with the tools they need to diagnose plant diseases early, get real-time treatment recommendations, and improve crop yields sustainably.
+                    </p>
+                    <p>
+                        What began as a shared vision between four passionate innovators has grown into a promising agri-tech solution that's already making an impact. We developed a mobile app that allows users to take a picture of a crop, instantly receive a diagnosis using AI, and get tailored treatment options—right at their fingertips.
+                    </p>
+
+                    <h3>Meet the Founders</h3>
+                    <ul class="founders-list">
+                        <li><strong>Nathaniel Deryl</strong> – Chief Executive Officer (CEO)</li>
+                        <li><strong>Okraku Ofei Agyekum</strong> – Chief Operating Officer (COO)</li>
+                        <li><strong>Adin Mcpherson</strong> – Chief Financial Officer (CFO)</li>
+                        <li><strong>Stallone Musigah</strong> – Chief Technology Officer (CTO)</li>
+                    </ul>
+
+                    <h3>Why We Do It</h3>
+                    <p>
+                        We believe food security starts with information. Millions of farmers lose crops every year to preventable plant diseases due to a lack of access to expert guidance. We're here to close that gap—by turning smartphones into powerful diagnostic tools.
+                    </p>
+
+                    <h3>What's Next</h3>
+                    <p>
+                        Our journey is just beginning. As we expand across markets and improve our technology, we remain committed to our mission: <strong>smart farming for a healthier world</strong>.
+                    </p>
+                </div>
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1523741543316-beb7fc7023d8?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Farm Fresh Produce">
+                </div>
+            </div>
+            
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="value-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                            <path d="M2 17l10 5 10-5"></path>
+                            <path d="M2 12l10 5 10-5"></path>
+                        </svg>
+                    </div>
+                    <h4>Sustainability</h4>
+                    <p>Promoting eco-friendly farming practices and reducing food waste through efficient supply chains.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M12 16v-4"></path>
+                            <path d="M12 8h.01"></path>
+                        </svg>
+                    </div>
+                    <h4>Quality</h4>
+                    <p>Ensuring the highest standards in product quality and customer service.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                    </div>
+                    <h4>Community</h4>
+                    <p>Building strong relationships between farmers, consumers, and local communities.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 20V10"></path>
+                            <path d="M18 20V4"></path>
+                            <path d="M6 20v-6"></path>
+                        </svg>
+                    </div>
+                    <h4>Innovation</h4>
+                    <p>Leveraging technology to create efficient and transparent agricultural supply chains.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div>
+                <h3 class="footer-logo">Agera</h3>
+                <p class="footer-description">Agera is dedicated to providing the freshest, highest quality agricultural products directly from local farmers to your doorstep.</p>
+                <div class="footer-social">
+                    <a href="https://www.facebook.com/profile.php?id=61567329766931&rdid=CL1Ty0VwY3Drxigu&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F16kE8TG5eq%2F#" target="_blank" class="social-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 2h-3a4 4 0 0 0-4 4v3H8v4h3v8h4v-8h3l1-4h-4V6a1 1 0 0 1 1-1h3z"></path>
+                        </svg>
+                    </a>
+                    <a href="https://www.linkedin.com/company/agera-llc/posts/?feedView=all" target="_blank" class="social-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                            <rect x="2" y="9" width="4" height="12"></rect>
+                            <circle cx="4" cy="4" r="2"></circle>
+                        </svg>
+                    </a>
+                    <a href="https://www.instagram.com/agera.tech/?__pwa=1" target="_blank" class="social-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                        </svg>
+                    </a>
+                    <a href="https://x.com/Agera_Tech" target="_blank" class="social-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                        </svg>
+                    </a>
+                    <a href="https://www.tiktok.com/@agera_technologies" target="_blank" class="social-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div>
+                <h4 class="footer-heading">Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#products">Products</a></li>
+                    <li><a href="#how-it-works">How It Works</a></li>
+                    <li><a href="#categories">Categories</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-heading">Contact Us</h4>
+                <div class="contact-info">
+                    <p><span class="contact-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 2L11 13"></path>
+                            <path d="M22 2L15 22L11 13L2 9L22 2Z"></path>
+                        </svg>
+                    </span> Denver CO  |  Nairobi Kenya</p>
+                    <p><span class="contact-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 2L11 13"></path>
+                            <path d="M22 2L15 22L11 13L2 9L22 2Z"></path>
+                        </svg>
+                    </span> ageratechnologiesllc@gmail.com</p>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Agera LLc. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Add this HTML right before the closing body tag -->
+    <div class="download-modal" id="downloadModal">
+        <div class="modal-content">
+            <button class="close-modal" id="closeModal">&times;</button>
+            <h3>Download Our App</h3>
+            <p>Get the Agera app for a better shopping experience</p>
+            <div class="store-buttons">
+                <a href="https://play.google.com/store/apps?hl=en_US" target="_blank" class="store-button play-store">
+                    <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play">
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Hero Section Animation
+        gsap.fromTo('.hero-content', 
+            { opacity: 0, y: 100, scale: 0.8 }, 
+            { opacity: 1, y: 0, scale: 1, duration: 1.5, delay: 0.5, ease: "power3.out" }
+        );
+
+        // How It Works Animation
+        gsap.fromTo('.step-card', 
+            { opacity: 0, y: 80, scale: 0.8 }, 
+            { 
+                opacity: 1, 
+                y: 0, 
+                scale: 1, 
+                duration: 1.5, 
+                stagger: 0.4, 
+                ease: "power3.out",
+                scrollTrigger: {
+                    trigger: '.how-it-works',
+                    start: 'top 80%',
+                }
+            }
+        );
+
+        // Partners Animation
+        gsap.fromTo('.partner-card', 
+            { opacity: 0, y: 120, scale: 0.6, rotation: -5 }, 
+            { 
+                opacity: 1, 
+                y: 0, 
+                scale: 1, 
+                rotation: 0,
+                duration: 1.8, 
+                stagger: 0.5, 
+                ease: "elastic.out(1, 0.5)",
+                scrollTrigger: {
+                    trigger: '.partners',
+                    start: 'top 70%',
+                }
+            }
+        );
+
+        // Testimonials Animation
+        gsap.fromTo('.testimonial-card', 
+            { opacity: 0, y: 80, scale: 0.8 }, 
+            { 
+                opacity: 1, 
+                y: 0, 
+                scale: 1, 
+                duration: 1.5, 
+                stagger: 0.4, 
+                ease: "power3.out",
+                scrollTrigger: {
+                    trigger: '.testimonials',
+                    start: 'top 80%',
+                }
+            }
+        );
+
+        // App Preview Animation
+        gsap.fromTo('.feature-item', 
+            { opacity: 0, y: 80, scale: 0.8 }, 
+            { 
+                opacity: 1, 
+                y: 0, 
+                scale: 1, 
+                duration: 1.5, 
+                stagger: 0.4, 
+                ease: "power3.out",
+                scrollTrigger: {
+                    trigger: '.app-preview',
+                    start: 'top 80%',
+                }
+            }
+        );
+
+        // Dynamic falling leaves effect
+        const leavesContainer = document.getElementById('leaves-container');
+        for (let i = 0; i < 20; i++) {
+            const leaf = document.createElement('div');
+            leaf.classList.add('hero-leaf');
+            leaf.style.left = `${Math.random() * 100}vw`;
+            leaf.style.animationDuration = `${Math.random() * 3 + 2}s`;
+            leaf.style.animationDelay = `${Math.random() * 5}s`;
+            leavesContainer.appendChild(leaf);
+        }
+
+        // Welcome Banner functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            const banner = document.getElementById('welcome-banner');
+            const closeBtn = document.getElementById('close-welcome');
+
+            if (!localStorage.getItem('welcomeShown')) {
+                banner.style.display = 'block';
+            }
+
+            closeBtn?.addEventListener('click', () => {
+                banner.style.display = 'none';
+                localStorage.setItem('welcomeShown', 'true');
+            });
+        });
+
+        // Auth state management
+        document.addEventListener('DOMContentLoaded', () => {
+            const authButtons = document.querySelector('.auth-buttons');
+            const userActions = document.querySelector('.user-actions');
+            const loginButton = document.querySelector('.auth-button.login');
+            const signupButton = document.querySelector('.auth-button.signup');
+
+            // Check if user is logged in (you would replace this with actual auth check)
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+
+            if (isLoggedIn) {
+                authButtons.style.display = 'none';
+                userActions.style.display = 'flex';
+            }
+
+            // Simulate login (replace with actual login logic)
+            loginButton.addEventListener('click', () => {
+                localStorage.setItem('isLoggedIn', 'true');
+                authButtons.style.display = 'none';
+                userActions.style.display = 'flex';
+            });
+
+            // Simulate signup (replace with actual signup logic)
+            signupButton.addEventListener('click', () => {
+                localStorage.setItem('isLoggedIn', 'true');
+                authButtons.style.display = 'none';
+                userActions.style.display = 'flex';
+            });
+        });
+
+        // Language handling
+        let currentLanguage = 'en';
+        let translations = {
+            en: {
+                nav: {
+                    home: "Home",
+                    partners: "Partners",
+                    howItWorks: "How It Works",
+                    appPreview: "App Preview",
+                    about: "About Us",
+                    contact: "Contact"
+                },
+                hero: {
+                    title: "Farm Fresh Delivered To Your Door",
+                    subtitle: "Experience the freshest organic produce and premium agricultural products, sourced directly from local farmers and delivered straight to your doorstep.",
+                    cta: "Download App"
+                },
+                howItWorks: {
+                    title: "How It Works",
+                    subtitle: "Simple steps to get fresh produce delivered to your doorstep",
+                    steps: {
+                        browse: {
+                            title: "Browse & Select",
+                            description: "Explore our wide range of fresh produce and agricultural products sourced from local farmers."
+                        },
+                        order: {
+                            title: "Place Your Order",
+                            description: "Add items to your cart and check out securely with various payment options."
+                        },
+                        delivery: {
+                            title: "Fast Delivery",
+                            description: "Receive your fresh products directly to your doorstep."
+                        }
+                    }
+                },
+                appPreview: {
+                    title: "App Preview",
+                    subtitle: "Experience the convenience of ordering fresh produce with our mobile app",
+                    features: {
+                        ordering: {
+                            title: "Easy Ordering",
+                            description: "Browse and order fresh produce with just a few taps"
+                        },
+                        tracking: {
+                            title: "Real-time Tracking",
+                            description: "Track your delivery in real-time from farm to doorstep"
+                        },
+                        personalization: {
+                            title: "Personalized Experience",
+                            description: "Get recommendations based on your preferences"
+                        }
+                    }
+                },
+                partners: {
+                    title: "Our Partners",
+                    subtitle: "Working together with local farmers and producers to bring you the best quality products"
+                },
+                testimonials: {
+                    title: "What Our Customers Say",
+                    subtitle: "Hear from our satisfied customers"
+                },
+                footer: {
+                    description: "Agera is dedicated to providing the freshest, highest quality agricultural products directly from local farmers to your doorstep.",
+                    quickLinks: "Quick Links",
+                    contactUs: "Contact Us",
+                    copyright: "© 2025 Agera LLC. All rights reserved."
+                }
+            },
+            sw: {
+                nav: {
+                    home: "Nyumbani",
+                    partners: "Washirika",
+                    howItWorks: "Jinsi Inavyofanya Kazi",
+                    appPreview: "Onesho la Programu",
+                    about: "Kuhusu Sisi",
+                    contact: "Wasiliana"
+                },
+                hero: {
+                    title: "Mazao Matamu Mlangoni Mwako",
+                    subtitle: "Jione mazao ya kikaboni na bidhaa bora za kilimo, zikiletwa moja kwa moja kutoka kwa wakulima wa kawaida hadi kwenye mlango wako.",
+                    cta: "Pakua Programu"
+                },
+                howItWorks: {
+                    title: "Jinsi Inavyofanya Kazi",
+                    subtitle: "Hatua rahisi za kupata mazao matamu yaletwe kwenye mlango wako",
+                    steps: {
+                        browse: {
+                            title: "Chagua na Tafuta",
+                            description: "Gundua aina zetu za mazao matamu na bidhaa za kilimo kutoka kwa wakulima wa kawaida."
+                        },
+                        order: {
+                            title: "Weka Oda Yako",
+                            description: "Ongeza vifaa kwenye gari lako na maliza kwa usalama na chaguo mbalimbali za malipo."
+                        },
+                        delivery: {
+                            title: "Usambazaji wa Haraka",
+                            description: "Pokea bidhaa zako matamu moja kwa moja kwenye mlango wako."
+                        }
+                    }
+                },
+                appPreview: {
+                    title: "Onesho la Programu",
+                    subtitle: "Jione urahisi wa kuagiza mazao matamu na programu yetu ya simu",
+                    features: {
+                        ordering: {
+                            title: "Kuagiza Rahisi",
+                            description: "Tafuta na agiza mazao matamu kwa kubofya mara chache tu"
+                        },
+                        tracking: {
+                            title: "Kufuatilia Wakati Halisi",
+                            description: "Fuatilia usambazaji wako kwa wakati halisi kutoka shambani hadi mlangoni"
+                        },
+                        personalization: {
+                            title: "Uzoefu wa Kibinafsi",
+                            description: "Pata mapendekezo kulingana na mapendeleo yako"
+                        }
+                    }
+                },
+                partners: {
+                    title: "Washirika Wetu",
+                    subtitle: "Kufanya kazi pamoja na wakulima wa kawaida na wazalishaji kukuletea bidhaa bora za ubora"
+                },
+                testimonials: {
+                    title: "Wateja Wetu Wasemaje",
+                    subtitle: "Sikia kutoka kwa wateja wetu wameridhika"
+                },
+                footer: {
+                    description: "Agera imejitolea kutoa bidhaa bora za ubora za kilimo moja kwa moja kutoka kwa wakulima wa kawaida hadi mlangoni mwako.",
+                    quickLinks: "Viungo vya Haraka",
+                    contactUs: "Wasiliana Nasi",
+                    copyright: "© 2025 Agera. Haki zote zimehifadhiwa."
+                }
+            }
+        };
+
+        function updatePageContent() {
+            const lang = translations[currentLanguage];
+            
+            // Navigation
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                const key = link.getAttribute('data-i18n');
+                if (key && lang.nav[key]) {
+                    link.textContent = lang.nav[key];
+                }
+            });
+
+            // Hero section
+            const heroTitle = document.querySelector('.hero h1');
+            const heroSubtitle = document.querySelector('.hero p');
+            const heroCta = document.querySelector('.cta-button');
+            if (heroTitle) heroTitle.textContent = lang.hero.title;
+            if (heroSubtitle) heroSubtitle.textContent = lang.hero.subtitle;
+            if (heroCta) heroCta.textContent = lang.hero.cta;
+
+            // How It Works section
+            const howItWorksTitle = document.querySelector('.how-it-works .section-title');
+            const howItWorksSubtitle = document.querySelector('.how-it-works .section-subtitle');
+            if (howItWorksTitle) howItWorksTitle.textContent = lang.howItWorks.title;
+            if (howItWorksSubtitle) howItWorksSubtitle.textContent = lang.howItWorks.subtitle;
+
+            // Update step cards
+            const steps = document.querySelectorAll('.step-card');
+            steps.forEach((step, index) => {
+                const stepKey = Object.keys(lang.howItWorks.steps)[index];
+                if (stepKey) {
+                    const stepData = lang.howItWorks.steps[stepKey];
+                    step.querySelector('.step-title').textContent = stepData.title;
+                    step.querySelector('.step-description').textContent = stepData.description;
+                }
+            });
+
+            // App Preview section
+            const appPreviewTitle = document.querySelector('.app-preview .section-title');
+            const appPreviewSubtitle = document.querySelector('.app-preview .section-subtitle');
+            if (appPreviewTitle) appPreviewTitle.textContent = lang.appPreview.title;
+            if (appPreviewSubtitle) appPreviewSubtitle.textContent = lang.appPreview.subtitle;
+
+            // Update feature items
+            const features = document.querySelectorAll('.feature-item');
+            features.forEach((feature, index) => {
+                const featureKey = Object.keys(lang.appPreview.features)[index];
+                if (featureKey) {
+                    const featureData = lang.appPreview.features[featureKey];
+                    feature.querySelector('h3').textContent = featureData.title;
+                    feature.querySelector('p').textContent = featureData.description;
+                }
+            });
+
+            // Partners section
+            const partnersTitle = document.querySelector('.partners .section-title');
+            const partnersSubtitle = document.querySelector('.partners .section-subtitle');
+            if (partnersTitle) partnersTitle.textContent = lang.partners.title;
+            if (partnersSubtitle) partnersSubtitle.textContent = lang.partners.subtitle;
+
+            // Testimonials section
+            const testimonialsTitle = document.querySelector('.testimonials .section-title');
+            const testimonialsSubtitle = document.querySelector('.testimonials .section-subtitle');
+            if (testimonialsTitle) testimonialsTitle.textContent = lang.testimonials.title;
+            if (testimonialsSubtitle) testimonialsSubtitle.textContent = lang.testimonials.subtitle;
+
+            // Footer
+            const footerDescription = document.querySelector('.footer-description');
+            const footerQuickLinks = document.querySelector('.footer-heading');
+            const footerContactUs = document.querySelectorAll('.footer-heading')[1];
+            const footerCopyright = document.querySelector('.footer-bottom p');
+            if (footerDescription) footerDescription.textContent = lang.footer.description;
+            if (footerQuickLinks) footerQuickLinks.textContent = lang.footer.quickLinks;
+            if (footerContactUs) footerContactUs.textContent = lang.footer.contactUs;
+            if (footerCopyright) footerCopyright.textContent = lang.footer.copyright;
+        }
+
+        // Language selector event listener
+        document.getElementById('language-select').addEventListener('change', (e) => {
+            currentLanguage = e.target.value;
+            updatePageContent();
+        });
+
+        // Load initial language
+        document.addEventListener('DOMContentLoaded', () => {
+            updatePageContent();
+        });
+
+        // Add this to your existing GSAP animations
+        gsap.fromTo('.value-card', 
+            { opacity: 0, y: 50 }, 
+            { 
+                opacity: 1, 
+                y: 0, 
+                duration: 1, 
+                stagger: 0.2,
+                scrollTrigger: {
+                    trigger: '.values-grid',
+                    start: 'top 80%',
+                }
+            }
+        );
+
+        gsap.fromTo('.stat-item', 
+            { opacity: 0, scale: 0.8 }, 
+            { 
+                opacity: 1, 
+                scale: 1, 
+                duration: 1, 
+                stagger: 0.2,
+                scrollTrigger: {
+                    trigger: '.mission-stats',
+                    start: 'top 80%',
+                }
+            }
+        );
+    </script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+{
+  "name": "agera-farm-fresh",
+  "version": "1.0.0",
+  "description": "Farm Fresh Direct - Agera",
+  "main": "backend/index.js",
+  "scripts": {
+    "start": "node backend/index.js",
+    "dev": "nodemon backend/index.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.5.0",
+    "helmet": "^8.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
