@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop & Order - Agera</title>
+    <style>
+        :root {
+            --primary: #3c8f5d;
+            --secondary: #f7b538;
+            --dark: #1f3d2c;
+            --light: #f9f7f3;
+            --accent: #e85d04;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        /* Navigation Styles */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 5%;
+            background-color: rgba(255, 255, 255, 0.95);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            height: 70px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            flex: 1;
+        }
+        
+        .logo img {
+            height: 100px;
+            margin-right: 10px;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            justify-content: center;
+            flex: 2;
+            margin: 0;
+        }
+        
+        .nav-links li {
+            margin: 0 1.2rem;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            flex: 1;
+            justify-content: flex-end;
+        }
+        
+        .language-selector {
+            display: flex;
+            align-items: center;
+        }
+        
+        .language-selector select {
+            padding: 0.4rem 1.2rem;
+            border-radius: 20px;
+            border: 1px solid #ddd;
+            font-size: 0.95rem;
+            color: var(--dark);
+            background: #fff;
+            outline: none;
+            transition: border 0.3s;
+            margin: 0;
+        }
+        
+        .language-selector select:focus {
+            border-color: var(--primary);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 6rem auto 2rem;
+            padding: 2rem;
+        }
+
+        .step-detail {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            background-color: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background-color: #326d4a;
+            transform: translateY(-2px);
+        }
+
+        .step-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .step-title {
+            font-size: 2rem;
+            color: var(--dark);
+        }
+
+        .step-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .step-text {
+            font-size: 1.1rem;
+            color: #666;
+        }
+
+        .step-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .features-list {
+            list-style: none;
+            margin-top: 1.5rem;
+        }
+
+        .features-list li {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .features-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .payment-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .payment-option {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .payment-option:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .payment-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        @media (max-width: 768px) {
+            .step-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="logo">
+            <a href="index.html" style="text-decoration: none; color: inherit;">
+                <img src="images/Agera_logo.png" alt="Agera Logo" style="height: 100px; vertical-align: middle; margin-right: 10px;">
+            </a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html#home" data-i18n="home">Home</a></li>
+            <li><a href="index.html#how-it-works" data-i18n="howItWorks">How It Works</a></li>
+            <li><a href="index.html#app-preview" data-i18n="appPreview">App Preview</a></li>
+            <li><a href="index.html#partners" data-i18n="partners">Partners</a></li>
+            <li><a href="index.html#about" data-i18n="about">About Us</a></li>
+            <li><a href="index.html#footer" data-i18n="contact">Contact</a></li>
+        </ul>
+        <div class="nav-actions">
+            <div class="language-selector">
+                <select id="language-select" aria-label="Select language">
+                    <option value="en">English</option>
+                    <option value="sw">Swahili</option>
+                </select>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="step-detail">
+            <div class="step-header">
+                <h1 class="step-title">Shop & Order</h1>
+            </div>
+            <div class="step-content">
+                <div class="step-text">
+                    <p>Browse through our extensive collection of fresh produce and agricultural products. Our user-friendly interface makes shopping easy and enjoyable:</p>
+                    <ul class="features-list">
+                        <li>Explore products by category or search for specific items</li>
+                        <li>View detailed product information and high-quality images</li>
+                        <li>Read customer reviews and ratings</li>
+                        <li>Add items to your shopping cart</li>
+                        <li>Review your order summary</li>
+                        <li>Choose from multiple payment options</li>
+                        <li>Select your preferred delivery time</li>
+                        <li>Receive instant order confirmation</li>
+                    </ul>
+                </div>
+                <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Shop & Order" class="step-image">
+            </div>
+
+            <div class="step-text" style="margin-top: 2rem;">
+                <h3 style="margin-bottom: 1rem;">Shopping Categories</h3>
+                <div class="payment-options">
+                    <div class="payment-option">
+                        <div class="payment-icon">🌱</div>
+                        <h4>Seeds & Plants</h4>
+                        <p>Quality seeds and seedlings</p>
+                    </div>
+                    <div class="payment-option">
+                        <div class="payment-icon">🧪</div>
+                        <h4>Agri-Inputs</h4>
+                        <p>Fertilizers and pesticides</p>
+                    </div>
+                    <div class="payment-option">
+                        <div class="payment-icon">🛠️</div>
+                        <h4>Farm Tools</h4>
+                        <p>Essential farming equipment</p>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 2rem; margin-bottom: 1rem;">Available Payment Methods</h3>
+                <div class="payment-options">
+                    <div class="payment-option">
+                        <div class="payment-icon">📱</div>
+                        <h4>Mobile Money</h4>
+                        <p>M-Pesa</p>
+                    </div>
+                    <div class="payment-option">
+                        <div class="payment-icon">💳</div>
+                        <h4>Mastercard</h4>
+                        <p>Secure online payments</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const translations = {
+            en: {
+                // ... existing English translations ...
+            },
+            sw: {
+                nav: {
+                    home: "Nyumbani",
+                    partners: "Washirika",
+                    howItWorks: "Jinsi Inavyofanya Kazi",
+                    appPreview: "Onesho la Programu",
+                    about: "Kuhusu Sisi",
+                    contact: "Wasiliana",
+                    termsOfService: "Sheria na Masharti"
+                },
+                step: {
+                    title: "Nunua na Agiza",
+                    description: "Tafuta bidhaa zetu mbalimbali na agiza kwa urahisi. Kiolesura chetu cha kirafiki kinafanya ununuzi uwe rahisi na wa kufurahisha:",
+                    features: {
+                        explore: "Tafuta bidhaa kwa jamii au tafuta vifaa maalum",
+                        view: "Ona habari za kina za bidhaa na picha za ubora wa juu",
+                        reviews: "Soma maoni ya wateja na ukadiriaji",
+                        cart: "Ongeza vifaa kwenye gari lako la ununuzi",
+                        summary: "Kagua muhtasari wa oda yako",
+                        payment: "Chagua kati ya chaguo mbalimbali za malipo",
+                        delivery: "Chagua wakati wako wa kipendeleo cha usambazaji",
+                        confirmation: "Pokea uthibitisho wa oda wa haraka"
+                    },
+                    categories: {
+                        title: "Jamii za Ununuzi",
+                        seeds: {
+                            title: "Mbegu na Mimea",
+                            description: "Mbegu na mimea ya ubora wa juu"
+                        },
+                        inputs: {
+                            title: "Vifaa vya Kilimo",
+                            description: "Mboreshaji na dawa za wadudu"
+                        },
+                        tools: {
+                            title: "Vifaa vya Shamba",
+                            description: "Vifaa muhimu vya kilimo"
+                        }
+                    },
+                    payment: {
+                        title: "Njia za Malipo Zinazopatikana",
+                        mobile: {
+                            title: "Pesa ya Simu",
+                            description: "M-Pesa"
+                        },
+                        card: {
+                            title: "Mastercard",
+                            description: "Malipo salama ya mtandaoni"
+                        }
+                    }
+                }
+            }
+        };
+    </script>
+</body>
+</html> 
