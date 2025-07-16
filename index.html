@@ -1893,6 +1893,87 @@
     }
 }
       </style>
+      <style>
+.app-preview .main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: stretch;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+}
+.app-preview .main-content img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 0;
+    box-shadow: none;
+    display: block;
+}
+      </style>
+      <style>
+.app-preview-bg {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(135deg, #e8f5e8 0%, #f7b538 60%, #fffbe6 100%);
+    overflow: hidden;
+}
+.app-preview-bg .bg-geo {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 2;
+    pointer-events: none;
+}
+.app-preview-bg .geo-shape {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(40px);
+    opacity: 0.22;
+    mix-blend-mode: lighten;
+    animation: geoFloat 18s ease-in-out infinite;
+}
+.app-preview-bg .geo-1 {
+    width: 340px; height: 340px;
+    background: #3c8f5d;
+    top: 5%; left: 8%;
+    animation-delay: 0s;
+}
+.app-preview-bg .geo-2 {
+    width: 180px; height: 180px;
+    background: #f7b538;
+    top: 60%; left: 70%;
+    animation-delay: 3s;
+}
+.app-preview-bg .geo-3 {
+    width: 120px; height: 120px;
+    background: #e85d04;
+    top: 30%; right: 12%;
+    animation-delay: 6s;
+}
+.app-preview-bg .geo-4 {
+    width: 200px; height: 200px;
+    background: #6a93cb;
+    bottom: 12%; left: 55%;
+    animation-delay: 9s;
+}
+.app-preview-bg .geo-5 {
+    width: 100px; height: 100px;
+    background: #fffbe6;
+    top: 20%; left: 40%;
+    opacity: 0.13;
+    animation-delay: 12s;
+}
+@keyframes geoFloat {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-30px) scale(1.08); }
+}
+</style>
 </head>
 <body>
     <!-- Welcome Banner -->
@@ -1986,12 +2067,12 @@
         </div>
         <!-- Layered Gradient & Floating Shapes Background -->
         <div class="app-preview-bg">
-            <div class="bg-gradient-premium"></div>
-            <div class="bg-blobs">
-                <div class="blob blob-1"></div>
-                <div class="blob blob-2"></div>
-                <div class="blob blob-3"></div>
-                <div class="blob blob-4"></div>
+            <div class="bg-geo">
+                <div class="geo-shape geo-1"></div>
+                <div class="geo-shape geo-2"></div>
+                <div class="geo-shape geo-3"></div>
+                <div class="geo-shape geo-4"></div>
+                <div class="geo-shape geo-5"></div>
             </div>
         </div>
 
@@ -2011,19 +2092,8 @@
                             </div>
                             <!-- Screen content -->
                             <div class="screen-content">
-                                <div class="status-bar">
-                                    <div class="status-left">9:41</div>
-                                    <div class="status-right">
-                                        <span>●●●</span>
-                                        <span>📶</span>
-                                        <span>📶</span>
-                                        <div class="battery-icon">
-                                            <div class="battery-fill"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="main-content">
-                                    <img src="images/storeowner.png" alt="Easy Ordering" style="width:100%;height:auto;max-height:340px;object-fit:contain;border-radius:24px;box-shadow:0 2px 12px #0002;">
+                                <div class="main-content" style="padding:0;flex:1;display:flex;align-items:center;justify-content:center;">
+                                    <img src="images/storeowner.png" alt="Easy Ordering" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;border-radius:0;box-shadow:none;">
                                 </div>
                                 <div class="home-indicator"></div>
                             </div>
@@ -2053,19 +2123,8 @@
                                 </div>
                             </div>
                             <div class="screen-content">
-                                <div class="status-bar">
-                                    <div class="status-left">9:41</div>
-                                    <div class="status-right">
-                                        <span>●●●</span>
-                                        <span>📶</span>
-                                        <span>📶</span>
-                                        <div class="battery-icon">
-                                            <div class="battery-fill"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="main-content">
-                                    <img src="images/delivery-demo.png" alt="Real-time Tracking" style="width:100%;height:auto;max-height:340px;object-fit:contain;border-radius:24px;box-shadow:0 2px 12px #0002;">
+                                <div class="main-content" style="padding:0;flex:1;display:flex;align-items:center;justify-content:center;">
+                                    <img src="images/Agera_logo.png" alt="Agera Logo" style="width:100%;height:100%;object-fit:contain;object-position:center;display:block;border-radius:0;box-shadow:none;background:#fff;">
                                 </div>
                                 <div class="home-indicator"></div>
                             </div>
@@ -2095,19 +2154,8 @@
                                 </div>
                             </div>
                             <div class="screen-content">
-                                <div class="status-bar">
-                                    <div class="status-left">9:41</div>
-                                    <div class="status-right">
-                                        <span>●●●</span>
-                                        <span>📶</span>
-                                        <span>📶</span>
-                                        <div class="battery-icon">
-                                            <div class="battery-fill"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="main-content">
-                                    <img src="images/Instagram - Inbox • Chats - Personal 6_16_2025 3_50_24 PM.png" alt="Plant Diagnosis" style="width:100%;height:auto;max-height:340px;object-fit:contain;border-radius:24px;box-shadow:0 2px 12px #0002;">
+                                <div class="main-content" style="padding:0;flex:1;display:flex;align-items:center;justify-content:center;">
+                                    <img src="images/Instagram - Inbox • Chats - Personal 6_16_2025 3_50_24 PM.png" alt="Plant Diagnosis" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;border-radius:0;box-shadow:none;">
                                 </div>
                                 <div class="home-indicator"></div>
                             </div>
