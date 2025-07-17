@@ -1921,61 +1921,94 @@
     top: 0; left: 0; right: 0; bottom: 0;
     z-index: 1;
     pointer-events: none;
-    background: linear-gradient(135deg, #e8f5e8 0%, #f7b538 60%, #fffbe6 100%);
+    /* Smoother, harmonious gradient: light → primary → dark */
+    background: linear-gradient(120deg, var(--light) 0%, var(--primary) 55%, var(--dark) 100%);
     overflow: hidden;
 }
-.app-preview-bg .bg-geo {
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    z-index: 2;
-    pointer-events: none;
-}
+.app-preview-bg .bg-geo,
 .app-preview-bg .geo-shape {
+    display: none !important;
+}
+.app-preview-bg::before,
+.app-preview-bg::after,
+.app-preview-bg .app-preview-accent,
+.app-preview-bg .app-preview-dark {
+    content: '';
     position: absolute;
     border-radius: 50%;
-    filter: blur(40px);
-    opacity: 0.22;
-    mix-blend-mode: lighten;
-    animation: geoFloat 18s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 2;
 }
-.app-preview-bg .geo-1 {
-    width: 340px; height: 340px;
-    background: #3c8f5d;
-    top: 5%; left: 8%;
-    animation-delay: 0s;
-}
-.app-preview-bg .geo-2 {
-    width: 180px; height: 180px;
-    background: #f7b538;
-    top: 60%; left: 70%;
-    animation-delay: 3s;
-}
-.app-preview-bg .geo-3 {
-    width: 120px; height: 120px;
-    background: #e85d04;
-    top: 30%; right: 12%;
-    animation-delay: 6s;
-}
-.app-preview-bg .geo-4 {
-    width: 200px; height: 200px;
-    background: #6a93cb;
-    bottom: 12%; left: 55%;
-    animation-delay: 9s;
-}
-.app-preview-bg .geo-5 {
-    width: 100px; height: 100px;
-    background: #fffbe6;
-    top: 20%; left: 40%;
+.app-preview-bg::before {
+    width: 380px;
+    height: 380px;
+    top: 6%;
+    left: 4%;
+    background: var(--primary);
+    filter: blur(64px);
     opacity: 0.13;
-    animation-delay: 12s;
 }
-@keyframes geoFloat {
-    0%, 100% { transform: translateY(0) scale(1); }
-    50% { transform: translateY(-30px) scale(1.08); }
+.app-preview-bg::after {
+    width: 220px;
+    height: 220px;
+    bottom: 8%;
+    right: 8%;
+    background: var(--dark);
+    filter: blur(80px);
+    opacity: 0.09;
 }
-</style>
+.app-preview-bg .app-preview-accent {
+    width: 90px;
+    height: 90px;
+    bottom: 18%;
+    left: 48%;
+    background: var(--accent);
+    filter: blur(60px);
+    opacity: 0.05;
+    display: block;
+}
+@media (max-width: 900px) {
+    .app-preview-bg::before {
+        width: 160px;
+        height: 160px;
+        top: 4%;
+        left: 2%;
+    }
+    .app-preview-bg::after {
+        width: 90px;
+        height: 90px;
+        bottom: 5%;
+        right: 5%;
+    }
+    .app-preview-bg .app-preview-accent {
+        width: 40px;
+        height: 40px;
+        bottom: 10%;
+        left: 60%;
+    }
+}
+      </style>
+      <script>
+      // Dynamically add the accent and dark circles for the app preview background
+      document.addEventListener('DOMContentLoaded', function() {
+        var bg = document.querySelector('.app-preview-bg');
+        if(bg && !bg.querySelector('.app-preview-accent')) {
+          var accent = document.createElement('div');
+          accent.className = 'app-preview-accent';
+          bg.appendChild(accent);
+        }
+      });
+      </script>
+
 </head>
 <body>
+    <!-- Background Video -->
+    <video id="bg-video" autoplay loop muted playsinline>
+      <source src="images/ageraco.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <div id="bg-overlay"></div>
+    
     <!-- Welcome Banner -->
     <div id="welcome-banner" class="welcome-banner" style="display: none;">
         <p>👋 Welcome to our store! Discover amazing products curated just for you.</p>
@@ -2062,9 +2095,9 @@
     <section class="app-preview" id="app-preview">
         <!-- Section Header at the very top -->
         <div class="section-header" style="position: relative; z-index: 10; margin-bottom: 3.5rem;">
-            <h2 class="section-title">App Preview</h2>
-            <p class="section-subtitle">Experience the convenience of ordering fresh produce with our mobile app</p>
-        </div>
+                <h2 class="section-title">App Preview</h2>
+                <p class="section-subtitle">Experience the convenience of ordering fresh produce with our mobile app</p>
+            </div>
         <!-- Layered Gradient & Floating Shapes Background -->
         <div class="app-preview-bg">
             <div class="bg-geo">
@@ -2088,16 +2121,16 @@
                                     <div class="front-camera"></div>
                                     <div class="speaker"></div>
                                     <div class="proximity-sensor"></div>
-                                </div>
-                            </div>
+          </div>
+          </div>
                             <!-- Screen content -->
                             <div class="screen-content">
                                 <div class="main-content" style="padding:0;flex:1;display:flex;align-items:center;justify-content:center;">
                                     <img src="images/storeowner.png" alt="Easy Ordering" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;border-radius:0;box-shadow:none;">
-                                </div>
+          </div>
                                 <div class="home-indicator"></div>
-                            </div>
-                        </div>
+        </div>
+      </div>
                         <div class="side-button mute-switch"></div>
                         <div class="side-button volume-up"></div>
                         <div class="side-button volume-down"></div>
@@ -2108,27 +2141,27 @@
                         </div>
                         <div class="speaker-grille right">
                             <div class="speaker-hole"></div><div class="speaker-hole"></div><div class="speaker-hole"></div><div class="speaker-hole"></div><div class="speaker-hole"></div>
-                        </div>
                     </div>
+                </div>
                     <div class="phone-caption premium">Easy Ordering</div>
                 </div>
                 <div class="phone-mockup-iphone">
                     <div class="phone-container app-preview-phone">
-                        <div class="phone-screen">
+                            <div class="phone-screen">
                             <div class="dynamic-island">
                                 <div class="camera-system">
                                     <div class="front-camera"></div>
                                     <div class="speaker"></div>
                                     <div class="proximity-sensor"></div>
-                                </div>
-                            </div>
+                                            </div>
+                                        </div>
                             <div class="screen-content">
                                 <div class="main-content" style="padding:0;flex:1;display:flex;align-items:center;justify-content:center;">
                                     <img src="images/Agera_logo.png" alt="Agera Logo" style="width:100%;height:100%;object-fit:contain;object-position:center;display:block;border-radius:0;box-shadow:none;background:#fff;">
-                                </div>
+                                    </div>
                                 <div class="home-indicator"></div>
-                            </div>
-                        </div>
+                                            </div>
+                                        </div>
                         <div class="side-button mute-switch"></div>
                         <div class="side-button volume-up"></div>
                         <div class="side-button volume-down"></div>
@@ -2136,13 +2169,13 @@
                         <div class="lightning-port"></div>
                         <div class="speaker-grille left">
                             <div class="speaker-hole"></div><div class="speaker-hole"></div><div class="speaker-hole"></div><div class="speaker-hole"></div><div class="speaker-hole"></div>
-                        </div>
+                                    </div>
                         <div class="speaker-grille right">
                             <div class="speaker-hole"></div><div class="speaker-hole"></div><div class="speaker-hole"></div><div class="speaker-hole"></div><div class="speaker-hole"></div>
-                        </div>
-                    </div>
+                                            </div>
+                                        </div>
                     <div class="phone-caption premium">Real-time Tracking</div>
-                </div>
+                                    </div>
                 <div class="phone-mockup-iphone">
                     <div class="phone-container app-preview-phone">
                         <div class="phone-screen">
@@ -2156,10 +2189,10 @@
                             <div class="screen-content">
                                 <div class="main-content" style="padding:0;flex:1;display:flex;align-items:center;justify-content:center;">
                                     <img src="images/Instagram - Inbox • Chats - Personal 6_16_2025 3_50_24 PM.png" alt="Plant Diagnosis" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;border-radius:0;box-shadow:none;">
-                                </div>
-                                <div class="home-indicator"></div>
-                            </div>
                         </div>
+                                <div class="home-indicator"></div>
+                    </div>
+                </div>
                         <div class="side-button mute-switch"></div>
                         <div class="side-button volume-up"></div>
                         <div class="side-button volume-down"></div>
@@ -2167,10 +2200,10 @@
                         <div class="lightning-port"></div>
                         <div class="speaker-grille left">
                             <div class="speaker-hole"></div><div class="speaker-hole"></div><div class="speaker-hole"></div><div class="speaker-hole"></div><div class="speaker-hole"></div>
-                        </div>
+            </div>
                         <div class="speaker-grille right">
                             <div class="speaker-hole"></div><div class="speaker-hole"></div><div class="speaker-hole"></div><div class="speaker-hole"></div><div class="speaker-hole"></div>
-                        </div>
+                    </div>
                     </div>
                     <div class="phone-caption premium">Plant Diagnosis</div>
                 </div>
@@ -2178,34 +2211,34 @@
         </div>
 
       <style>
-        .app-preview {
-            position: relative;
+            .app-preview {
+                position: relative;
             padding: 7rem 0 8rem 0;
-            min-height: 100vh;
+                min-height: 100vh;
             overflow: hidden;
             background: none;
-        }
-        .app-preview-bg {
-            position: absolute;
+            }
+            .app-preview-bg {
+                position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            z-index: 1;
+                z-index: 1;
             pointer-events: none;
-        }
+            }
         .bg-gradient-premium {
-            position: absolute;
+                position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
             background: radial-gradient(circle at 20% 80%, #e8f5e8 0%, transparent 60%),
                         radial-gradient(circle at 80% 20%, #f7b53822 0%, transparent 60%),
                         linear-gradient(135deg, #f9f7f3 0%, #e8f5e8 60%, #f0f9f0 100%);
             z-index: 1;
-        }
+            }
         .bg-blobs {
-            position: absolute;
+                position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
             z-index: 2;
-        }
+            }
         .blob {
-            position: absolute;
+                position: absolute;
             border-radius: 50%;
             filter: blur(32px);
             opacity: 0.25;
@@ -2238,29 +2271,29 @@
         @keyframes floatBlob {
             0%, 100% { transform: translateY(0) scale(1); }
             50% { transform: translateY(-30px) scale(1.08); }
-        }
+            }
         .three-phones-row.premium {
-            display: flex;
+                display: flex;
             justify-content: center;
             align-items: flex-end;
-            gap: 1.5rem;
+                gap: 1.5rem;
             margin: 4rem 0 0 0;
             flex-wrap: nowrap;
             position: relative;
             z-index: 3;
         }
         .phone-mockup-static.premium {
-            display: flex;
+                display: flex;
             flex-direction: column;
-            align-items: center;
+                align-items: center;
             width: 260px;
-            opacity: 0;
+                opacity: 0;
             transform: translateY(60px) scale(0.95);
             animation: phoneEntrance 1.2s cubic-bezier(.77,0,.18,1) forwards;
-        }
+            }
         .phone-mockup-static.premium:nth-child(2) {
             animation-delay: 0.25s;
-        }
+            }
         .phone-mockup-static.premium:nth-child(3) {
             animation-delay: 0.5s;
         }
@@ -2279,44 +2312,44 @@
             box-shadow: 0 24px 64px 0 rgba(60,143,93,0.13), 0 2px 12px 0 rgba(60,143,93,0.10), 0 0 0 2px #fff2;
             position: relative;
             margin-bottom: 1.2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+                display: flex;
+                align-items: center;
+                justify-content: center;
             overflow: hidden;
-        }
+            }
         .phone-notch-static.premium {
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
+                position: absolute;
+                top: 0;
+                left: 50%;
+                transform: translateX(-50%);
             width: 150px;
             height: 36px;
-            background: #000;
+                background: #000;
             border-radius: 0 0 20px 20px;
-            z-index: 10;
+                z-index: 10;
             box-shadow: 0 2px 8px #0004;
         }
         .phone-glass {
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            border-radius: 32px;
+                border-radius: 32px;
             background: linear-gradient(120deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.05) 100%);
             pointer-events: none;
             z-index: 9;
-        }
+            }
         .phone-screen-static.premium {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
             border-radius: 28px;
             background: #fff;
             box-shadow: 0 2px 12px #0002;
             z-index: 8;
-        }
+            }
         .phone-caption.premium {
-            text-align: center;
+                text-align: center;
             font-size: 1.18rem;
-            color: var(--dark);
+                color: var(--dark);
             font-weight: 700;
             margin-top: 0.7rem;
             letter-spacing: 0.01em;
@@ -2325,37 +2358,37 @@
         @media (max-width: 1100px) {
             .phone-mockup-static.premium {
                 width: 180px;
-            }
+                }
             .phone-frame-static.premium {
                 width: 180px;
                 height: 360px;
-            }
+                }
             .phone-notch-static.premium {
                 width: 110px;
                 height: 28px;
                 border-radius: 0 0 14px 14px;
+                }
             }
-        }
         @media (max-width: 900px) {
             .phone-mockup-static.premium {
                 width: 160px;
-            }
+                }
             .phone-frame-static.premium {
                 width: 160px;
                 height: 340px;
-            }
+                }
             .phone-notch-static.premium {
                 width: 80px;
                 height: 18px;
                 border-radius: 0 0 10px 10px;
+                }
             }
-        }
         @media (max-width: 700px) {
             .three-phones-row.premium {
-                flex-direction: column;
+                    flex-direction: column;
                 align-items: center;
                 gap: 2.5rem;
-            }
+                }
             .phone-mockup-static.premium {
                 width: 95vw;
                 max-width: 340px;
@@ -2364,22 +2397,22 @@
                 width: 95vw;
                 max-width: 340px;
                 height: 400px;
-            }
+                }
             .phone-notch-static.premium {
                 width: 60px;
                 height: 12px;
                 border-radius: 0 0 6px 6px;
-            }
+                }
         }
       </style>
       <script>
         // Animate blobs floating (parallax on scroll)
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
+                window.addEventListener('scroll', () => {
+                    const scrolled = window.pageYOffset;
             document.querySelectorAll('.blob').forEach((blob, i) => {
                 const speed = 0.15 + (i * 0.07);
                 blob.style.transform = `translateY(${scrolled * speed}px)`;
-            });
+          });
         });
       </script>
     </section>
@@ -3937,5 +3970,26 @@
 })();
 // ... existing code ...
     </script>
+    <style>
+#bg-video {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 1;
+}
+#bg-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(30, 60, 40, 0.25); /* Adjust for readability */
+  z-index: 0;
+  pointer-events: none;
+}
+      </style>
 </body>
 </html>
