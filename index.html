@@ -4091,9 +4091,37 @@ setInterval(() => {
 </script>
 
 <style>
-  /* Pure white backgrounds for all sections */
+  /* Section backgrounds */
   #how-it-works, .how-it-works-section, .how-it-works {
-    background: white !important;
+    background: linear-gradient(135deg, #fff8e1 0%, #ffcc80 100%) !important;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  #how-it-works::before, .how-it-works-section::before, .how-it-works::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+      url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" opacity="0.1"><defs><pattern id="farmPattern" patternUnits="userSpaceOnUse" width="200" height="200"><circle cx="50" cy="50" r="3" fill="%23228B22" opacity="0.3"/><circle cx="150" cy="100" r="2" fill="%23228B22" opacity="0.2"/><circle cx="100" cy="150" r="2.5" fill="%23228B22" opacity="0.25"/><path d="M20,180 Q50,160 80,180 T140,180" stroke="%23228B22" stroke-width="1" fill="none" opacity="0.2"/><path d="M160,20 Q180,40 200,20" stroke="%23228B22" stroke-width="1" fill="none" opacity="0.15"/></pattern></defs><rect width="100%25" height="100%25" fill="url(%23farmPattern)"/><g opacity="0.08"><path d="M100,400 Q300,350 500,400 T900,400" stroke="%23228B22" stroke-width="2" fill="none"/><path d="M200,500 Q400,450 600,500 T1000,500" stroke="%23228B22" stroke-width="1.5" fill="none"/><circle cx="200" cy="200" r="8" fill="%23228B22" opacity="0.3"/><circle cx="800" cy="300" r="6" fill="%23228B22" opacity="0.25"/><circle cx="600" cy="150" r="5" fill="%23228B22" opacity="0.2"/></g></svg>');
+    pointer-events: none;
+    z-index: 1;
+  }
+  
+  #how-it-works::after, .how-it-works-section::after, .how-it-works::after {
+    content: '';
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    width: 200px;
+    height: 200px;
+    background-image: 
+      url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" opacity="0.06"><circle cx="50" cy="50" r="40" fill="none" stroke="%23228B22" stroke-width="1"/><circle cx="50" cy="50" r="30" fill="none" stroke="%23228B22" stroke-width="0.5"/><circle cx="50" cy="50" r="20" fill="none" stroke="%23228B22" stroke-width="0.5"/><path d="M30,50 L70,50 M50,30 L50,70" stroke="%23228B22" stroke-width="0.5"/></svg>');
+    pointer-events: none;
+    z-index: 1;
   }
   
   #app-preview, .app-preview, .app-preview-bg {
