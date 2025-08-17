@@ -23,7 +23,7 @@
         }
         
         body {
-    background: linear-gradient(120deg, #f8bbd0 0%, #bbdefb 100%);
+    background: linear-gradient(135deg, #f0f8f0 0%, #e8f5e8 25%, #f9f7f3 50%, #f0f6f0 75%, #e6f2e6 100%);
     color: var(--dark);
     overflow-x: hidden;
 }
@@ -2083,21 +2083,22 @@
 
         <!-- Fresh App Preview Section -->
     <section class="app-preview" id="app-preview">
+        <!-- Interactive Background Elements -->
+        <div class="animated-grid"></div>
+        <div class="app-preview-particles">
+            <div class="floating-element"></div>
+            <div class="floating-element"></div>
+            <div class="floating-element"></div>
+            <div class="floating-element"></div>
+            <div class="floating-element"></div>
+        </div>
+        <div class="interactive-orb"></div>
+        
         <!-- Section Header at the very top -->
         <div class="section-header" style="position: relative; z-index: 10; margin-bottom: 3.5rem;">
-                <h2 class="section-title">App Preview</h2>
-                <p class="section-subtitle">Experience the convenience of ordering fresh produce with our mobile app</p>
+                <h2 class="section-title" style="color: white;">App Preview</h2>
+                <p class="section-subtitle" style="color: rgba(255,255,255,0.8);">Experience the convenience of ordering fresh produce with our mobile app</p>
             </div>
-        <!-- Layered Gradient & Floating Shapes Background -->
-        <div class="app-preview-bg">
-            <div class="bg-geo">
-                <div class="geo-shape geo-1"></div>
-                <div class="geo-shape geo-2"></div>
-                <div class="geo-shape geo-3"></div>
-                <div class="geo-shape geo-4"></div>
-                <div class="geo-shape geo-5"></div>
-            </div>
-        </div>
 
         <div class="app-preview-container">
             <!-- Five Phone Mockups -->
@@ -4125,7 +4126,144 @@ setInterval(() => {
   }
   
   #app-preview, .app-preview, .app-preview-bg {
-    background: white !important;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%) !important;
+    position: relative;
+    overflow: hidden;
+    min-height: 100vh;
+  }
+  
+  .app-preview-particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+  }
+  
+  .floating-element {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(60, 143, 93, 0.1);
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  .floating-element:nth-child(1) {
+    width: 80px;
+    height: 80px;
+    top: 20%;
+    left: 10%;
+    animation-delay: 0s;
+    background: rgba(247, 181, 56, 0.15);
+  }
+  
+  .floating-element:nth-child(2) {
+    width: 60px;
+    height: 60px;
+    top: 60%;
+    right: 15%;
+    animation-delay: 2s;
+    background: rgba(60, 143, 93, 0.12);
+  }
+  
+  .floating-element:nth-child(3) {
+    width: 100px;
+    height: 100px;
+    bottom: 30%;
+    left: 20%;
+    animation-delay: 4s;
+    background: rgba(187, 222, 251, 0.1);
+  }
+  
+  .floating-element:nth-child(4) {
+    width: 40px;
+    height: 40px;
+    top: 40%;
+    left: 50%;
+    animation-delay: 1s;
+    background: rgba(232, 93, 4, 0.08);
+  }
+  
+  .floating-element:nth-child(5) {
+    width: 70px;
+    height: 70px;
+    top: 70%;
+    right: 30%;
+    animation-delay: 3s;
+    background: rgba(60, 143, 93, 0.1);
+  }
+  
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px) rotate(0deg);
+      opacity: 0.7;
+    }
+    25% {
+      transform: translateY(-20px) rotate(90deg);
+      opacity: 1;
+    }
+    50% {
+      transform: translateY(-40px) rotate(180deg);
+      opacity: 0.8;
+    }
+    75% {
+      transform: translateY(-20px) rotate(270deg);
+      opacity: 1;
+    }
+  }
+  
+  .animated-grid {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+      linear-gradient(rgba(60, 143, 93, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(60, 143, 93, 0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+    animation: gridMove 20s linear infinite;
+    pointer-events: none;
+    z-index: 0;
+  }
+  
+  @keyframes gridMove {
+    0% {
+      transform: translate(0, 0);
+    }
+    100% {
+      transform: translate(50px, 50px);
+    }
+  }
+  
+  .interactive-orb {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, rgba(247, 181, 56, 0.2), rgba(60, 143, 93, 0.1));
+    top: 50%;
+    right: 10%;
+    transform: translateY(-50%);
+    animation: pulse 4s ease-in-out infinite;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 2;
+  }
+  
+  .interactive-orb:hover {
+    transform: translateY(-50%) scale(1.1);
+    background: radial-gradient(circle at 30% 30%, rgba(247, 181, 56, 0.3), rgba(60, 143, 93, 0.15));
+  }
+  
+  @keyframes pulse {
+    0%, 100% {
+      box-shadow: 0 0 20px rgba(60, 143, 93, 0.3);
+    }
+    50% {
+      box-shadow: 0 0 40px rgba(247, 181, 56, 0.4), 0 0 60px rgba(60, 143, 93, 0.2);
+    }
   }
 </style>
 
