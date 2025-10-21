@@ -1998,116 +1998,9 @@
       });
       </script>
 
-    <style>
-      /* Loading screen animation styles */
-      #loading-screen { transition: opacity 0.8s ease; }
-      #leaf { display:none; }
-      .loading-letters {
-        position: absolute;
-        top: calc(50% - 120px);
-        left: 50%;
-        transform: translateX(-50%);
-        display: flex;
-        gap: 10px;
-        color: #fff;
-        font-weight: 800;
-        letter-spacing: 0.1em;
-      }
-      .loading-letters span {
-        display: inline-block;
-        font-size: 3.5rem;
-        opacity: 0;
-        transform: translateY(-80px);
-        filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35));
-        animation: letterDrop 1.2s cubic-bezier(.34,1.56,.64,1) forwards;
-      }
-      .loading-letters span:nth-child(1) { animation-delay: 0.1s; }
-      .loading-letters span:nth-child(2) { animation-delay: 0.25s; }
-      .loading-letters span:nth-child(3) { animation-delay: 0.4s; }
-      .loading-letters span:nth-child(4) { animation-delay: 0.55s; }
-      .loading-letters span:nth-child(5) { animation-delay: 0.7s; }
-      @keyframes letterDrop {
-        0% { opacity: 0; transform: translateY(-80px) scale(0.95); }
-        40% { opacity: 1; transform: translateY(0) scale(1); }
-        60% { transform: translateY(0) scale(1); }
-        100% { opacity: 0; transform: translateY(90px) scale(0.9); }
-      }
-      #cart {
-        left: 50% !important;
-        right: auto !important;
-        top: calc(50% + 40px) !important;
-        transform: translateX(-50%);
-        transition: all 0.9s cubic-bezier(.34,1.56,.64,1);
-        background: transparent !important;
-      }
-      #cart { filter: drop-shadow(0 6px 16px rgba(0,0,0,0.35)); animation: cartBounce 2s ease-in-out infinite; }
-      #cart.cart-go { transform: translateX(120vw); opacity: 1; animation: none; }
-      #cart.cart-go svg circle { animation: wheelSpin 0.5s linear infinite; }
-      @keyframes cartBounce {
-        0%, 100% { transform: translateX(-50%) translateY(0px); }
-        50% { transform: translateX(-50%) translateY(-3px); }
-      }
-      @keyframes wheelSpin {
-        from { transform: rotate(0deg); }
-        to { transform: rotate(360deg); }
-      }
-    </style>
-    <script>
-        // Loading screen animation sequence (letters drop into cart, cart drives away)
-        document.addEventListener('DOMContentLoaded', function() {
-            const loadingScreen = document.getElementById('loading-screen');
-            const ageraText = document.getElementById('agera-text');
-            const cart = document.getElementById('cart');
-
-            // Replace text with individual letters
-            ageraText.innerHTML = '<div class="loading-letters">\
-              <span>A</span><span>G</span><span>E</span><span>R</span><span>A</span>\
-            </div>';
-
-            document.body.style.overflow = 'hidden';
-
-            // Reveal cart under the letters
-            setTimeout(() => {
-                cart.style.opacity = '1';
-            }, 250);
-
-            // After letters have dropped, drive cart off and hide loader
-            const totalDurationMs = 1400 + 800; // letter sequence + small buffer
-            setTimeout(() => {
-                cart.classList.add('cart-go');
-                setTimeout(() => {
-                    loadingScreen.style.opacity = '0';
-                    setTimeout(() => {
-                        loadingScreen.style.display = 'none';
-                        document.body.style.overflow = 'visible';
-                    }, 800);
-                }, 700);
-            }, totalDurationMs);
-        });
-    </script>
 
 </head>
 <body>
-    <!-- Loading Screen -->
-    <div id="loading-screen" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #1f3d2c; display: flex; justify-content: center; align-items: center; z-index: 9999; overflow: hidden;">
-        <!-- Leaf -->
-        <div id="leaf" style="position: absolute; width: 80px; height: 80px; background: #3c8f5d; border-radius: 50% 0 50% 0; transform: rotate(-45deg) translateY(200px); opacity: 0; transition: all 1s cubic-bezier(0.34, 1.56, 0.64, 1);">
-            <div style="position: absolute; top: 10px; left: 10px; width: 60px; height: 60px; background: #4caf50; border-radius: 50% 0 50% 0;"></div>
-        </div>
-        
-        <!-- AGERA Letters (injected/animated via JS/CSS) -->
-        <div id="agera-text" style="font-size: 3.5rem; font-weight: 700; color: white; text-align: center; line-height: 1.2;"></div>
-        
-        <!-- Shopping Cart -->
-        <div id="cart" style="position: absolute; width: 100px; height: 80px; opacity: 0;">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: 100%;">
-                <!-- Shopping cart icon -->
-                <path d="M3 3H5L5.4 5M7 13H17L21 5H5.4M7 13L5.4 5M7 13L4.7 15.3C4.3 15.7 4.6 16.5 5.1 16.5H17M17 13V17C17 17.6 16.6 18 16 18H8C7.4 18 7 17.6 7 17V13M17 13H7" stroke="#e85d04" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-                <circle cx="9" cy="19" r="1" fill="#e85d04"/>
-                <circle cx="20" cy="19" r="1" fill="#e85d04"/>
-            </svg>
-        </div>
-    </div>
 
     <!-- Main Content -->
     <section class="hero" id="home" style="position:relative;">
@@ -2215,62 +2108,71 @@
             <div class="content-wrapper">
                 <!-- Text Section -->
                 <div class="text-section">
-                    <div class="section-header">
-                        <div class="section-badge">
-                            <span class="badge-text">✨ Premium Experience</span>
+                    <!-- Compact Header -->
+                    <div style="margin-bottom: 3rem;">
+                        <div style="display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(74, 222, 128, 0.15); padding: 0.5rem 1rem; border-radius: 50px; border: 1px solid rgba(74, 222, 128, 0.3); margin-bottom: 1.5rem;">
+                            <span style="font-size: 1.25rem;">📱</span>
+                            <span style="font-family: 'Inter', sans-serif; font-size: 0.85rem; font-weight: 700; color: #4ade80; letter-spacing: 0.5px;">MOBILE EXPERIENCE</span>
                         </div>
-                        <h2 class="main-title">
-                            <span class="title-word">Smart</span>
-                            <span class="title-word accent">Farming</span>
-                            <span class="title-word">Made Simple</span>
+                        <h2 style="font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 2.75rem; font-weight: 800; line-height: 1.2; margin: 0 0 1rem 0; color: #ffffff; letter-spacing: -0.02em;">
+                            Powerful Agriculture<br>
+                            <span style="background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">At Your Fingertips</span>
                         </h2>
+                        <p style="font-family: 'Inter', sans-serif; font-size: 1.05rem; color: rgba(255, 255, 255, 0.7); line-height: 1.6; margin: 0; max-width: 450px;">
+                            Everything you need to manage your farm, diagnose crops, and order supplies all in one intuitive mobile app.
+                        </p>
                     </div>
-                    <p class="description">
-                        Experience the future of agriculture with our cutting-edge mobile application. 
-                        From AI-powered crop analysis to seamless product delivery, we're revolutionizing 
-                        how farmers connect with technology.
-                    </p>
                     
-                    <!-- App Stats & Download -->
-                    <div class="app-stats-section">
-                        <div class="stats-grid">
-                            <div class="stat-box">
-                                <div class="stat-number">2.5M+</div>
-                                <div class="stat-label">Crops Analyzed</div>
+                    <!-- Feature Cards Grid -->
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; margin-bottom: 2.5rem;">
+                        <div style="background: linear-gradient(135deg, rgba(74, 222, 128, 0.1) 0%, rgba(34, 197, 94, 0.05) 100%); padding: 1.5rem; border-radius: 16px; border: 1px solid rgba(74, 222, 128, 0.2); backdrop-filter: blur(10px);">
+                            <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #4ade80, #22c55e); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; box-shadow: 0 4px 12px rgba(74, 222, 128, 0.3);">
+                                <span style="font-size: 1.25rem;">🌾</span>
                             </div>
-                            <div class="stat-box">
-                                <div class="stat-number">50K+</div>
-                                <div class="stat-label">Happy Farmers</div>
-                            </div>
-                            <div class="stat-box">
-                                <div class="stat-number">4.9★</div>
-                                <div class="stat-label">App Rating</div>
-                            </div>
-                            <div class="stat-box">
-                                <div class="stat-number">24/7</div>
-                                <div class="stat-label">Support</div>
-                            </div>
+                            <h4 style="font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 700; color: #ffffff; margin: 0 0 0.5rem 0;">AI Crop Diagnosis</h4>
+                            <p style="font-family: 'Inter', sans-serif; font-size: 0.875rem; color: rgba(255, 255, 255, 0.6); margin: 0; line-height: 1.5;">Instant disease detection with treatment plans</p>
                         </div>
                         
-                        <div class="download-section">
-                            <h3 class="download-title">Download Now</h3>
-                            <p class="download-subtitle">Available on all major platforms</p>
-                            <div class="download-buttons">
-                                <div class="download-btn">
-                                    <div class="btn-icon">📱</div>
-                                    <div class="btn-text">
-                                        <span class="btn-label">Download on the</span>
-                                        <span class="btn-store">App Store</span>
-                                    </div>
-                                </div>
-                                <div class="download-btn">
-                                    <div class="btn-icon">🤖</div>
-                                    <div class="btn-text">
-                                        <span class="btn-label">Get it on</span>
-                                        <span class="btn-store">Google Play</span>
-                                    </div>
-                                </div>
+                        <div style="background: linear-gradient(135deg, rgba(74, 222, 128, 0.1) 0%, rgba(34, 197, 94, 0.05) 100%); padding: 1.5rem; border-radius: 16px; border: 1px solid rgba(74, 222, 128, 0.2); backdrop-filter: blur(10px);">
+                            <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #4ade80, #22c55e); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; box-shadow: 0 4px 12px rgba(74, 222, 128, 0.3);">
+                                <span style="font-size: 1.25rem;">🛒</span>
                             </div>
+                            <h4 style="font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 700; color: #ffffff; margin: 0 0 0.5rem 0;">Smart Shopping</h4>
+                            <p style="font-family: 'Inter', sans-serif; font-size: 0.875rem; color: rgba(255, 255, 255, 0.6); margin: 0; line-height: 1.5;">Browse & order farm supplies with ease</p>
+                        </div>
+                        
+                        <div style="background: linear-gradient(135deg, rgba(74, 222, 128, 0.1) 0%, rgba(34, 197, 94, 0.05) 100%); padding: 1.5rem; border-radius: 16px; border: 1px solid rgba(74, 222, 128, 0.2); backdrop-filter: blur(10px);">
+                            <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #4ade80, #22c55e); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; box-shadow: 0 4px 12px rgba(74, 222, 128, 0.3);">
+                                <span style="font-size: 1.25rem;">📦</span>
+                            </div>
+                            <h4 style="font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 700; color: #ffffff; margin: 0 0 0.5rem 0;">Track Deliveries</h4>
+                            <p style="font-family: 'Inter', sans-serif; font-size: 0.875rem; color: rgba(255, 255, 255, 0.6); margin: 0; line-height: 1.5;">Real-time updates on your orders</p>
+                        </div>
+                        
+                        <div style="background: linear-gradient(135deg, rgba(74, 222, 128, 0.1) 0%, rgba(34, 197, 94, 0.05) 100%); padding: 1.5rem; border-radius: 16px; border: 1px solid rgba(74, 222, 128, 0.2); backdrop-filter: blur(10px);">
+                            <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #4ade80, #22c55e); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; box-shadow: 0 4px 12px rgba(74, 222, 128, 0.3);">
+                                <span style="font-size: 1.25rem;">💡</span>
+                            </div>
+                            <h4 style="font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 700; color: #ffffff; margin: 0 0 0.5rem 0;">Expert Insights</h4>
+                            <p style="font-family: 'Inter', sans-serif; font-size: 0.875rem; color: rgba(255, 255, 255, 0.6); margin: 0; line-height: 1.5;">Access farming tips & best practices</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Stats Bar -->
+                    <div style="background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%); padding: 1.75rem; border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px); display: flex; justify-content: space-around; align-items: center;">
+                        <div style="text-align: center;">
+                            <div style="font-family: 'Inter', sans-serif; font-size: 2rem; font-weight: 800; background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1; margin-bottom: 0.25rem;">1,200</div>
+                            <p style="font-family: 'Inter', sans-serif; font-size: 0.75rem; color: rgba(255, 255, 255, 0.7); margin: 0; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Users</p>
+                        </div>
+                        <div style="width: 1px; height: 40px; background: rgba(255, 255, 255, 0.15);"></div>
+                        <div style="text-align: center;">
+                            <div style="font-family: 'Inter', sans-serif; font-size: 2rem; font-weight: 800; background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1; margin-bottom: 0.25rem;">24/7</div>
+                            <p style="font-family: 'Inter', sans-serif; font-size: 0.75rem; color: rgba(255, 255, 255, 0.7); margin: 0; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Support</p>
+                        </div>
+                        <div style="width: 1px; height: 40px; background: rgba(255, 255, 255, 0.15);"></div>
+                        <div style="text-align: center;">
+                            <div style="font-family: 'Inter', sans-serif; font-size: 2rem; font-weight: 800; background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1; margin-bottom: 0.25rem;">96%</div>
+                            <p style="font-family: 'Inter', sans-serif; font-size: 0.75rem; color: rgba(255, 255, 255, 0.7); margin: 0; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Satisfaction</p>
                         </div>
                     </div>
                 </div>
@@ -4354,7 +4256,7 @@
                 },
                 hero: {
                     title: "Moving Everything Everywhere All the Time",
-                    subtitle: "At Agera, we empower farmers by connecting them with nearby agri-vets, offering instant crop diagnostics, and ensuring fast access to the products they need to thrive.",
+                    subtitle: "At Agera, we empower farmers by connecting them with nearby agro-vets, offering instant crop diagnostics, and ensuring fast access to the products they need to thrive.",
                     cta: "Download App"
                 },
                 howItWorks: {
@@ -4446,7 +4348,7 @@
                     answers: {
                         a1: "Agera is a mobile-based agricultural technology (AgriTech) platform that empowers smallholder farmers by providing real-time AI crop disease diagnostics, a curated marketplace for agricultural inputs, expert recommendations, and efficient delivery services. It connects farmers directly with Agro-vets and suppliers, all in one seamless digital ecosystem.",
                         a2: "Agera is designed for: Smallholder farmers seeking affordable, expert tools to increase yield and manage crop health. Agro-vets and suppliers wanting to reach more customers and manage inventory digitally. Delivery personnel who support rural logistics through optimized, app-managed delivery routes.",
-                        a3: "Farmers use their smartphone cameras to scan crops via the Agera app. The AI, trained on regional pests and crop diseases, provides a diagnosis with up to 98% accuracy, followed by treatment recommendations and product suggestions from nearby suppliers.",
+                        a3: "Farmers use their smartphone cameras to scan crops via the Agera app. The AI, trained on regional pests and crop diseases, provides a diagnosis with up to 9% accuracy, followed by treatment recommendations and product suggestions from nearby suppliers.",
                         a4: "Yes, farmers can access all essential services, including diagnostics, marketplace browsing, and delivery coordination, for free through a freemium model. Agro-vets can choose between multiple subscription tiers to access additional features such as analytics, marketing tools, and premium support.",
                         a5: "The Agera marketplace includes pesticides, fertilizers, seeds, farm tools, and other agricultural inputs provided by verified Agro-vets and local suppliers.",
                         a6: "Deliveries are managed through a network of local motorbike riders ('Piki Piki') and logistics partners. The app features order tracking, optimized routing, and performance metrics to ensure fast and reliable service, even in remote areas.",
