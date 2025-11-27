@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -410,114 +410,1402 @@
             background-color: #326d4a;
         }
         
-        /* How It Works */
+        /* How It Works - Tutorial Style */
         .how-it-works {
             padding: 5rem 0;
-            background: white !important;
-            border-bottom: 1px solid #f0f0f0;
-        }
-        
-        .steps-container {
-            display: flex;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            gap: 2rem;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        
-        .step-card {
-            background-color: white;
-            border-radius: 15px;
-            padding: 2.5rem;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            flex: 1;
-            min-width: 280px;
-            text-align: center;
-            opacity: 0;
-            transform: translateY(30px);
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            text-decoration: none;
-            color: inherit;
+            background: linear-gradient(180deg, #f8fdf9 0%, #ffffff 50%, #f8fdf9 100%) !important;
             position: relative;
             overflow: hidden;
         }
         
-        .step-card::before {
+        .tutorial-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 3rem 20px;
+        }
+        
+        .tutorial-step {
+            display: flex;
+            align-items: center;
+            gap: 4rem;
+            margin-bottom: 5rem;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .tutorial-step.reverse {
+            flex-direction: row-reverse;
+        }
+        
+        .step-visual {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .phone-mockup {
+            width: 280px;
+            height: 560px;
+            background: #1f1f1f;
+            border-radius: 35px;
+            padding: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+        
+        .phone-mockup::before {
             content: '';
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 25px;
+            background: #1f1f1f;
+            border-radius: 0 0 15px 15px;
+            z-index: 10;
+        }
+        
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            border-radius: 25px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        /* Ensure any image placed inside a phone screen fills the visible screen area
+           even if inner containers (like .demo-content) have padding. This targets
+           both the tutorial `.phone-mockup` variant and the `phone-body`/app-preview
+           variant used elsewhere. */
+        .phone-mockup .phone-screen > img,
+        .phone-body .phone-screen > img,
+        .phone-screen > img.screen-image {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
-            opacity: 0;
-            transition: opacity 0.4s ease;
-            z-index: 0;
+            object-fit: cover;
+            display: block;
+            border-radius: 25px;
         }
         
-        .step-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        .demo-content {
+            width: 100%;
+            height: 100%;
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Restore original mockup positioning by giving .phone-screen the
+           sizes and placement it had when the outer mockup/frame existed. */
+        /* Tutorial "How It Works" screens (replaces .phone-mockup) */
+        .tutorial-step .step-visual .phone-screen {
+            width: 280px;
+            height: 560px;
+            background: #1f1f1f; /* bezel color */
+            border-radius: 35px;
+            padding: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* The demo content should occupy the inner screen (white area) */
+        .tutorial-step .step-visual .phone-screen .demo-content {
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            border-radius: 25px;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+
+        /* App preview phones: use the phone-wrapper as the outer frame and place
+           the screen inside it at the same inset that previously existed. */
+        .phone-wrapper {
+            position: relative;
+            width: 220px;
+            height: 440px;
+        }
+
+        .phone-wrapper .phone-screen {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 200px;
+            height: 420px;
+            background: #000;
+            border-radius: 30px;
+            overflow: hidden;
+        }
+
+        /* Ensure images still fill the screen area */
+        .phone-wrapper .phone-screen .screen-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
         }
         
-        .step-card:hover::before {
-            opacity: 0.05;
+        /* Camera Demo */
+        .camera-demo {
+            background: linear-gradient(135deg, #2d7047 0%, #3c8f5d 100%);
+            justify-content: center;
+            align-items: center;
         }
         
-        .step-icon {
-            background-color: var(--primary);
-            width: 90px;
-            height: 90px;
+        .camera-viewfinder {
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 3rem;
+        }
+        
+        .scan-line {
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: var(--secondary);
+            animation: scan 2s ease-in-out infinite;
+        }
+        
+        @keyframes scan {
+            0%, 100% { top: 20%; opacity: 0.3; }
+            50% { top: 80%; opacity: 1; }
+        }
+        
+        .corner-frame {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            border: 3px solid var(--secondary);
+        }
+        
+        .corner-frame.tl { top: 10px; left: 10px; border-right: none; border-bottom: none; }
+        .corner-frame.tr { top: 10px; right: 10px; border-left: none; border-bottom: none; }
+        .corner-frame.bl { bottom: 10px; left: 10px; border-right: none; border-top: none; }
+        .corner-frame.br { bottom: 10px; right: 10px; border-left: none; border-top: none; }
+        
+        .plant-icon {
+            font-size: 4rem;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .shutter-button {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: white;
+            border: 4px solid var(--secondary);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .shutter-button:active {
+            transform: scale(0.9);
+        }
+        
+        /* Diagnosis Demo */
+        .diagnosis-demo {
+            background: linear-gradient(135deg, #f0fdf4 0%, #ffffff 100%);
+            padding: 1rem 1.2rem 1.2rem 1.2rem;
+        }
+        
+        .diagnosis-header {
+            padding-top: 0.8rem;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        
+        .diagnosis-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 0.6rem;
+        }
+        
+        .diagnosis-header h4 {
+            color: var(--dark);
+            font-size: 1rem;
+            font-weight: 700;
+            margin: 0;
+        }
+        
+        .scan-preview {
+            position: relative;
+            width: 100%;
+            height: 140px;
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .scan-preview-icon {
+            font-size: 4rem;
+            opacity: 0.3;
+        }
+        
+        .scan-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent 0%, var(--primary) 50%, transparent 100%);
+            animation: scanLine 2s ease-in-out infinite;
+        }
+        
+        @keyframes scanLine {
+            0%, 100% { top: 0; }
+            50% { top: calc(100% - 3px); }
+        }
+        
+        .diagnosis-result {
+            background: white;
+            padding: 1rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+            margin-bottom: 1rem;
+            border: 1px solid #e5e7eb;
+        }
+        
+        .result-header {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin-bottom: 0.8rem;
+        }
+        
+        .disease-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+        
+        .disease-info {
+            flex: 1;
+        }
+        
+        .disease-name {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 0.2rem;
+        }
+        
+        .disease-category {
+            font-size: 0.7rem;
+            color: #6b7280;
+        }
+        
+        .confidence-meter {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin-bottom: 0.8rem;
+        }
+        
+        .confidence-label {
+            font-size: 0.75rem;
+            color: #6b7280;
+            min-width: 65px;
+        }
+        
+        .confidence-bar {
+            flex: 1;
+            background: #e5e7eb;
+            height: 6px;
+            border-radius: 3px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .confidence-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+            animation: fillBar 2s ease-out;
+            border-radius: 3px;
+        }
+        
+        @keyframes fillBar {
+            from { width: 0; }
+            to { width: 96%; }
+        }
+        
+        .confidence-value {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            min-width: 35px;
+            text-align: right;
+        }
+        
+        .severity-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.6rem 0.8rem;
+            background: #fef3c7;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+        
+        .severity-label {
+            font-size: 0.75rem;
+            color: #92400e;
+            font-weight: 600;
+        }
+        
+        .severity-value {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #b45309;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 0.6rem;
+        }
+        
+        .action-btn {
+            flex: 1;
+            padding: 0.7rem;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, #2d7047 100%);
+            color: white;
+            box-shadow: 0 2px 8px rgba(52, 168, 83, 0.3);
+        }
+        
+        .btn-secondary {
+            background: white;
+            color: var(--dark);
+            border: 1.5px solid #e5e7eb;
+        }
+        
+        /* Shop Demo */
+        .shop-demo {
+            background: linear-gradient(135deg, #f7fef9 0%, #ffffff 100%);
+            padding: 1.5rem 1.2rem 1.2rem 1.2rem;
+        }
+        
+        .shop-header {
+            padding-top: 0.8rem;
+            margin-bottom: 1rem;
+        }
+        
+        .shop-header h4 {
+            color: var(--dark);
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.4rem;
+        }
+        
+        .shop-category {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .category-chip {
+            background: #e8f5e8;
+            color: var(--primary);
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+        
+        .category-chip.active {
+            background: linear-gradient(135deg, #4ade80, #22c55e);
+            color: white;
+        }
+        
+        .product-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+        }
+        
+        .product-item {
+            background: white;
+            padding: 0.9rem;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            border: 1px solid #f0f0f0;
+        }
+        
+        .product-img {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        .product-details {
+            flex: 1;
+        }
+        
+        .product-name {
+            font-weight: 700;
+            color: var(--dark);
+            font-size: 0.85rem;
+            margin-bottom: 0.2rem;
+        }
+        
+        .product-meta {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.7rem;
+            color: #999;
+        }
+        
+        .product-rating {
+            color: #fbbf24;
+        }
+        
+        .product-price {
+            color: var(--primary);
+            font-weight: 800;
+            font-size: 0.95rem;
+        }
+        
+        .add-btn {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #4ade80, #22c55e);
+            color: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            font-weight: 700;
+            box-shadow: 0 2px 6px rgba(74, 222, 128, 0.4);
+        }
+        
+        .cart-summary {
+            background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+            padding: 0.8rem;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.8rem;
+            border: 1px solid #bbf7d0;
+        }
+        
+        .cart-info {
+            font-size: 0.75rem;
+            color: #666;
+        }
+        
+        .cart-total {
+            font-weight: 800;
+            color: var(--primary);
+            font-size: 1rem;
+        }
+        
+        .checkout-btn {
+            background: linear-gradient(135deg, #4ade80, #22c55e);
+            color: white;
+            padding: 0.9rem;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(74, 222, 128, 0.4);
+            font-size: 0.9rem;
+        }
+        
+        /* Delivery Demo */
+        .delivery-demo {
+            background: linear-gradient(135deg, #f0f9f4 0%, #ffffff 100%);
+            padding: 1.5rem 1.2rem 1.2rem 1.2rem;
+        }
+        
+        .delivery-header {
+            text-align: center;
+            margin-bottom: 1.2rem;
+            padding-top: 0.8rem;
+        }
+        
+        .delivery-header h4 {
+            color: var(--dark);
+            font-size: 1.1rem;
+            margin-bottom: 0.4rem;
+            font-weight: 700;
+        }
+        
+        .delivery-status {
+            display: inline-block;
+            background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-top: 0.3rem;
+        }
+        
+        .delivery-map {
+            background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+            height: 120px;
+            border-radius: 15px;
+            position: relative;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            border: 2px solid #86efac;
+        }
+        
+        .map-route {
+            position: absolute;
+            top: 50%;
+            left: 10%;
+            right: 10%;
+            height: 3px;
+            background: linear-gradient(90deg, #4ade80 0%, #22c55e 100%);
+            transform: translateY(-50%);
+        }
+        
+        .map-pin {
+            position: absolute;
+            font-size: 1.8rem;
+        }
+        
+        .map-pin.start {
+            bottom: 15px;
+            left: 15px;
+            animation: pulse 2s infinite;
+        }
+        
+        .map-pin.end {
+            top: 15px;
+            right: 15px;
+        }
+        
+        .map-delivery-icon {
+            position: absolute;
+            top: 50%;
+            left: 55%;
+            transform: translate(-50%, -50%);
+            font-size: 1.5rem;
+            animation: moveDelivery 3s ease-in-out infinite;
+        }
+        
+        @keyframes moveDelivery {
+            0%, 100% { left: 55%; }
+            50% { left: 65%; }
+        }
+        
+        .rider-card {
+            background: white;
+            padding: 1rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            margin-bottom: 1rem;
+            border: 1px solid #e5e7eb;
+        }
+        
+        .rider-header {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 0.8rem;
+        }
+        
+        .rider-avatar {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #4ade80, #22c55e);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 1.5rem;
-            color: white;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-            z-index: 1;
+            font-size: 1.8rem;
+            box-shadow: 0 4px 8px rgba(74, 222, 128, 0.3);
         }
         
-        .step-card:hover .step-icon {
-            transform: scale(1.1) rotate(5deg);
-            background-color: var(--secondary);
+        .rider-details {
+            flex: 1;
         }
         
-        .step-title {
-            font-size: 1.4rem;
-            margin-bottom: 1rem;
+        .rider-name {
+            font-weight: 700;
             color: var(--dark);
-            transition: all 0.4s ease;
+            font-size: 0.95rem;
+            margin-bottom: 0.2rem;
+        }
+        
+        .rider-rating {
+            font-size: 0.75rem;
+            color: #666;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        
+        .rating-stars {
+            color: #fbbf24;
+            font-size: 0.7rem;
+        }
+        
+        .call-btn {
+            width: 38px;
+            height: 38px;
+            background: linear-gradient(135deg, #4ade80, #22c55e);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(74, 222, 128, 0.4);
+        }
+        
+        .delivery-info {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.6rem 0;
+            border-top: 1px solid #f3f4f6;
+        }
+        
+        .info-item {
+            text-align: center;
+            flex: 1;
+        }
+        
+        .info-label {
+            font-size: 0.65rem;
+            color: #9ca3af;
+            text-transform: uppercase;
+            margin-bottom: 0.2rem;
+            font-weight: 600;
+        }
+        
+        .info-value {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--dark);
+        }
+        
+        .track-btn {
+            background: linear-gradient(135deg, #4ade80, #22c55e);
+            color: white;
+            text-align: center;
+            padding: 0.9rem;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(74, 222, 128, 0.4);
+            font-size: 0.9rem;
+        }
+        
+        .rider-icon {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            width: 200px;
+            height: 420px;
+            background: #000;
+            border-radius: 30px;
+            overflow: hidden;
+        }
+
+        /* Mobile Responsive Styles for Demo Screens */
+        @media (max-width: 768px) {
+            /* Diagnosis Demo Mobile */
+            .diagnosis-demo {
+                padding: 0.8rem 1rem 1rem 1rem;
+            }
+            
+            .diagnosis-header {
+                padding-top: 0.6rem;
+                margin-bottom: 0.8rem;
+            }
+            
+            .diagnosis-status {
+                padding: 0.3rem 0.8rem;
+                font-size: 0.7rem;
+                margin-bottom: 0.5rem;
+            }
+            
+            .diagnosis-header h4 {
+                font-size: 0.9rem;
+            }
+            
+            .scan-preview {
+                height: 110px;
+                margin-bottom: 0.8rem;
+            }
+            
+            .scan-preview-icon {
+                font-size: 3rem;
+            }
+            
+            .diagnosis-result {
+                padding: 0.8rem;
+                margin-bottom: 0.8rem;
+            }
+            
+            .disease-icon {
+                width: 32px;
+                height: 32px;
+                font-size: 1rem;
+            }
+            
+            .disease-name {
+                font-size: 0.85rem;
+            }
+            
+            .disease-category {
+                font-size: 0.65rem;
+            }
+            
+            .confidence-meter {
+                gap: 0.5rem;
+                margin-bottom: 0.6rem;
+            }
+            
+            .confidence-label {
+                font-size: 0.7rem;
+                min-width: 55px;
+            }
+            
+            .confidence-value {
+                font-size: 0.75rem;
+                min-width: 30px;
+            }
+            
+            .severity-indicator {
+                padding: 0.5rem 0.7rem;
+                margin-bottom: 0.8rem;
+            }
+            
+            .severity-label,
+            .severity-value {
+                font-size: 0.7rem;
+            }
+            
+            .action-buttons {
+                gap: 0.5rem;
+            }
+            
+            .action-btn {
+                padding: 0.6rem;
+                font-size: 0.75rem;
+                gap: 0.3rem;
+            }
+            
+            /* Shop Demo Mobile */
+            .shop-demo {
+                padding: 1rem 1rem 1rem 1rem;
+            }
+            
+            .shop-header {
+                padding-top: 0.6rem;
+                margin-bottom: 0.8rem;
+            }
+            
+            .shop-header h4 {
+                font-size: 0.95rem;
+            }
+            
+            .shop-category {
+                gap: 0.4rem;
+                margin-bottom: 0.8rem;
+            }
+            
+            .category-chip {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.7rem;
+            }
+            
+            .product-item {
+                padding: 0.7rem;
+                margin-bottom: 0.7rem;
+            }
+            
+            .product-img {
+                width: 40px;
+                height: 40px;
+                font-size: 1.3rem;
+            }
+            
+            .product-name {
+                font-size: 0.85rem;
+            }
+            
+            .product-meta {
+                font-size: 0.65rem;
+                gap: 0.3rem;
+            }
+            
+            .product-price {
+                font-size: 0.85rem;
+            }
+            
+            .cart-summary {
+                padding: 0.8rem;
+                margin-bottom: 0.8rem;
+            }
+            
+            .cart-info {
+                font-size: 0.75rem;
+            }
+            
+            .cart-total {
+                font-size: 1rem;
+            }
+            
+            .checkout-btn {
+                padding: 0.7rem 0.9rem;
+                font-size: 0.8rem;
+            }
+            
+            /* Delivery Demo Mobile */
+            .delivery-demo {
+                padding: 1rem 1rem 1rem 1rem;
+            }
+            
+            .delivery-header {
+                padding-top: 0.6rem;
+                margin-bottom: 0.8rem;
+            }
+            
+            .delivery-header h4 {
+                font-size: 0.95rem;
+            }
+            
+            .delivery-status {
+                padding: 0.3rem 0.8rem;
+                font-size: 0.7rem;
+                margin-bottom: 0.5rem;
+            }
+            
+            .delivery-map {
+                height: 100px;
+                margin-bottom: 0.8rem;
+            }
+            
+            .map-delivery-icon {
+                font-size: 1.3rem;
+            }
+            
+            .rider-card {
+                padding: 0.8rem;
+                margin-bottom: 0.8rem;
+            }
+            
+            .rider-avatar {
+                width: 42px;
+                height: 42px;
+                font-size: 1.2rem;
+            }
+            
+            .rider-name {
+                font-size: 0.85rem;
+            }
+            
+            .rider-rating {
+                font-size: 0.7rem;
+            }
+            
+            .rider-details {
+                gap: 0.4rem;
+            }
+            
+            .delivery-info {
+                gap: 0.6rem;
+                margin-bottom: 0.8rem;
+            }
+            
+            .info-item {
+                padding: 0.6rem;
+            }
+            
+            .info-label {
+                font-size: 0.6rem;
+            }
+            
+            .info-value {
+                font-size: 0.8rem;
+            }
+            
+            .track-btn {
+                padding: 0.75rem;
+                font-size: 0.85rem;
+            }
+        }
+
+        /* iPhone 14 Pro Mockup - Compact Realistic Device Frame */
+        .iphone-container {
+            position: relative;
+            filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.5));
+        }
+
+        /* Device Frame */
+        .iphone {
+            width: 280px;
+            height: 580px;
+            background: linear-gradient(145deg, #2c2c2e, #1c1c1e);
+            border-radius: 42px;
+            padding: 6px;
             position: relative;
             z-index: 1;
         }
-        
-        .step-description {
-            color: #666;
-            line-height: 1.6;
-            transition: all 0.4s ease;
+
+        /* Antenna Lines */
+        .antenna-line {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.05);
+            z-index: 0;
+        }
+
+        .antenna-top {
+            width: 45px;
+            height: 1px;
+            top: 90px;
+            left: 0;
+        }
+
+        .antenna-bottom {
+            width: 45px;
+            height: 1px;
+            bottom: 90px;
+            left: 0;
+        }
+
+        /* Screen */
+        .iphone .screen {
+            width: 100%;
+            height: 100%;
+            background: #000;
+            border-radius: 38px;
+            overflow: hidden;
             position: relative;
-            z-index: 1;
+        }
+
+        /* Dynamic Island (iPhone 14 Pro) */
+        .dynamic-island {
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 95px;
+            height: 28px;
+            background: #000;
+            border-radius: 14px;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            padding: 0 12px;
+        }
+
+        .camera-pill {
+            width: 8px;
+            height: 8px;
+            background: #0d1117;
+            border-radius: 50%;
+            border: 1px solid #1f2937;
+        }
+
+        .speaker-slit {
+            width: 35px;
+            height: 5px;
+            background: #0d1117;
+            border-radius: 2px;
+        }
+
+        /* Screen Content */
+        .iphone .screen-content {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .iphone .screen-content img.screen-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Home Indicator */
+        .iphone .home-indicator {
+            position: absolute;
+            bottom: 6px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 105px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 2px;
+            z-index: 20;
+        }
+
+        /* Side Buttons */
+        .side-button {
+            position: absolute;
+            background: linear-gradient(90deg, #1a1a1c, #2c2c2e);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.5);
+            z-index: 0;
+        }
+
+        /* Left Side Buttons */
+        .mute-switch {
+            width: 4px;
+            height: 26px;
+            left: -4px;
+            top: 75px;
+            border-radius: 2px 0 0 2px;
+        }
+
+        .volume-up {
+            width: 4px;
+            height: 52px;
+            left: -4px;
+            top: 116px;
+            border-radius: 2px 0 0 2px;
+        }
+
+        .volume-down {
+            width: 4px;
+            height: 52px;
+            left: -4px;
+            top: 176px;
+            border-radius: 2px 0 0 2px;
+        }
+
+        /* Right Side Button */
+        .power-button {
+            width: 4px;
+            height: 75px;
+            right: -4px;
+            top: 135px;
+            border-radius: 0 2px 2px 0;
+        }
+
+        /* SIM Card Tray */
+        .sim-tray {
+            position: absolute;
+            width: 2px;
+            height: 38px;
+            left: -2px;
+            bottom: 90px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 2px 0 0 2px;
+            z-index: 0;
+        }
+
+        /* Bottom Ports */
+        .bottom-section {
+            position: absolute;
+            bottom: -6px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            height: 6px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 45px;
+            z-index: 0;
+        }
+
+        .speaker-grill, .charging-port {
+            display: flex;
+            gap: 3px;
+        }
+
+        .speaker-hole, .port-hole {
+            width: 4px;
+            height: 4px;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 1px;
+        }
+
+        .charging-port .port-hole {
+            width: 8px;
+            height: 3px;
+            border-radius: 1px;
+        }
+
+        /* Reflection Effect */
+        .reflection {
+            position: absolute;
+            top: 10%;
+            left: 5%;
+            width: 40%;
+            height: 60%;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+            border-radius: 38px 0 38px 0;
+            pointer-events: none;
+            z-index: 3;
+        }
+        
+        .delivery-route {
+            position: absolute;
+            top: 50%;
+            left: 20%;
+            right: 20%;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 2px;
+            opacity: 0.4;
+        }
+        
+        .delivery-status {
+            background: white;
+            padding: 1rem;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+        }
+        
+        .status-text {
+            font-weight: 700;
+            color: var(--primary);
             font-size: 1rem;
         }
         
-        .step-card:hover .step-title,
-        .step-card:hover .step-description {
-            transform: translateY(-5px);
+        .eta {
+            color: #666;
+            font-size: 0.85rem;
+            margin-top: 0.3rem;
         }
         
+        .rider-info {
+            background: white;
+            padding: 1rem;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+        }
+        
+        .rider-avatar {
+            width: 45px;
+            height: 45px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        .rider-details {
+            flex: 1;
+        }
+        
+        .rider-name {
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 0.95rem;
+        }
+        
+        .rider-rating {
+            font-size: 0.85rem;
+            color: #666;
+        }
+        
+        .call-btn {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+        
+        /* Step Info */
+        .step-info {
+            flex: 1;
+        }
+        
+        .step-number {
+            font-size: 4rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+            margin-bottom: 1rem;
+        }
+        
+        .tutorial-title {
+            font-size: 2rem;
+            color: var(--dark);
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .tutorial-text {
+            font-size: 1.1rem;
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+        
+        .step-tip {
+            background: linear-gradient(135deg, #fff9e6 0%, #fff3d6 100%);
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid var(--secondary);
+            color: #7a5f00;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            text-align: center;
+            margin-top: 4rem;
+            padding: 3rem 2rem;
+            background: linear-gradient(135deg, var(--primary) 0%, #2d7047 100%);
+            border-radius: 25px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .cta-section h3 {
+            color: white;
+            font-size: 2rem;
+            margin-bottom: 0.8rem;
+        }
+        
+        .cta-section p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .download-cta {
+            background: var(--secondary);
+            color: var(--dark);
+            border: none;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(247, 181, 56, 0.4);
+        }
+        
+        .download-cta:hover {
+            background: #e6a82a;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(247, 181, 56, 0.5);
+        }
+        
+        /* Responsive */
         @media screen and (max-width: 768px) {
-            .steps-container {
-                flex-direction: column;
-                gap: 1.5rem;
+            .how-it-works {
+                padding: 3rem 0;
             }
             
-            .step-card {
-                padding: 2rem;
+            .tutorial-step,
+            .tutorial-step.reverse {
+                flex-direction: column;
+                gap: 2rem;
+                margin-bottom: 3rem;
+            }
+            
+            .phone-mockup {
+                width: 240px;
+                height: 480px;
+            }
+            
+            .step-number {
+                font-size: 3rem;
+            }
+            
+            .tutorial-title {
+                font-size: 1.6rem;
+            }
+            
+            .tutorial-text {
+                font-size: 1rem;
+            }
+            
+            .cta-section {
+                padding: 2rem 1.5rem;
+            }
+            
+            .cta-section h3 {
+                font-size: 1.6rem;
             }
         }
         
@@ -1359,7 +2647,6 @@
             }
         }
 
-        /* Add these styles to your existing CSS */
         .founders-list {
             list-style: none;
             padding: 0;
@@ -1785,136 +3072,6 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 0 10px;
-}
-.app-preview .home-indicator {
-    position: absolute;
-    bottom: 6px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 70px;
-    height: 3px;
-    background: rgba(255,255,255,0.4);
-    border-radius: 3px;
-}
-.app-preview .side-button {
-    position: absolute;
-    background: linear-gradient(145deg, #4a4a4a 0%, #2a2a2a 100%);
-    border-radius: 3px;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.4), 0 2px 6px rgba(0,0,0,0.4);
-    border: 1px solid rgba(255,255,255,0.1);
-}
-.app-preview .mute-switch {
-    left: -4px;
-    top: 60px;
-    width: 4px;
-    height: 15px;
-    border-radius: 2px;
-}
-.app-preview .volume-up {
-    left: -4px;
-    top: 90px;
-    width: 4px;
-    height: 20px;
-}
-.app-preview .volume-down {
-    left: -4px;
-    top: 120px;
-    width: 4px;
-    height: 20px;
-}
-.app-preview .power-button {
-    right: -4px;
-    top: 100px;
-    width: 4px;
-    height: 30px;
-}
-.app-preview .lightning-port {
-    position: absolute;
-    bottom: 15px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 30px;
-    height: 5px;
-    background: linear-gradient(to bottom, #2a2a2a, #000);
-    border-radius: 4px;
-    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.1);
-}
-.app-preview .speaker-grille {
-    position: absolute;
-    bottom: 15px;
-    display: flex;
-    gap: 2px;
-}
-.app-preview .speaker-grille.left {
-    left: 30px;
-}
-.app-preview .speaker-grille.right {
-    right: 30px;
-}
-.app-preview .speaker-hole {
-    width: 1.5px;
-    height: 5px;
-    background: #2a2a2a;
-    border-radius: 1px;
-}
-.app-preview .phone-caption.premium {
-    text-align: center;
-    font-size: 1.1rem;
-    color: var(--dark);
-    font-weight: 600;
-    margin-top: 0.5rem;
-}
-.app-preview .three-phones-row.premium {
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    gap: 1.5rem;
-    margin: 4rem 0 0 0;
-    flex-wrap: nowrap;
-    position: relative;
-    z-index: 3;
-}
-        @media (max-width: 1400px) {
-            .app-preview .phone-container {
-                width: 200px;
-                height: 400px;
-                border-radius: 32px;
-            }
-        }
-        @media (max-width: 1100px) {
-            .app-preview .phone-container {
-                width: 160px;
-                height: 320px;
-                border-radius: 28px;
-            }
-        }
-        @media (max-width: 900px) {
-            .app-preview .phone-container {
-                width: 140px;
-                height: 280px;
-                border-radius: 24px;
-            }
-        }
-        @media (max-width: 700px) {
-            .app-preview .phone-container {
-                width: 90vw;
-                max-width: 300px;
-                height: 350px;
-                border-radius: 20px;
-            }
-            .app-preview .phone-screen {
-                border-radius: 16px;
-            }
-        }
-      </style>
-      <style>
-.app-preview .main-content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
     align-items: stretch;
     justify-content: stretch;
     padding: 0;
@@ -2004,13 +3161,10 @@
 
     <!-- Main Content -->
     <section class="hero" id="home" style="position:relative;">
-      <video id="bg-video" autoplay loop muted playsinline style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:0;">
-        <source src="images/background vid.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
+      <img src="images/WhatsApp Image 2025-11-26 at 18.20.03_36d482f4.jpg" alt="Agera Background" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:0;">
       <div class="hero-content" style="position:relative;z-index:1;">
-        <h1>Farm Fresh Delivered To Your Door Step</h1>
-        <p>Experience the freshest organic produce and premium agricultural products, sourced directly from local farmers and delivered straight to your doorstep.</p>
+        <h1 data-i18n="heroTitle">Farm Fresh Delivered To Your Door Step</h1>
+        <p data-i18n="heroSubtitle">Experience the freshest organic produce and premium agricultural products, sourced directly from local farmers and delivered straight to your doorstep.</p>
       </div>
     </section>
 
@@ -2050,43 +3204,437 @@
 
     <!-- How It Works -->
     <section class="how-it-works" id="how-it-works">
-        <h2 class="section-title">How It Works</h2>
-        <p class="section-subtitle">Smart seamless access to trusted crop care delivered straight to your door</p>
-        <div class="steps-container">
-            <a href="how-it-works.html" class="step-card">
-                <div class="step-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
-                        <circle cx="12" cy="13" r="4"></circle>
-                    </svg>
+        <h2 class="section-title" data-i18n="howItWorksTitle">Getting Started is Easy</h2>
+        <p class="section-subtitle" data-i18n="howItWorksSubtitle">Follow these simple steps to start using Agera</p>
+        
+        <div class="tutorial-container">
+            <!-- Step 1 -->
+            <div class="tutorial-step">
+                <div class="step-visual">
+                    <div class="iphone-container">
+                        <!-- Side Buttons -->
+                        <div class="side-button mute-switch"></div>
+                        <div class="side-button volume-up"></div>
+                        <div class="side-button volume-down"></div>
+                        <div class="side-button power-button"></div>
+                        
+                        <!-- SIM Tray -->
+                        <div class="sim-tray"></div>
+                        
+                        <!-- iPhone Body -->
+                        <div class="iphone" aria-hidden="true">
+                            <div class="antenna-line antenna-top"></div>
+                            <div class="antenna-line antenna-bottom"></div>
+                            
+                            <div class="screen">
+                                <!-- Reflection Effect -->
+                                <div class="reflection"></div>
+                                
+                                <!-- Dynamic Island -->
+                                <div class="dynamic-island">
+                                    <div class="camera-pill"></div>
+                                    <div class="speaker-slit"></div>
+                                </div>
+                                
+                                <div class="screen-content">
+                                    <div class="demo-content camera-demo">
+                                        <div class="camera-viewfinder">
+                                            <div class="scan-line"></div>
+                                            <div class="corner-frame tl"></div>
+                                            <div class="corner-frame tr"></div>
+                                            <div class="corner-frame bl"></div>
+                                            <div class="corner-frame br"></div>
+                                            <div class="plant-icon">🌿</div>
+                                        </div>
+                                        <div class="camera-button">
+                                            <div class="shutter-button"></div>
+                                        </div>
+                                    </div>
+                                    <div class="home-indicator"></div>
+                                </div>
+                                
+                                <!-- Bottom Section -->
+                                <div class="bottom-section">
+                                    <div class="speaker-grill">
+                                        <div class="speaker-hole"></div>
+                                        <div class="speaker-hole"></div>
+                                        <div class="speaker-hole"></div>
+                                        <div class="speaker-hole"></div>
+                                        <div class="speaker-hole"></div>
+                                    </div>
+                                    <div class="charging-port">
+                                        <div class="port-hole"></div>
+                                    </div>
+                                    <div class="speaker-grill">
+                                        <div class="speaker-hole"></div>
+                                        <div class="speaker-hole"></div>
+                                        <div class="speaker-hole"></div>
+                                        <div class="speaker-hole"></div>
+                                        <div class="speaker-hole"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <h3 class="step-title">Scan & Diagnose</h3>
-                <p class="step-description">Take a photo of your crop and get instant AI-powered diagnostics and treatment recommendations.</p>
-            </a>
-            <a href="how-it-works-step2.html" class="step-card">
-                <div class="step-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="9" cy="21" r="1"></circle>
-                        <circle cx="20" cy="21" r="1"></circle>
-                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-                    </svg>
+                <div class="step-info">
+                    <div class="step-number">01</div>
+                    <h3 class="tutorial-title" data-i18n="step1Title">Take a Photo</h3>
+                    <p class="tutorial-text" data-i18n="step1Text">Open the app and tap the camera icon. Point your phone at the affected crop and take a clear photo.</p>
+                    <div class="step-tip" data-i18n="step1Tip">💡 Tip: Make sure the plant is well-lit</div>
                 </div>
-                <h3 class="step-title">Shop & Order</h3>
-                <p class="step-description">Browse our wide range of products and order with ease.</p>
-            </a>
-            <a href="how-it-works-step3.html" class="step-card">
-                <div class="step-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="1" y="3" width="15" height="13"></rect>
-                        <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
-                        <circle cx="5.5" cy="18.5" r="2.5"></circle>
-                        <circle cx="18.5" cy="18.5" r="2.5"></circle>
-                    </svg>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="tutorial-step reverse">
+                <div class="step-visual">
+                    <div class="iphone-container">
+                        <!-- Side Buttons -->
+                        <div class="side-button mute-switch"></div>
+                        <div class="side-button volume-up"></div>
+                        <div class="side-button volume-down"></div>
+                        <div class="side-button power-button"></div>
+                        
+                        <!-- SIM Tray -->
+                        <div class="sim-tray"></div>
+                        
+                        <!-- iPhone Body -->
+                        <div class="iphone" aria-hidden="true">
+                            <div class="antenna-line antenna-top"></div>
+                            <div class="antenna-line antenna-bottom"></div>
+                            
+                            <div class="screen">
+                                <!-- Reflection Effect -->
+                                <div class="reflection"></div>
+                                
+                                <!-- Dynamic Island -->
+                                <div class="dynamic-island">
+                                    <div class="camera-pill"></div>
+                                    <div class="speaker-slit"></div>
+                                </div>
+                                
+                                <div class="screen-content">
+                                    <div class="demo-content diagnosis-demo">
+                                        <div class="diagnosis-header">
+                                            <div class="diagnosis-status">
+                                                <span>✓</span>
+                                                <span>Analysis Complete</span>
+                                            </div>
+                                            <h4>Crop Health Report</h4>
+                                        </div>
+                                        
+                                        <div class="scan-preview">
+                                            <div class="scan-preview-icon">🌿</div>
+                                            <div class="scan-overlay"></div>
+                                        </div>
+                                        
+                                        <div class="diagnosis-result">
+                                            <div class="result-header">
+                                                <div class="disease-icon">⚠️</div>
+                                                <div class="disease-info">
+                                                    <div class="disease-name">Leaf Blight Disease</div>
+                                                    <div class="disease-category">Fungal Infection</div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="confidence-meter">
+                                                <span class="confidence-label">Accuracy</span>
+                                                <div class="confidence-bar">
+                                                    <div class="confidence-fill" style="width:96%;"></div>
+                                                </div>
+                                                <span class="confidence-value">96%</span>
+                                            </div>
+                                            
+                                            <div class="severity-indicator">
+                                                <span class="severity-label">Severity Level</span>
+                                                <span class="severity-value">⚠️ Moderate</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="action-buttons">
+                                            <div class="action-btn btn-primary">
+                                                <span>🛒</span>
+                                                <span>View Treatment</span>
+                                            </div>
+                                            <div class="action-btn btn-secondary">
+                                                <span>💾</span>
+                                                <span>Save Report</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="home-indicator"></div>
+                                </div>
+                                
+                                <!-- Bottom Section -->
+                                <div class="bottom-section">
+                                    <div class="speaker-grill">
+                                        <div class="speaker-hole"></div>
+                                        <div class="speaker-hole"></div>
+                                        <div class="speaker-hole"></div>
+                                        <div class="speaker-hole"></div>
+                                        <div class="speaker-hole"></div>
+                                    </div>
+                                    <div class="charging-port">
+                                        <div class="port-hole"></div>
+                                    </div>
+                                    <div class="speaker-grill">
+                                        <div class="speaker-hole"></div>
+                                        <div class="speaker-hole"></div>
+                                        <div class="speaker-hole"></div>
+                                        <div class="speaker-hole"></div>
+                                        <div class="speaker-hole"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <h3 class="step-title">Fast Delivery</h3>
-                <p class="step-description">Get your products delivered directly to your door.</p>
-            </a>
+                <div class="step-info">
+                    <div class="step-number">02</div>
+                    <h3 class="tutorial-title" data-i18n="step2Title">Get Instant Results</h3>
+                    <p class="tutorial-text" data-i18n="step2Text">Our AI analyzes your photo in seconds and tells you exactly what's affecting your crop and how to treat it.</p>
+                    <div class="step-tip" data-i18n="step2Tip">💡 Tip: Save results for future reference</div>
+                </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="tutorial-step">
+            <div class="step-visual">
+                <div class="iphone-container">
+                    <!-- Side Buttons -->
+                    <div class="side-button mute-switch"></div>
+                    <div class="side-button volume-up"></div>
+                    <div class="side-button volume-down"></div>
+                    <div class="side-button power-button"></div>
+                    
+                    <!-- SIM Tray -->
+                    <div class="sim-tray"></div>
+                    
+                    <!-- iPhone Body -->
+                    <div class="iphone" aria-hidden="true">
+                        <div class="antenna-line antenna-top"></div>
+                        <div class="antenna-line antenna-bottom"></div>
+                        
+                        <div class="screen">
+                            <!-- Reflection Effect -->
+                            <div class="reflection"></div>
+                            
+                            <!-- Dynamic Island -->
+                            <div class="dynamic-island">
+                                <div class="camera-pill"></div>
+                                <div class="speaker-slit"></div>
+                            </div>
+                            
+                            <div class="screen-content">
+                                <div class="demo-content shop-demo">
+                                    <div class="shop-header">
+                                        <h4>Shop Supplies</h4>
+                                        <div class="shop-category">
+                                            <div class="category-chip active">All</div>
+                                            <div class="category-chip">Seeds</div>
+                                            <div class="category-chip">Tools</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="product-list">
+                                        <div class="product-item">
+                                            <div class="product-img">🌱</div>
+                                            <div class="product-details">
+                                                <div class="product-name">Organic Fertilizer</div>
+                                                <div class="product-meta">
+                                                    <span class="product-rating">★★★★★</span>
+                                                    <span>(234)</span>
+                                                </div>
+                                                <div class="product-price">KSh 850</div>
+                                            </div>
+                                            <div class="add-btn">+</div>
+                                        </div>
+                                        
+                                        <div class="product-item">
+                                            <div class="product-img">�</div>
+                                            <div class="product-details">
+                                                <div class="product-name">Fungicide Spray</div>
+                                                <div class="product-meta">
+                                                    <span class="product-rating">★★★★★</span>
+                                                    <span>(156)</span>
+                                                </div>
+                                                <div class="product-price">KSh 1,200</div>
+                                            </div>
+                                            <div class="add-btn">+</div>
+                                        </div>
+                                        
+                                        <div class="product-item">
+                                            <div class="product-img">🌾</div>
+                                            <div class="product-details">
+                                                <div class="product-name">Premium Seeds</div>
+                                                <div class="product-meta">
+                                                    <span class="product-rating">★★★★★</span>
+                                                    <span>(312)</span>
+                                                </div>
+                                                <div class="product-price">KSh 650</div>
+                                            </div>
+                                            <div class="add-btn">+</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="cart-summary">
+                                        <div class="cart-info">
+                                            <span style="font-weight: 600; display: block; margin-bottom: 0.1rem;">Cart Total</span>
+                                            <span style="font-size: 0.7rem; color: #999;">2 items</span>
+                                        </div>
+                                        <div class="cart-total">KSh 2,050</div>
+                                    </div>
+                                    
+                                    <div class="checkout-btn" style="display: flex; justify-content: space-between; align-items: center;">
+                                        <span>Checkout Now</span>
+                                        <span style="font-size: 1.1rem;">→</span>
+                                    </div>
+                                </div>
+                                <div class="home-indicator"></div>
+                            </div>
+                            
+                            <!-- Bottom Section -->
+                            <div class="bottom-section">
+                                <div class="speaker-grill">
+                                    <div class="speaker-hole"></div>
+                                    <div class="speaker-hole"></div>
+                                    <div class="speaker-hole"></div>
+                                    <div class="speaker-hole"></div>
+                                    <div class="speaker-hole"></div>
+                                </div>
+                                <div class="charging-port">
+                                    <div class="port-hole"></div>
+                                </div>
+                                <div class="speaker-grill">
+                                    <div class="speaker-hole"></div>
+                                    <div class="speaker-hole"></div>
+                                    <div class="speaker-hole"></div>
+                                    <div class="speaker-hole"></div>
+                                    <div class="speaker-hole"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                <div class="step-info">
+                    <div class="step-number">03</div>
+                    <h3 class="tutorial-title" data-i18n="step3Title">Order What You Need</h3>
+                    <p class="tutorial-text" data-i18n="step3Text">Browse products from nearby suppliers. Add items to your cart and place your order with just a few taps.</p>
+                    <div class="step-tip" data-i18n="step3Tip">💡 Tip: Compare prices from different sellers</div>
+                </div>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="tutorial-step reverse">
+                <div class="step-visual">
+                    <div class="iphone-container">
+                        <!-- Side Buttons -->
+                        <div class="side-button mute-switch"></div>
+                        <div class="side-button volume-up"></div>
+                        <div class="side-button volume-down"></div>
+                        <div class="side-button power-button"></div>
+                        
+                        <!-- SIM Tray -->
+                        <div class="sim-tray"></div>
+                        
+                        <!-- iPhone Body -->
+                        <div class="iphone" aria-hidden="true">
+                            <div class="antenna-line antenna-top"></div>
+                            <div class="antenna-line antenna-bottom"></div>
+                            
+                            <div class="screen">
+                                <!-- Reflection Effect -->
+                                <div class="reflection"></div>
+                                
+                                <!-- Dynamic Island -->
+                                <div class="dynamic-island">
+                                    <div class="camera-pill"></div>
+                                    <div class="speaker-slit"></div>
+                                </div>
+                                
+                                <div class="screen-content">
+                                    <div class="demo-content delivery-demo">
+                                        <div class="delivery-header">
+                                            <h4>Order Tracking</h4>
+                                            <div class="delivery-status">● On the way</div>
+                                        </div>
+                                        
+                                        <div class="delivery-map">
+                                            <div class="map-route"></div>
+                                            <div class="map-pin start">📍</div>
+                                            <div class="map-pin end">🏠</div>
+                                            <div class="map-delivery-icon">🛵</div>
+                                        </div>
+                                        
+                                        <div class="rider-card">
+                                            <div class="rider-header">
+                                                <div class="rider-avatar">🚴</div>
+                                                <div class="rider-details">
+                                                    <div class="rider-name">James Mwangi</div>
+                                                    <div class="rider-rating">
+                                                        <span class="rating-stars">★★★★★</span>
+                                                        <span>4.9 (127)</span>
+                                                    </div>
+                                                </div>
+                                                <div class="call-btn">📞</div>
+                                            </div>
+                                            
+                                            <div class="delivery-info">
+                                                <div class="info-item">
+                                                    <div class="info-label">Distance</div>
+                                                    <div class="info-value">2.4 km</div>
+                                                </div>
+                                                <div class="info-item">
+                                                    <div class="info-label">ETA</div>
+                                                    <div class="info-value">12 mins</div>
+                                                </div>
+                                                <div class="info-item">
+                                                    <div class="info-label">Order ID</div>
+                                                    <div class="info-value">#AG4821</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="track-btn">Track Live Location</div>
+                                    </div>
+                                    <div class="home-indicator"></div>
+                                </div>
+                                
+                                <!-- Bottom Section -->
+                                <div class="bottom-section">
+                                    <div class="speaker-grill">
+                                        <div class="speaker-hole"></div>
+                                        <div class="speaker-hole"></div>
+                                        <div class="speaker-hole"></div>
+                                        <div class="speaker-hole"></div>
+                                        <div class="speaker-hole"></div>
+                                    </div>
+                                    <div class="charging-port">
+                                        <div class="port-hole"></div>
+                                    </div>
+                                    <div class="speaker-grill">
+                                        <div class="speaker-hole"></div>
+                                        <div class="speaker-hole"></div>
+                                        <div class="speaker-hole"></div>
+                                        <div class="speaker-hole"></div>
+                                        <div class="speaker-hole"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="step-info">
+                    <div class="step-number">04</div>
+                    <h3 class="tutorial-title" data-i18n="step4Title">Receive Your Products</h3>
+                    <p class="tutorial-text" data-i18n="step4Text">Track your delivery in real-time. Our riders will bring your products straight to your farm.</p>
+                    <div class="step-tip" data-i18n="step4Tip">💡 Tip: Rate your delivery experience</div>
+                </div>
+            </div>
         </div>
+
+        
     </section>
 
         <!-- Fresh App Preview Section -->
@@ -2115,10 +3663,9 @@
                             <span style="font-family: 'Inter', sans-serif; font-size: 0.85rem; font-weight: 700; color: #4ade80; letter-spacing: 0.5px;">MOBILE EXPERIENCE</span>
                         </div>
                         <h2 style="font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 2.75rem; font-weight: 800; line-height: 1.2; margin: 0 0 1rem 0; color: #ffffff; letter-spacing: -0.02em;">
-                            Powerful Agriculture<br>
-                            <span style="background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">At Your Fingertips</span>
+                            <span data-i18n="appPreviewTitle">Powerful Agriculture<br>At Your Fingertips</span>
                         </h2>
-                        <p style="font-family: 'Inter', sans-serif; font-size: 1.05rem; color: rgba(255, 255, 255, 0.7); line-height: 1.6; margin: 0; max-width: 450px;">
+                        <p style="font-family: 'Inter', sans-serif; font-size: 1.05rem; color: rgba(255, 255, 255, 0.7); line-height: 1.6; margin: 0; max-width: 450px;" data-i18n="appPreviewSubtitle">
                             Everything you need to manage your farm, diagnose crops, and order supplies all in one intuitive mobile app.
                         </p>
                     </div>
@@ -2129,32 +3676,32 @@
                             <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #4ade80, #22c55e); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; box-shadow: 0 4px 12px rgba(74, 222, 128, 0.3);">
                                 <span style="font-size: 1.25rem;">🌾</span>
                             </div>
-                            <h4 style="font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 700; color: #ffffff; margin: 0 0 0.5rem 0;">AI Crop Diagnosis</h4>
-                            <p style="font-family: 'Inter', sans-serif; font-size: 0.875rem; color: rgba(255, 255, 255, 0.6); margin: 0; line-height: 1.5;">Instant disease detection with treatment plans</p>
+                            <h4 style="font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 700; color: #ffffff; margin: 0 0 0.5rem 0;" data-i18n="appFeature1Title">AI Crop Diagnosis</h4>
+                            <p style="font-family: 'Inter', sans-serif; font-size: 0.875rem; color: rgba(255, 255, 255, 0.6); margin: 0; line-height: 1.5;" data-i18n="appFeature1Desc">Instant disease detection with treatment plans</p>
                         </div>
                         
                         <div style="background: linear-gradient(135deg, rgba(74, 222, 128, 0.1) 0%, rgba(34, 197, 94, 0.05) 100%); padding: 1.5rem; border-radius: 16px; border: 1px solid rgba(74, 222, 128, 0.2); backdrop-filter: blur(10px);">
                             <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #4ade80, #22c55e); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; box-shadow: 0 4px 12px rgba(74, 222, 128, 0.3);">
                                 <span style="font-size: 1.25rem;">🛒</span>
                             </div>
-                            <h4 style="font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 700; color: #ffffff; margin: 0 0 0.5rem 0;">Smart Shopping</h4>
-                            <p style="font-family: 'Inter', sans-serif; font-size: 0.875rem; color: rgba(255, 255, 255, 0.6); margin: 0; line-height: 1.5;">Browse & order farm supplies with ease</p>
+                            <h4 style="font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 700; color: #ffffff; margin: 0 0 0.5rem 0;" data-i18n="appFeature2Title">Smart Shopping</h4>
+                            <p style="font-family: 'Inter', sans-serif; font-size: 0.875rem; color: rgba(255, 255, 255, 0.6); margin: 0; line-height: 1.5;" data-i18n="appFeature2Desc">Browse & order farm supplies with ease</p>
                         </div>
                         
                         <div style="background: linear-gradient(135deg, rgba(74, 222, 128, 0.1) 0%, rgba(34, 197, 94, 0.05) 100%); padding: 1.5rem; border-radius: 16px; border: 1px solid rgba(74, 222, 128, 0.2); backdrop-filter: blur(10px);">
                             <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #4ade80, #22c55e); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; box-shadow: 0 4px 12px rgba(74, 222, 128, 0.3);">
                                 <span style="font-size: 1.25rem;">📦</span>
                             </div>
-                            <h4 style="font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 700; color: #ffffff; margin: 0 0 0.5rem 0;">Track Deliveries</h4>
-                            <p style="font-family: 'Inter', sans-serif; font-size: 0.875rem; color: rgba(255, 255, 255, 0.6); margin: 0; line-height: 1.5;">Real-time updates on your orders</p>
+                            <h4 style="font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 700; color: #ffffff; margin: 0 0 0.5rem 0;" data-i18n="appFeature3Title">Track Deliveries</h4>
+                            <p style="font-family: 'Inter', sans-serif; font-size: 0.875rem; color: rgba(255, 255, 255, 0.6); margin: 0; line-height: 1.5;" data-i18n="appFeature3Desc">Real-time updates on your orders</p>
                         </div>
                         
                         <div style="background: linear-gradient(135deg, rgba(74, 222, 128, 0.1) 0%, rgba(34, 197, 94, 0.05) 100%); padding: 1.5rem; border-radius: 16px; border: 1px solid rgba(74, 222, 128, 0.2); backdrop-filter: blur(10px);">
                             <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #4ade80, #22c55e); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; box-shadow: 0 4px 12px rgba(74, 222, 128, 0.3);">
                                 <span style="font-size: 1.25rem;">💡</span>
                             </div>
-                            <h4 style="font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 700; color: #ffffff; margin: 0 0 0.5rem 0;">Expert Insights</h4>
-                            <p style="font-family: 'Inter', sans-serif; font-size: 0.875rem; color: rgba(255, 255, 255, 0.6); margin: 0; line-height: 1.5;">Access farming tips & best practices</p>
+                            <h4 style="font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 700; color: #ffffff; margin: 0 0 0.5rem 0;" data-i18n="appFeature4Title">Expert Insights</h4>
+                            <p style="font-family: 'Inter', sans-serif; font-size: 0.875rem; color: rgba(255, 255, 255, 0.6); margin: 0; line-height: 1.5;" data-i18n="appFeature4Desc">Access farming tips & best practices</p>
                         </div>
                     </div>
                     
@@ -2162,17 +3709,17 @@
                     <div style="background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%); padding: 1.75rem; border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px); display: flex; justify-content: space-around; align-items: center;">
                         <div style="text-align: center;">
                             <div style="font-family: 'Inter', sans-serif; font-size: 2rem; font-weight: 800; background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1; margin-bottom: 0.25rem;">1,200</div>
-                            <p style="font-family: 'Inter', sans-serif; font-size: 0.75rem; color: rgba(255, 255, 255, 0.7); margin: 0; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Users</p>
+                            <p style="font-family: 'Inter', sans-serif; font-size: 0.75rem; color: rgba(255, 255, 255, 0.7); margin: 0; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;" data-i18n="statsUsers">Users</p>
                         </div>
                         <div style="width: 1px; height: 40px; background: rgba(255, 255, 255, 0.15);"></div>
                         <div style="text-align: center;">
                             <div style="font-family: 'Inter', sans-serif; font-size: 2rem; font-weight: 800; background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1; margin-bottom: 0.25rem;">24/7</div>
-                            <p style="font-family: 'Inter', sans-serif; font-size: 0.75rem; color: rgba(255, 255, 255, 0.7); margin: 0; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Support</p>
+                            <p style="font-family: 'Inter', sans-serif; font-size: 0.75rem; color: rgba(255, 255, 255, 0.7); margin: 0; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;" data-i18n="statsSupport">Support</p>
                         </div>
                         <div style="width: 1px; height: 40px; background: rgba(255, 255, 255, 0.15);"></div>
                         <div style="text-align: center;">
                             <div style="font-family: 'Inter', sans-serif; font-size: 2rem; font-weight: 800; background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1; margin-bottom: 0.25rem;">96%</div>
-                            <p style="font-family: 'Inter', sans-serif; font-size: 0.75rem; color: rgba(255, 255, 255, 0.7); margin: 0; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Satisfaction</p>
+                            <p style="font-family: 'Inter', sans-serif; font-size: 0.75rem; color: rgba(255, 255, 255, 0.7); margin: 0; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;" data-i18n="statsSatisfaction">Satisfaction</p>
                         </div>
                     </div>
                 </div>
@@ -2183,38 +3730,27 @@
                         <!-- Main Phone -->
                         <div class="phone-main">
                             <div class="phone-wrapper">
-                                <div class="phone-body">
                                     <div class="phone-screen">
                                         <img src="images/home_page.jpg" alt="App Home" class="screen-image">
-                                        <div class="screen-overlay"></div>
                                     </div>
-                                    <div class="phone-frame"></div>
                                 </div>
-                                <div class="phone-glow"></div>
-                            </div>
                         </div>
                         
                         <!-- Side Phones -->
                         <div class="phone-side phone-left">
                             <div class="phone-wrapper">
-                                <div class="phone-body">
-                                    <div class="phone-screen">
-                                        <img src="images/product_screen.jpg" alt="Product Screen" class="screen-image">
-                                        <div class="screen-overlay"></div>
-                                    </div>
-                                    <div class="phone-frame"></div>
+                                <div class="phone-screen">
+                                    <img src="images/product_screen.jpg" alt="Product Screen" class="screen-image">
+                                    <div class="screen-overlay"></div>
                                 </div>
                             </div>
                         </div>
                         
                         <div class="phone-side phone-right">
                             <div class="phone-wrapper">
-                                <div class="phone-body">
-                                    <div class="phone-screen">
-                                        <img src="images/store_page.jpg" alt="Store Screen" class="screen-image">
-                                        <div class="screen-overlay"></div>
-                                    </div>
-                                    <div class="phone-frame"></div>
+                                <div class="phone-screen">
+                                    <img src="images/store_page.jpg" alt="Store Screen" class="screen-image">
+                                    <div class="screen-overlay"></div>
                                 </div>
                             </div>
                         </div>
@@ -2282,7 +3818,7 @@
                 pointer-events: auto; 
                 transform: translateX(0) translateY(0) scale(1.12); 
                 filter: drop-shadow(0 24px 64px rgba(0,0,0,0.35));
-                animation: phoneGlow 3s ease-in-out infinite alternate;
+                animation: phoneGlow 3s ease-in-out infinite;
             }
             @keyframes phoneGlow {
                 0% { filter: drop-shadow(0 24px 64px rgba(0,0,0,0.35)) drop-shadow(0 0 20px rgba(60,143,93,0.3)); }
@@ -2431,7 +3967,7 @@
             }
             @media (max-width: 768px) {
                 .three-phones-row.premium { height: 520px; flex-wrap: nowrap; transform: scale(0.92); }
-                .three-phones-row.premium .phone-mockup-iphone:nth-child(3) { transform: translateX(0) translateY(0) scale(1.02); }
+                .three-phones-row.premium .phone-mockup-iphone:nth-child(3) { transform: translate(0) translateY(0) scale(1.02); }
                 .app-showcase { padding: 1rem; border-radius: 18px; }
             }
             .app-preview::before {
@@ -2550,42 +4086,42 @@
         }
         
         .phone-mockup-iphone:nth-child(1) {
-            transform: translateX(-20px) translateY(8px) scale(0.82);
+            transform: translate(-50px, 35px) scale(0.65);
             z-index: 1;
             filter: drop-shadow(0 4px 8px rgba(0,0,0,0.08));
             opacity: 0.6;
         }
         
         .phone-mockup-iphone:nth-child(2) {
-            transform: translateX(-8px) translateY(3px) scale(0.89);
+            transform: translate(-25px, 18px) scale(0.8);
             z-index: 2;
             filter: drop-shadow(0 8px 16px rgba(0,0,0,0.12));
             opacity: 0.75;
         }
         
         .phone-mockup-iphone:nth-child(3) {
-            transform: translateX(0) translateY(0) scale(1.08);
+            transform: translate(0) translateY(0) scale(1.08);
             z-index: 10;
             filter: drop-shadow(0 20px 40px rgba(0,0,0,0.25));
             opacity: 1;
         }
         
         .phone-mockup-iphone:nth-child(4) {
-            transform: translateX(8px) translateY(3px) scale(0.89);
+            transform: translate(25px, 18px) scale(0.8);
             z-index: 2;
             filter: drop-shadow(0 8px 16px rgba(0,0,0,0.12));
             opacity: 0.75;
         }
         
         .phone-mockup-iphone:nth-child(5) {
-            transform: translateX(20px) translateY(8px) scale(0.82);
+            transform: translate(50px, 35px) scale(0.65);
             z-index: 1;
             filter: drop-shadow(0 4px 8px rgba(0,0,0,0.08));
             opacity: 0.6;
         }
         
         .phone-mockup-iphone:hover {
-            transform: translateX(0) translateY(0) scale(1.02) !important;
+            transform: translate(0) translateY(0) scale(1.02) !important;
             z-index: 10 !important;
             filter: drop-shadow(0 20px 40px rgba(0,0,0,0.3)) !important;
             opacity: 1 !important;
@@ -2668,16 +4204,16 @@
                 height: 500px;
             }
             .phone-mockup-iphone:nth-child(1) {
-                transform: translateX(-50px) translateY(35px) scale(0.65);
+                transform: translate(-50px, 35px) scale(0.65);
             }
             .phone-mockup-iphone:nth-child(2) {
-                transform: translateX(-25px) translateY(18px) scale(0.8);
+                transform: translate(-25px, 18px) scale(0.8);
             }
             .phone-mockup-iphone:nth-child(4) {
-                transform: translateX(25px) translateY(18px) scale(0.8);
+                transform: translate(25px, 18px) scale(0.8);
             }
             .phone-mockup-iphone:nth-child(5) {
-                transform: translateX(50px) translateY(35px) scale(0.65);
+                transform: translate(50px, 35px) scale(0.65);
             }
         }
         @media (max-width: 1100px) {
@@ -2685,16 +4221,16 @@
                 height: 450px;
             }
             .phone-mockup-iphone:nth-child(1) {
-                transform: translateX(-45px) translateY(30px) scale(0.6);
+                transform: translate(-45px, 30px) scale(0.6);
             }
             .phone-mockup-iphone:nth-child(2) {
-                transform: translateX(-22px) translateY(15px) scale(0.75);
+                transform: translate(-22px, 15px) scale(0.75);
             }
             .phone-mockup-iphone:nth-child(4) {
-                transform: translateX(22px) translateY(15px) scale(0.75);
+                transform: translate(22px, 15px) scale(0.75);
             }
             .phone-mockup-iphone:nth-child(5) {
-                transform: translateX(45px) translateY(30px) scale(0.6);
+                transform: translate(45px, 30px) scale(0.6);
             }
         }
         @media (max-width: 900px) {
@@ -2702,16 +4238,16 @@
                 height: 400px;
             }
             .phone-mockup-iphone:nth-child(1) {
-                transform: translateX(-40px) translateY(25px) scale(0.55);
+                transform: translate(-40px, 25px) scale(0.55);
             }
             .phone-mockup-iphone:nth-child(2) {
-                transform: translateX(-20px) translateY(12px) scale(0.7);
+                transform: translate(-20px, 12px) scale(0.7);
             }
             .phone-mockup-iphone:nth-child(4) {
-                transform: translateX(20px) translateY(12px) scale(0.7);
+                transform: translate(20px, 12px) scale(0.7);
             }
             .phone-mockup-iphone:nth-child(5) {
-                transform: translateX(40px) translateY(25px) scale(0.55);
+                transform: translate(40px, 25px) scale(0.55);
             }
         }
         @media (max-width: 700px) {
@@ -2748,7 +4284,9 @@
             background: 
                 radial-gradient(circle at 20% 20%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
                 radial-gradient(circle at 80% 80%, rgba(255, 119, 198, 0.2) 0%, transparent 50%),
-                radial-gradient(circle at 40% 60%, rgba(120, 219, 255, 0.2) 0%, transparent 50%);
+                radial-gradient(circle at 40% 60%, rgba(120, 219, 255, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 80% 75%, rgba(33, 150, 83, 0.25) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(60, 143, 93, 0.15) 0%, transparent 50%);
         }
         .floating-orbs {
             position: absolute;
@@ -2870,7 +4408,7 @@
         .title-word:nth-child(2) { animation-delay: 0.4s; }
         .title-word:nth-child(3) { animation-delay: 0.6s; }
         .title-word.accent {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -2904,7 +4442,7 @@
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 16px;
-            padding: 1.5rem;
+            padding: 2rem;
             text-align: center;
             backdrop-filter: blur(10px);
             transition: all 0.3s ease;
@@ -2919,7 +4457,7 @@
             font-weight: 700;
             color: white;
             margin-bottom: 0.5rem;
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #4ade80, #22c55e);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -3055,7 +4593,9 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 30px;
+            opacity: 0.3;
             z-index: 1;
         }
         .phone-frame {
@@ -3068,7 +4608,7 @@
             border-radius: 35px;
             box-shadow: 
                 0 25px 50px rgba(0, 0, 0, 0.4),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
             z-index: 1;
         }
         .phone-glow {
@@ -3189,8 +4729,8 @@
 
     <!-- Partners Section -->
     <section class="partners" id="partners">
-        <h2 class="section-title">Our Partners</h2>
-        <p class="section-subtitle">Working together with local farmers and producers to bring you the best quality products</p>
+        <h2 class="section-title" data-i18n="partnersTitle">Our Partners</h2>
+        <p class="section-subtitle" data-i18n="partnersSubtitle">Working together with local farmers and producers to bring you the best quality products</p>
         <div class="partners-grid">
             <div class="partner-card">
                 <a href="https://agrifichallengefund.org/transu/" target="_blank" style="text-decoration: none; color: inherit;">
@@ -3243,8 +4783,8 @@
       <div style="max-width:1200px; margin:0 auto; position:relative; z-index:1; padding:0 2vw;">
         <!-- Header -->
         <div style="text-align:center; margin-bottom:4rem;">
-          <h2 class="section-title" style="color:#fff; font-size:3.5rem; margin-bottom:1rem; text-shadow:0 8px 32px rgba(0,0,0,0.2); letter-spacing:-0.02em; font-weight:800;">What Our Customers Say</h2>
-          <p class="section-subtitle" style="color:rgba(255,255,255,0.9); font-size:1.3rem; max-width:600px; margin:0 auto; line-height:1.6; text-shadow:0 2px 16px rgba(0,0,0,0.1);">Real stories from farmers, business owners, and delivery partners who trust Agera</p>
+          <h2 class="section-title" style="color:#fff; font-size:3.5rem; margin-bottom:1rem; text-shadow:0 8px 32px rgba(0,0,0,0.2); letter-spacing:-0.02em; font-weight:800;" data-i18n="testimonialsTitle">What Our Customers Say</h2>
+          <p class="section-subtitle" style="color:rgba(255,255,255,0.9); font-size:1.3rem; max-width:600px; margin:0 auto; line-height:1.6; text-shadow:0 2px 16px rgba(0,0,0,0.1);" data-i18n="testimonialsSubtitle">Real stories from farmers, business owners, and delivery partners who trust Agera</p>
         </div>
         
         <!-- Testimonials Grid -->
@@ -3317,25 +4857,9 @@
                 <span style="color:#ffc107; font-size:1.2rem;">★</span>
                 <span style="color:#ffc107; font-size:1.2rem;">★</span>
                 <span style="color:#ffc107; font-size:1.2rem;">★</span>
-                <span style="color:#ffc107; font-size:1.2rem;">★</span>
-                <span style="color:#ffc107; font-size:1.2rem;">★</span>
-              </div>
-              <span style="color:#666; font-size:0.9rem;">Verified Partner</span>
-            </div>
+                <span style="color:#ffc107; font-size:1.2rem;">★</span
           </div>
-        </div>
-        
-        <!-- Stats Section -->
-        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:2rem; margin-top:4rem;">
-          <div style="text-align:center; background:rgba(255,255,255,0.1); padding:2rem; border-radius:16px; backdrop-filter:blur(10px); border:1px solid rgba(255,255,255,0.2);">
-            <div style="font-size:3rem; font-weight:800; color:#fff; margin-bottom:0.5rem;" class="counter" data-target="98" data-suffix="%">0%</div>
-            <div style="color:rgba(255,255,255,0.9); font-size:1.1rem;">Accuracy Rate</div>
-          </div>
-          <div style="text-align:center; background:rgba(255,255,255,0.1); padding:2rem; border-radius:16px; backdrop-filter:blur(10px); border:1px solid rgba(255,255,255,0.2);">
-            <div style="font-size:3rem; font-weight:800; color:#fff; margin-bottom:0.5rem;" class="counter" data-target="10000" data-suffix="+">0+</div>
-            <div style="color:rgba(255,255,255,0.9); font-size:1.1rem;">Crops Diagnosed</div>
-          </div>
-          <div style="text-align:center; background:rgba(255,255,255,0.1); padding:2rem; border-radius:16px; backdrop-filter:blur(10px); border:1px solid rgba(255,255,255,0.2);">
+          <div style="text-align:center; background:rgba(255,255,255,0.1); padding:2rem; border-radius:16px; backdrop-filter:blur(10px); border:1px solid rgba(255,255,255,0.15);">
             <div style="font-size:3rem; font-weight:800; color:#fff; margin-bottom:0.5rem;" class="counter" data-target="1200" data-suffix="+">0+</div>
             <div style="color:rgba(255,255,255,0.9); font-size:1.1rem;">Active Users</div>
           </div>
@@ -3480,15 +5004,15 @@
     <!-- About Us Section -->
     <section class="about-us" id="about" style="position: relative; padding: 8rem 0; background: #0a0a0a; color: white; overflow: hidden;">
         <!-- Animated Background -->
-        <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(circle at 20% 80%, rgba(60, 143, 93, 0.1) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(247, 181, 56, 0.08) 0%, transparent 50%);"></div>
+        <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(circle at 20% 80%, rgba(60, 143, 93, 0.1) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(247, 181, 56, 0.05) 0%, transparent 50%);"></div>
         <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(circle at 10% 10%, rgba(60,143,93,0.3) 0%, transparent 50%), radial-gradient(circle at 90% 30%, rgba(60,143,93,0.2) 0%, transparent 50%), radial-gradient(circle at 70% 80%, rgba(60,143,93,0.25) 0%, transparent 50%), radial-gradient(circle at 30% 60%, rgba(60,143,93,0.15) 0%, transparent 50%); opacity: 0.6;"></div>
         
         <div style="max-width: 1400px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 2;">
             <!-- Header -->
-            <div style="text-align: center; margin-bottom: 6rem;">
-                <div style="display: inline-block; background: linear-gradient(45deg, #3c8f5d, #f7b538); padding: 0.5rem 1.5rem; border-radius: 0; font-size: 0.8rem; font-weight: 600; margin-bottom: 2rem; text-transform: uppercase; letter-spacing: 2px; clip-path: polygon(0 0, 95% 0, 100% 50%, 95% 100%, 0 100%, 5% 50%);">About Agera</div>
-                <h2 style="font-size: 3.5rem; margin-bottom: 1.5rem; font-weight: 300; letter-spacing: 2px; text-transform: uppercase;">Revolutionizing<br><span style="background: linear-gradient(45deg, #3c8f5d, #f7b538); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-weight: 700;">Agriculture</span></h2>
-                <p style="font-size: 1.1rem; color: #ccc; max-width: 600px; margin: 0 auto; line-height: 1.6; font-weight: 300;">Empowering farmers with AI-powered diagnostics, real-time insights, and sustainable solutions to ensure food security for future generations.</p>
+            <div style="text-align: center; margin-bottom: 5rem;">
+                <div style="display: inline-block; background: linear-gradient(45deg, #3c8f5d, #f7b538); padding: 0.5rem 1.5rem; border-radius: 0; font-size: 0.8rem; font-weight: 600; margin-bottom: 2rem; text-transform: uppercase; letter-spacing: 2px; clip-path: polygon(0 0, 95% 0, 100% 50%, 95% 100%, 0 100%, 5% 50%); color: white;" data-i18n="aboutBadge">About Agera</div>
+                <h2 style="font-size: 3.5rem; margin-bottom: 1.5rem; font-weight: 300; letter-spacing: 2px; text-transform: uppercase; color: #1f3d2c;"><span data-i18n="aboutHeading1">Revolutionizing</span><br><span style="background: linear-gradient(45deg, #3c8f5d, #f7b538); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;" data-i18n="aboutHeading2">Agriculture</span></h2>
+                <p style="font-size: 1.1rem; color: #666; max-width: 600px; margin: 0 auto; line-height: 1.6; font-weight: 300;" data-i18n="aboutDescription">Empowering farmers with AI-powered diagnostics, real-time insights, and sustainable solutions to ensure food security for future generations.</p>
             </div>
 
             <!-- Timeline Layout -->
@@ -3501,8 +5025,8 @@
                     <div style="flex: 1; text-align: right; padding-right: 3rem;">
                         <div style="background: rgba(60, 143, 93, 0.1); border: 1px solid rgba(60, 143, 93, 0.3); padding: 2rem; position: relative;">
                             <div style="position: absolute; right: -10px; top: 50%; transform: translateY(-50%); width: 0; height: 0; border-left: 10px solid rgba(60, 143, 93, 0.3); border-top: 10px solid transparent; border-bottom: 10px solid transparent;"></div>
-                            <h3 style="font-size: 1.5rem; margin-bottom: 1rem; font-weight: 600; color: #3c8f5d;">Our Mission</h3>
-                            <p style="color: #ccc; line-height: 1.6; font-size: 0.95rem;">To revolutionize agriculture through smart, accessible technology that empowers farmers—especially smallholders—with the tools they need to diagnose plant diseases early, get real-time treatment recommendations, and improve crop yields sustainably.</p>
+                            <h3 style="font-size: 1.5rem; margin-bottom: 1rem; font-weight: 600; color: #3c8f5d;" data-i18n="ourMission">Our Mission</h3>
+                            <p style="color: #ccc; line-height: 1.6; font-size: 0.95rem;" data-i18n="missionText">To revolutionize agriculture through smart, accessible technology that empowers farmers—especially smallholders—with the tools they need to diagnose plant diseases early, get real-time treatment recommendations, and improve crop yields sustainably.</p>
                         </div>
                     </div>
                     <div style="width: 60px; height: 60px; background: #3c8f5d; border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; z-index: 2; box-shadow: 0 0 20px rgba(60, 143, 93, 0.5);">
@@ -3528,100 +5052,16 @@
                     <div style="flex: 1; text-align: left; padding-left: 3rem;">
                         <div style="background: rgba(247, 181, 56, 0.1); border: 1px solid rgba(247, 181, 56, 0.3); padding: 2rem; position: relative;">
                             <div style="position: absolute; left: -10px; top: 50%; transform: translateY(-50%); width: 0; height: 0; border-right: 10px solid rgba(247, 181, 56, 0.3); border-top: 10px solid transparent; border-bottom: 10px solid transparent;"></div>
-                            <h3 style="font-size: 1.5rem; margin-bottom: 1rem; font-weight: 600; color: #f7b538;">Our Vision</h3>
-                            <p style="color: #ccc; line-height: 1.6; font-size: 0.95rem;">We believe food security starts with information. Millions of farmers lose crops every year to preventable plant diseases due to a lack of access to expert guidance. We're here to close that gap—by turning smartphones into powerful diagnostic tools.</p>
+                            <h3 style="font-size: 1.5rem; margin-bottom: 1rem; font-weight: 600; color: #f7b538;" data-i18n="ourVision">Our Vision</h3>
+                            <p style="color: #ccc; line-height: 1.6; font-size: 0.95rem;" data-i18n="visionText">We believe food security starts with information. Millions of farmers lose crops every year to preventable plant diseases due to a lack of access to expert guidance. We're here to close that gap—by turning smartphones into powerful diagnostic tools.</p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Founders Grid -->
-            <div style="margin-bottom: 6rem;">
-                <h3 style="text-align: center; font-size: 2.5rem; margin-bottom: 3rem; font-weight: 300; text-transform: uppercase; letter-spacing: 1px;">Meet Our <span style="color: #3c8f5d;">Founders</span></h3>
-                
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
-                    <!-- Founder 1 -->
-                    <a href="https://www.linkedin.com/in/nathaniel-deryl-1576a82ba/" target="_blank" style="text-decoration: none; color: inherit; display: block;">
-                        <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.1); padding: 2rem; position: relative; overflow: hidden; transition: all 0.3s ease; cursor: pointer;">
-                            <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #3c8f5d, #f7b538);"></div>
-                            <div style="display: flex; align-items: center; margin-bottom: 1.5rem;">
-                                <div style="width: 60px; height: 60px; background: linear-gradient(45deg, #3c8f5d, #2e7d32); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 1rem; font-size: 1.5rem; font-weight: 700; color: white;">N</div>
-                                <div>
-                                    <h4 style="font-size: 1.1rem; color: white; margin-bottom: 0.3rem; font-weight: 600;">Nathaniel Deryl</h4>
-                                    <p style="color: #3c8f5d; font-size: 0.85rem; font-weight: 500;">Chief Executive Officer</p>
-                                </div>
-                            </div>
-                            <p style="color: #ccc; line-height: 1.5; font-size: 0.9rem; margin-bottom: 1rem;">Leading the strategic vision and growth of Agera Technologies with a passion for agricultural innovation.</p>
-                            <div style="display: flex; gap: 0.5rem;">
-                                <span style="background: rgba(60, 143, 93, 0.2); color: #3c8f5d; padding: 0.3rem 0.8rem; font-size: 0.75rem; border-radius: 12px;">Strategy</span>
-                                <span style="background: rgba(60, 143, 93, 0.2); color: #3c8f5d; padding: 0.3rem 0.8rem; font-size: 0.75rem; border-radius: 12px;">Growth</span>
-                            </div>
-                        </div>
-                    </a>
-
-                    <!-- Founder 2 -->
-                    <a href="https://www.linkedin.com/in/okraku-ofei-agyekum-1494a7361/" target="_blank" style="text-decoration: none; color: inherit; display: block;">
-                        <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.1); padding: 2rem; position: relative; overflow: hidden; transition: all 0.3s ease; cursor: pointer;">
-                            <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #f7b538, #e85d04);"></div>
-                            <div style="display: flex; align-items: center; margin-bottom: 1.5rem;">
-                                <div style="width: 60px; height: 60px; background: linear-gradient(45deg, #f7b538, #e6a82a); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 1rem; font-size: 1.5rem; font-weight: 700; color: white;">O</div>
-                                <div>
-                                    <h4 style="font-size: 1.1rem; color: white; margin-bottom: 0.3rem; font-weight: 600;">Okraku Ofei Agyekum</h4>
-                                    <p style="color: #f7b538; font-size: 0.85rem; font-weight: 500;">Chief Operating Officer</p>
-                                </div>
-                            </div>
-                            <p style="color: #ccc; line-height: 1.5; font-size: 0.9rem; margin-bottom: 1rem;">Driving operational excellence and ensuring seamless delivery of our agricultural solutions.</p>
-                            <div style="display: flex; gap: 0.5rem;">
-                                <span style="background: rgba(247, 181, 56, 0.2); color: #f7b538; padding: 0.3rem 0.8rem; font-size: 0.75rem; border-radius: 12px;">Operations</span>
-                                <span style="background: rgba(247, 181, 56, 0.2); color: #f7b538; padding: 0.3rem 0.8rem; font-size: 0.75rem; border-radius: 12px;">Excellence</span>
-                            </div>
-
-                        </div>
-                    </a>
-
-                    <!-- Founder 3 -->
-                    <a href="https://www.linkedin.com/in/adinmcpherson/" target="_blank" style="text-decoration: none; color: inherit; display: block;">
-                        <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.1); padding: 2rem; position: relative; overflow: hidden; transition: all 0.3s ease; cursor: pointer;">
-                            <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #e85d04, #6a93cb);"></div>
-                            <div style="display: flex; align-items: center; margin-bottom: 1.5rem;">
-                                <div style="width: 60px; height: 60px; background: linear-gradient(45deg, #e85d04, #d45103); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 1rem; font-size: 1.5rem; font-weight: 700; color: white;">A</div>
-                                <div>
-                                    <h4 style="font-size: 1.1rem; color: white; margin-bottom: 0.3rem; font-weight: 600;">Adin Mcpherson</h4>
-                                    <p style="color: #e85d04; font-size: 0.85rem; font-weight: 500;">Chief Financial Officer</p>
-                                </div>
-                            </div>
-                            <p style="color: #ccc; line-height: 1.5; font-size: 0.9rem; margin-bottom: 1rem;">Managing financial strategy and ensuring sustainable growth for long-term success.</p>
-                            <div style="display: flex; gap: 0.5rem;">
-                                <span style="background: rgba(232, 93, 4, 0.2); color: #e85d04; padding: 0.3rem 0.8rem; font-size: 0.75rem; border-radius: 12px;">Finance</span>
-                                <span style="background: rgba(232, 93, 4, 0.2); color: #e85d04; padding: 0.3rem 0.8rem; font-size: 0.75rem; border-radius: 12px;">Strategy</span>
-                            </div>
-                        </div>
-                    </a>
-
-                    <!-- Founder 4 -->
-                    <a href="https://www.linkedin.com/in/stallone-musigah-2b2644224/" target="_blank" style="text-decoration: none; color: inherit; display: block;">
-                        <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.1); padding: 2rem; position: relative; overflow: hidden; transition: all 0.3s ease; cursor: pointer;">
-                            <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #6a93cb, #3c8f5d);"></div>
-                            <div style="display: flex; align-items: center; margin-bottom: 1.5rem;">
-                                <div style="width: 60px; height: 60px; background: linear-gradient(45deg, #6a93cb, #5a7bb8); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 1rem; font-size: 1.5rem; font-weight: 700; color: white;">S</div>
-                                <div>
-                                    <h4 style="font-size: 1.1rem; color: white; margin-bottom: 0.3rem; font-weight: 600;">Stallone Musigah</h4>
-                                    <p style="color: #6a93cb; font-size: 0.85rem; font-weight: 500;">Chief Technology Officer</p>
-                                </div>
-                            </div>
-                            <p style="color: #ccc; line-height: 1.5; font-size: 0.9rem; margin-bottom: 1rem;">Architecting innovative technology solutions that power our agricultural platform.</p>
-                            <div style="display: flex; gap: 0.5rem;">
-                                <span style="background: rgba(106, 147, 203, 0.2); color: #6a93cb; padding: 0.3rem 0.8rem; font-size: 0.75rem; border-radius: 12px;">Technology</span>
-                                <span style="background: rgba(106, 147, 203, 0.2); color: #6a93cb; padding: 0.3rem 0.8rem; font-size: 0.75rem; border-radius: 12px;">Innovation</span>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-
             <!-- Values Section -->
             <div style="margin-bottom: 6rem;">
-                <h3 style="text-align: center; font-size: 2.5rem; margin-bottom: 3rem; font-weight: 300; text-transform: uppercase; letter-spacing: 1px;">Our <span style="color: #f7b538;">Values</span></h3>
+                <h3 style="text-align: center; font-size: 2.5rem; margin-bottom: 3rem; font-weight: 300; text-transform: uppercase; letter-spacing: 1px;"><span data-i18n="ourValues">Our Values</span></h3>
                 
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
                     <!-- Sustainability -->
@@ -3634,8 +5074,8 @@
                             </svg>
                             <div style="position: absolute; top: -2px; left: -2px; right: -2px; bottom: -2px; border: 2px solid rgba(60, 143, 93, 0.3); border-radius: 50%; animation: pulse 2s infinite;"></div>
                         </div>
-                        <h4 style="font-size: 1.2rem; color: #3c8f5d; margin-bottom: 1rem; font-weight: 600;">Sustainability</h4>
-                        <p style="color: #ccc; line-height: 1.5; font-size: 0.9rem;">Promoting eco-friendly farming practices and reducing food waste through efficient supply chains.</p>
+                        <h4 style="font-size: 1.2rem; color: #3c8f5d; margin-bottom: 1rem; font-weight: 600;" data-i18n="valueSustainability">Sustainability</h4>
+                        <p style="color: #ccc; line-height: 1.5; font-size: 0.9rem;" data-i18n="sustainabilityDesc">Promoting eco-friendly farming practices and reducing food waste through efficient supply chains.</p>
                     </div>
 
                     <!-- Quality -->
@@ -3648,8 +5088,8 @@
                             </svg>
                             <div style="position: absolute; top: -2px; left: -2px; right: -2px; bottom: -2px; border: 2px solid rgba(247, 181, 56, 0.3); border-radius: 50%; animation: pulse 2s infinite 0.5s;"></div>
                         </div>
-                        <h4 style="font-size: 1.2rem; color: #f7b538; margin-bottom: 1rem; font-weight: 600;">Quality</h4>
-                        <p style="color: #ccc; line-height: 1.5; font-size: 0.9rem;">Ensuring the highest standards in product quality, customer service, and technological innovation.</p>
+                        <h4 style="font-size: 1.2rem; color: #f7b538; margin-bottom: 1rem; font-weight: 600;" data-i18n="valueQuality">Quality</h4>
+                        <p style="color: #ccc; line-height: 1.5; font-size: 0.9rem;" data-i18n="qualityDesc">Ensuring the highest standards in product quality, customer service, and technological innovation.</p>
                     </div>
 
                     <!-- Community -->
@@ -3663,8 +5103,8 @@
                             </svg>
                             <div style="position: absolute; top: -2px; left: -2px; right: -2px; bottom: -2px; border: 2px solid rgba(232, 93, 4, 0.3); border-radius: 50%; animation: pulse 2s infinite 1s;"></div>
                         </div>
-                        <h4 style="font-size: 1.2rem; color: #e85d04; margin-bottom: 1rem; font-weight: 600;">Community</h4>
-                        <p style="color: #ccc; line-height: 1.5; font-size: 0.9rem;">Building strong relationships between farmers, consumers, and local communities.</p>
+                        <h4 style="font-size: 1.2rem; color: #e85d04; margin-bottom: 1rem; font-weight: 600;" data-i18n="valueCommunity">Community</h4>
+                        <p style="color: #ccc; line-height: 1.5; font-size: 0.9rem;" data-i18n="communityDesc">Building strong relationships between farmers, consumers, and local communities.</p>
                     </div>
 
                     <!-- Innovation -->
@@ -3677,8 +5117,8 @@
                             </svg>
                             <div style="position: absolute; top: -2px; left: -2px; right: -2px; bottom: -2px; border: 2px solid rgba(106, 147, 203, 0.3); border-radius: 50%; animation: pulse 2s infinite 1.5s;"></div>
                         </div>
-                        <h4 style="font-size: 1.2rem; color: #6a93cb; margin-bottom: 1rem; font-weight: 600;">Innovation</h4>
-                        <p style="color: #ccc; line-height: 1.5; font-size: 0.9rem;">Leveraging cutting-edge technology to create efficient, transparent, and scalable solutions.</p>
+                        <h4 style="font-size: 1.2rem; color: #6a93cb; margin-bottom: 1rem; font-weight: 600;" data-i18n="valueInnovation">Innovation</h4>
+                        <p style="color: #ccc; line-height: 1.5; font-size: 0.9rem;" data-i18n="innovationDesc">Leveraging cutting-edge technology to create efficient, transparent, and scalable solutions.</p>
                     </div>
                 </div>
             </div>
@@ -3779,7 +5219,7 @@
             <!-- Header -->
             <div style="text-align: center; margin-bottom: 5rem;">
                 <div style="display: inline-block; background: linear-gradient(45deg, #3c8f5d, #f7b538); padding: 0.5rem 1.5rem; border-radius: 0; font-size: 0.8rem; font-weight: 600; margin-bottom: 2rem; text-transform: uppercase; letter-spacing: 2px; clip-path: polygon(0 0, 95% 0, 100% 50%, 95% 100%, 0 100%, 5% 50%); color: white;">FAQ</div>
-                <h2 style="font-size: 3.5rem; margin-bottom: 1.5rem; font-weight: 300; letter-spacing: 2px; text-transform: uppercase; color: #1f3d2c;">Frequently Asked <span style="background: linear-gradient(45deg, #3c8f5d, #f7b538); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-weight: 700;">Questions</span></h2>
+                <h2 style="font-size: 3.5rem; margin-bottom: 1.5rem; font-weight: 300; letter-spacing: 2px; text-transform: uppercase; color: #1f3d2c;">Frequently Asked <span style="background: linear-gradient(45deg, #3c8f5d, #f7b538); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Questions</span></h2>
                 <p style="font-size: 1.1rem; color: #666; max-width: 600px; margin: 0 auto; line-height: 1.6; font-weight: 300;">Find answers to common questions about our agricultural services, crop diagnostics, and delivery solutions.</p>
             </div>
 
@@ -3864,10 +5304,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Right Column -->
-                <div style="display: flex; flex-direction: column; gap: 1.5rem;">
                     <!-- FAQ Item 6 -->
                     <div class="faq-item" style="background: white; border-radius: 15px; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08); overflow: hidden; transition: all 0.3s ease;">
                         <button class="faq-question" style="width: 100%; padding: 2rem; background: none; border: none; text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-size: 1.1rem; font-weight: 600; color: #1f3d2c; transition: all 0.3s ease;">
@@ -4019,7 +5456,7 @@
         <div class="footer-content">
             <div>
                 <h3 class="footer-logo"><a href="mailto:ageratechnologiesllc@gmail.com" style="text-decoration: none; color: inherit;">Agera</a></h3>
-                <p class="footer-description">Agera is dedicated to providing the freshest, highest quality agricultural products directly from local farmers to your doorstep.</p>
+                <p class="footer-description" data-i18n="footerDescription">Agera is dedicated to providing the freshest, highest quality agricultural products directly from local farmers to your doorstep.</p>
                 <div class="footer-social">
                     <a href="https://www.facebook.com/profile.php?id=61567329766931&rdid=CL1Ty0VwY3Drxigu&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F16kE8TG5eq%2F#" target="_blank" class="social-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -4028,7 +5465,7 @@
                     </a>
                     <a href="https://www.linkedin.com/company/agera-llc/posts/?feedView=all" target="_blank" class="social-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                            <path d="M16 8a6 6 0 1 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
                             <rect x="2" y="9" width="4" height="12"></rect>
                             <circle cx="4" cy="4" r="2"></circle>
                         </svg>
@@ -4038,22 +5475,19 @@
                             <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
                             <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
                             <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                        </svg>
                     </a>
                     <a href="https://x.com/Agera_Tech" target="_blank" class="social-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                        </svg>
                     </a>
                     <a href="https://www.tiktok.com/@agera_technologies" target="_blank" class="social-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
-                        </svg>
                     </a>
                 </div>
             </div>
             <div>
-                <h4 class="footer-heading">Quick Links</h4>
+                <h4 class="footer-heading" data-i18n="quickLinks">Quick Links</h4>
                 <ul class="footer-links">
                     <li><a href="#home">Home</a></li>
                     <li><a href="#partners">Partners</a></li>
@@ -4061,11 +5495,11 @@
                     <li><a href="#about">About Us</a></li>
                     <li><a href="#faq" data-i18n="faq">FAQ</a></li>
                     <li><a href="#footer" data-i18n="contact">Contact</a></li>
-                    <li><a href="terms-of-service.html">Terms of Service</a></li>
+                    <li><a href='/terms-of-service'>Terms of Service</a></li>
                 </ul>
             </div>
             <div>
-                <h4 class="footer-heading">Contact Us</h4>
+                <h4 class="footer-heading" data-i18n="contactUs">Contact Us</h4>
                 <div class="contact-info">
                     <p><span class="contact-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -4083,7 +5517,7 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2025 Agera LLc. All rights reserved.</p>
+            <p data-i18n="copyright">&copy; 2025 Agera LLc. All rights reserved.</p>
         </div>
     </footer>
 
@@ -4113,16 +5547,15 @@
             { opacity: 1, y: 0, scale: 1, duration: 1.5, delay: 0.5, ease: "power3.out" }
         );
 
-        // How It Works Animation
-        gsap.fromTo('.step-card', 
-            { opacity: 0, y: 80, scale: 0.8 }, 
+        // How It Works Tutorial Animation
+        gsap.fromTo('.tutorial-step', 
+            { opacity: 0, y: 60 }, 
             { 
                 opacity: 1, 
                 y: 0, 
-                scale: 1, 
-                duration: 1.5, 
-                stagger: 0.4, 
-                ease: "power3.out",
+                duration: 1.2, 
+                stagger: 0.3, 
+                ease: "power2.out",
                 scrollTrigger: {
                     trigger: '.how-it-works',
                     start: 'top 80%',
@@ -4243,401 +5676,114 @@
         
         // Language handling
         let currentLanguage = 'en';
-        let translations = {
-            en: {
-                nav: {
-                    home: "Home",
-                    partners: "Partners",
-                    howItWorks: "How It Works",
-                    appPreview: "App Preview",
-                    about: "About Us",
-                    contact: "Contact",
-                    termsOfService: "Terms of Service"
-                },
-                hero: {
-                    title: "Moving Everything Everywhere All the Time",
-                    subtitle: "At Agera, we empower farmers by connecting them with nearby agro-vets, offering instant crop diagnostics, and ensuring fast access to the products they need to thrive.",
-                    cta: "Download App"
-                },
-                howItWorks: {
-                    title: "How It Works",
-                    subtitle: "Smart seamless access to trusted crop care delivered straight to your door",
-                    steps: {
-                        browse: {
-                            title: "Scan & Diagnose",
-                            description: "Scan your crop and get instant AI-powered diagnostics and treatment recommendations."
-                        },
-                        order: {
-                            title: "Shop & Order",
-                            description: "Browse our wide range of products and order with ease."
-                        },
-                        delivery: {
-                            title: "Fast Delivery",
-                            description: "Get your products delivered directly to your door."
-                        }
-                    }
-                },
-                appPreview: {
-                    title: "App Preview",
-                    subtitle: "Quickly diagnose crops, get tailored treatment recommendations, and order right from your phone.",
-                    features: {
-                        ordering: {
-                            title: "Easy Ordering",
-                            description: "Browse and order products with just a few taps"
-                        },
-                        tracking: {
-                            title: "Real-time Tracking",
-                            description: "Track your delivery in real-time from farm to doorstep"
-                        },
-                        personalization: {
-                            title: "Easy Plant Diagnosis",
-                            description: "Easily diagnose your plant's health and get instant results."
-                        }
-                    }
-                },
-                partners: {
-                    title: "Partners",
-                    subtitle: "Collaborating with trusted agri-vets and suppliers to bring reliable solutions and products to every farmer"
-                },
-                testimonials: {
-                    title: "What Our Customers Say",
-                    subtitle: "Hear from our satisfied customers"
-                },
-                about: {
-                    title: "About Agera",
-                    subtitle: "Revolutionizing Agriculture Through Smart Technology",
-                    description: "Empowering farmers with AI technology, real-time insights, and sustainable solutions to ensure food security for future generations.",
-                    mission: {
-                        title: "Our Mission",
-                        description: "To revolutionize agriculture through smart, accessible technology that empowers farmers—especially smallholders—with the tools they need to diagnose plant diseases early, get real-time treatment recommendations, and improve crop yields sustainably."
-                    },
-                    vision: {
-                        title: "Our Vision",
-                        description: "We believe food security starts with information. Millions of farmers lose crops every year to preventable plant diseases due to a lack of access to expert guidance. We're here to close that gap—by turning smartphones into powerful diagnostic tools."
-                    },
-                    founders: {
-                        title: "Meet Our Founders",
-                        subtitle: "Founders"
-                    },
-                    values: {
-                        title: "Our Values",
-                        subtitle: "Values"
-                    },
-                    cta: {
-                        title: "Ready to Transform Agriculture?",
-                        subtitle: "Join us in our mission to revolutionize farming through smart technology. Together, we can build a sustainable future for agriculture.",
-                        getStarted: "Get Started",
-                        learnMore: "Learn More"
-                    }
-                },
-                faq: {
-                    title: "Frequently Asked Questions",
-                    subtitle: "Find answers to common questions about our agricultural services, crop diagnostics, and delivery solutions.",
-                    questions: {
-                        q1: "What is Agera?",
-                        q2: "Who can use Agera?",
-                        q3: "How does the AI diagnostic system work?",
-                        q4: "Is the platform free to use?",
-                        q5: "What kind of products can I buy on Agera?",
-                        q6: "How are deliveries handled?",
-                        q7: "How does Agera ensure product quality and safety?",
-                        q8: "Is Agera available offline?",
-                        q9: "Where is Agera currently available?",
-                        q10: "How do I join Agera as a vendor or delivery partner?"
-                    },
-                    answers: {
-                        a1: "Agera is a mobile-based agricultural technology (AgriTech) platform that empowers smallholder farmers by providing real-time AI crop disease diagnostics, a curated marketplace for agricultural inputs, expert recommendations, and efficient delivery services. It connects farmers directly with Agro-vets and suppliers, all in one seamless digital ecosystem.",
-                        a2: "Agera is designed for: Smallholder farmers seeking affordable, expert tools to increase yield and manage crop health. Agro-vets and suppliers wanting to reach more customers and manage inventory digitally. Delivery personnel who support rural logistics through optimized, app-managed delivery routes.",
-                        a3: "Farmers use their smartphone cameras to scan crops via the Agera app. The AI, trained on regional pests and crop diseases, provides a diagnosis with up to 9% accuracy, followed by treatment recommendations and product suggestions from nearby suppliers.",
-                        a4: "Yes, farmers can access all essential services, including diagnostics, marketplace browsing, and delivery coordination, for free through a freemium model. Agro-vets can choose between multiple subscription tiers to access additional features such as analytics, marketing tools, and premium support.",
-                        a5: "The Agera marketplace includes pesticides, fertilizers, seeds, farm tools, and other agricultural inputs provided by verified Agro-vets and local suppliers.",
-                        a6: "Deliveries are managed through a network of local motorbike riders ('Piki Piki') and logistics partners. The app features order tracking, optimized routing, and performance metrics to ensure fast and reliable service, even in remote areas.",
-                        a7: "Agera only partners with certified Agro-vets and suppliers who comply with local agricultural regulations. The platform also includes user reviews, product ratings, and a regulatory filter system to enhance transparency and trust.",
-                        a8: "Yes, Agera offers offline capabilities and local language support to ensure accessibility for farmers in low-connectivity areas.",
-                        a9: "Agera launched in Kenya and is scaling across East Africa, with a focus on high-agriculture regions. Expansion plans include additional African markets over the next five years.",
-                        a10: "Agro-vets and delivery personnel can register directly through the app or the Agera website. Upon onboarding, they receive training and access to tools tailored to help them grow and manage their business digitally."
-                    }
-                },
-                footer: {
-                    description: "Agera is dedicated to providing the freshest, highest quality agricultural products directly from local farmers to your doorstep.",
-                    quickLinks: "Quick Links",
-                    contactUs: "Contact Us",
-                    copyright: "© 2025 Agera LLC. All rights reserved."
-                }
-            },
+        
+        // Embedded translations (no need to fetch from file)
+        const translations = {
             sw: {
-                nav: {
-                    home: "Nyumbani",
-                    partners: "Washirika",
-                    howItWorks: "Jinsi Inavyofanya Kazi",
-                    appPreview: "Onesho la Programu",
-                    about: "Kuhusu Sisi",
-                    contact: "Wasiliana",
-                    termsOfService: "Sheria na Masharti"
-                },
-                hero: {
-                    title: "Mazao Matamu Mlangoni Mwako",
-                    subtitle: "Pata mazao ya kikaboni na bidhaa bora za kilimo, zikiletwa moja kwa moja kutoka kwa wakulima hadi kwenye mlango wako.",
-                    cta: "Pakua Programu"
-                },
-                howItWorks: {
-                    title: "Jinsi Inavyofanya Kazi",
-                    subtitle: "Hatua rahisi za kupata mazao matamu yaletwe kwenye mlango wako",
-                    steps: {
-                        browse: {
-                            title: "Piga Picha na Chunguza",
-                            description: "Piga picha ya mazao yako na upate uchambuzi wa haraka wa AI na mapendekezo ya matibabu."
-                        },
-                        order: {
-                            title: "Nunua na Agiza",
-                            description: "Tafuta bidhaa zetu mbalimbali na agiza kwa urahisi."
-                        },
-                        delivery: {
-                            title: "Usambazaji wa Haraka",
-                            description: "Pokea bidhaa zako moja kwa moja kwenye mlango wako."
-                        }
-                    }
-                },
-                appPreview: {
-                    title: "Onesho la Programu",
-                    subtitle: "Chunguza mazao haraka, pata mapendekezo ya matibabu, na agiza kutoka kwa simu yako.",
-                    features: {
-                        ordering: {
-                            title: "Kuagiza Rahisi",
-                            description: "Tafuta na agiza bidhaa matamu kwa kubofya mara chache tu"
-                        },
-                        tracking: {
-                            title: "Kufuatilia Wakati Halisi",
-                            description: "Fuatilia usambazaji wako kwa wakati halisi kutoka shambani hadi mlangoni"
-                        },
-                        personalization: {
-                            title: "Uchunguzi wa Mimea Rahisi",
-                            description: "Chunguza afya ya mimea yako kwa urahisi na upate matokeo ya haraka."
-                        }
-                    }
-                },
-                partners: {
-                    title: "Washirika Wetu",
-                    subtitle: "Kufanya kazi pamoja na wakulima na wazalishaji wa kawaida kukuletea bidhaa bora za ubora"
-                },
-                testimonials: {
-                    title: "Wateja Wetu Wasemaje",
-                    subtitle: "Sikia kutoka kwa wateja wetu wameridhika"
-                },
-                about: {
-                    title: "Kuhusu Agera",
-                    subtitle: "Kubadilisha Kilimo Kupitia Teknolojia ya Kisasa",
-                    description: "Kuwawezesha wakulima na teknolojia ya AI, ufahamu wa wakati halisi, na suluhisho endelevu kuhakikisha usalama wa chakula kwa vizazi vijavyo.",
-                    mission: {
-                        title: "Dhamira Yetu",
-                        description: "Kubadilisha kilimo kupitia teknolojia ya kisasa, inayowezesha wakulima—hasa wadogo—na zana wanazohitaji kuchunguza magonjwa ya mimea mapema, kupata mapendekezo ya matibabu ya wakati halisi, na kuboresha mavuno ya mazao kwa njia endelevu."
-                    },
-                    vision: {
-                        title: "Dhamira Yetu",
-                        description: "Tunaamini usalama wa chakula unaanza na habari. Mamilioni ya wakulima hupoteza mazao kila mwaka kwa magonjwa ya mimea yanayoweza kuzuilika kutokana na ukosefu wa ufikiaji wa mwongozo wa wataalamu. Tupo hapa kufunga pengo hilo—kwa kugeuza simu za rununu kuwa zana nguvu za uchunguzi."
-                    },
-                    founders: {
-                        title: "Kutana na Waasisi Wetu",
-                        subtitle: "Waasisi"
-                    },
-                    values: {
-                        title: "Maadili Yetu",
-                        subtitle: "Maadili"
-                    },
-                    cta: {
-                        title: "Tayari Kubadilisha Kilimo?",
-                        subtitle: "Jiunge nasi katika dhamira yetu ya kubadilisha kilimo kupitia teknolojia ya kisasa. Pamoja, tunaweza kujenga mustakabali endelevu wa kilimo.",
-                        getStarted: "Anza",
-                        learnMore: "Jifunze Zaidi"
-                    }
-                },
-                faq: {
-                    title: "Maswali Yanayoulizwa Sana",
-                    subtitle: "Pata majibu ya maswali ya kawaida kuhusu huduma zetu za kilimo, uchunguzi wa mazao, na suluhisho za usambazaji.",
-                    questions: {
-                        q1: "Agera ni nini?",
-                        q2: "Nani anaweza kutumia Agera?",
-                        q3: "Mfumo wa uchunguzi wa AI unafanyaje kazi?",
-                        q4: "Jukwaa la bure kutumia?",
-                        q5: "Aina gani ya bidhaa ninaweza kununua kwenye Agera?",
-                        q6: "Usambazaji unafanywaje?",
-                        q7: "Agera inahakikishaje ubora na usalama wa bidhaa?",
-                        q8: "Agera inapatikana bila mtandao?",
-                        q9: "Agera inapatikana wapi kwa sasa?",
-                        q10: "Ninawezaje kujiunga na Agera kama muuzaji au mshirika wa usambazaji?"
-                    },
-                    answers: {
-                        a1: "Agera ni jukwaa la teknolojia ya kilimo (AgriTech) la simu ya rununu linalowezesha wakulima wadogo kwa kutoa uchunguzi wa magonjwa ya mazao wa AI ya wakati halisi, soko la bidhaa za kilimo, mapendekezo ya wataalamu, na huduma za usambazaji za ufanisi. Inaunganisha wakulima moja kwa moja na daktari wa mimea na wauzaji, yote katika mfumo mmoja wa kidijitali.",
-                        a2: "Agera imeundwa kwa: Wakulima wadogo wanaotafuta zana za bei nafuu za wataalamu kuongeza mavuno na kusimamia afya ya mazao. Daktari wa mimea na wauzaji wanaotaka kufikia wateja zaidi na kusimamia hesabu za bidhaa kwa kidijitali. Watu wa usambazaji ambao wanaunga mkono usambazaji wa vijijini kupitia njia zilizoboreshwa, zilizosimamiwa na programu.",
-                        a3: "Wakulima hutumia kamera za simu zao za rununu kuchunguza mazao kupitia programu ya Agera. AI, iliyofunzwa kuhusu wadudu na magonjwa ya mazao ya kikanda, inatoa uchunguzi na usahihi wa hadi 98%, ikifuatiwa na mapendekezo ya matibabu na mapendekezo ya bidhaa kutoka kwa wauzaji wa karibu.",
-                        a4: "Ndiyo, wakulima wanaweza kufikia huduma zote muhimu, ikiwemo uchunguzi, kutazama soko, na uratibu wa usambazaji, bure kupitia muundo wa freemium. Daktari wa mimea wanaweza kuchagua kati ya ngazi nyingi za ushirika kufikia vipengele vya ziada kama uchambuzi, zana za masoko, na msaada wa premium.",
-                        a5: "Soko la Agera linajumuisha dawa za wadudu, mbolea, mbegu, zana za shamba, na bidhaa zingine za kilimo zinazotolewa na daktari wa mimea waliodhibitishwa na wauzaji wa kawaida.",
-                        a6: "Usambazaji unasimamiwa kupitia mtandao wa wapanda pikipiki wa kawaida ('Piki Piki') na washirika wa usambazaji. Programu ina kufuatilia agizo, njia zilizoboreshwa, na vipimo vya utendaji kuhakikisha huduma ya haraka na ya kujiamini, hata katika maeneo ya mbali.",
-                        a7: "Agera inashirikiana tu na daktari wa mimea waliodhibitishwa na wauzaji ambao wanatii sheria za kilimo za kawaida. Jukwaa pia linajumuisha hakiki za watumiaji, ukadiriaji wa bidhaa, na mfumo wa kichujio cha udhibiti kuboresha uwazi na uaminifu.",
-                        a8: "Ndiyo, Agera inatoa uwezo wa kufanya kazi bila mtandao na msaada wa lugha ya kawaida kuhakikisha ufikiaji kwa wakulima katika maeneo yenye muunganisho wa chini.",
-                        a9: "Agera ilizinduliwa nchini Kenya na inapanuka katika Afrika Mashariki, ikizingatia maeneo ya kilimo cha juu. Mpango wa kupanua unajumuisha masoko ya ziada ya Kiafrika katika miaka mitano ijayo.",
-                        a10: "Daktari wa mimea na watu wa usambazaji wanaweza kujisajili moja kwa moja kupitia programu au tovuti ya Agera. Baada ya kujiunga, wanapokea mafunzo na ufikiaji wa zana zilizotengenezwa kuwasaidia kukua na kusimamia biashara zao kwa kidijitali."
-                    }
-                },
-                footer: {
-                    description: "Agera imejitolea kutoa bidhaa bora za ubora za kilimo moja kwa moja kutoka kwa wakulima hadi mlangoni mwako.",
-                    quickLinks: "Viungo vya Haraka",
-                    contactUs: "Wasiliana Nasi",
-                    copyright: "© 2025 Agera. Haki zote zimehifadhiwa."
-                }
+                "home": "Nyumbani",
+                "howItWorks": "Jinsi Inavyofanya Kazi",
+                "appPreview": "Onesho la Programu",
+                "partners": "Washirika",
+                "about": "Kuhusu Sisi",
+                "contact": "Wasiliana",
+                "faq": "Maswali Yanayoulizwa Mara kwa Mara",
+                "heroTitle": "Mazao Safi Yaletwe Mlangoni Mwako",
+                "heroSubtitle": "Jaribu mazao ya kikaboni matamu na bidhaa bora za kilimo, zinazoletwa moja kwa moja kutoka kwa wakulima wa karibu hadi mlangoni mwako.",
+                "howItWorksTitle": "Kuanza ni Rahisi",
+                "howItWorksSubtitle": "Fuata hatua hizi rahisi za kuanza kutumia Agera",
+                "step1Title": "Piga Picha",
+                "step1Text": "Fungua programu na ubofye ikoni ya kamera. Elekeza simu yako kwenye mazao yaliyoathiriwa na upige picha wazi.",
+                "step1Tip": "💡 Ushauri: Hakikisha mmea uko kwenye mwanga mzuri",
+                "step2Title": "Pata Matokeo Papo Hapo",
+                "step2Text": "AI yetu inachanganua picha yako kwa sekunde na kukuambia ni nini kinachoathiri mazao yako na jinsi ya kutibu.",
+                "step2Tip": "💡 Ushauri: Hifadhi matokeo kwa marejeleo ya baadaye",
+                "step3Title": "Agiza Unachohitaji",
+                "step3Text": "Tazama bidhaa kutoka kwa wasambazaji wa karibu. Ongeza vitu kwenye gari lako na uweke oda yako kwa kubofya mara chache tu.",
+                "step3Tip": "💡 Ushauri: Linganisha bei kutoka kwa wauzaji tofauti",
+                "step4Title": "Pokea Bidhaa Zako",
+                "step4Text": "Fuatilia usambazaji wako kwa wakati halisi. Wapiga magari wetu wataleta bidhaa zako moja kwa moja kwenye shamba lako.",
+                "step4Tip": "💡 Ushauri: Kadiria uzoefu wako wa usambazaji",
+                "appPreviewTitle": "Kilimo Chenye Nguvu Mkononi Mwako",
+                "appPreviewSubtitle": "Kila kitu unachohitaji kusimamia shamba lako, kuchunguza mazao, na kuagiza vifaa vyote katika programu moja ya simu rahisi.",
+                "appFeature1Title": "Uchunguzi wa Mazao wa AI",
+                "appFeature1Desc": "Ugunduzi wa papo hapo wa magonjwa na mipango ya tiba",
+                "appFeature2Title": "Ununuzi Mzuri",
+                "appFeature2Desc": "Tazama na uagize vifaa vya shamba kwa urahisi",
+                "appFeature3Title": "Fuatilia Usambazaji",
+                "appFeature3Desc": "Usasishaji wa wakati halisi juu ya maoda yako",
+                "appFeature4Title": "Maarifa ya Wataalamu",
+                "appFeature4Desc": "Fikia vidokezo vya kilimo na mbinu bora",
+                "statsUsers": "Watumiaji",
+                "statsSupport": "Msaada",
+                "statsSatisfaction": "Kuridhika",
+                "partnersTitle": "Washirika Wetu",
+                "partnersSubtitle": "Kushirikiana na mashirika yanayoaminika kufanya kilimo kiwe rahisi na endelevu",
+                "aboutTitle": "Kuhusu Agera",
+                "aboutSubtitle": "Kubadilisha Kilimo",
+                "aboutDescription": "Kuwapa wakulima nguvu kwa uchunguzi unaotumia AI, maarifa ya wakati halisi, na suluhisho endelevu ili kuhakikisha usalama wa chakula kwa vizazi vijavyo.",
+                "ourMission": "Dhamira Yetu",
+                "missionText": "Kubadilisha kilimo kupitia teknolojia yenye akili na inayoweza kupatikana ambayo inawapa wakulima—hasa wadogo—zana wanazohitaji ili kuchunguza magonjwa ya mimea mapema, kupata mapendekezo ya tiba ya wakati halisi, na kuboresha mavuno kwa njia endelevu.",
+                "ourVision": "Dira Yetu",
+                "visionText": "Tunaamini usalama wa chakula unaanza na habari. Mamilioni ya wakulima wanapoteza mazao kila mwaka kwa magonjwa ya mimea ambayo yangeweza kuzuiwa kutokana na ukosefu wa ufikiaji wa ushauri wa wataalamu. Tuko hapa kufunga pengo hilo—kwa kubadilisha simu mahiri kuwa zana za uchunguzi zenye nguvu.",
+                "ourValues": "Maadili Yetu",
+                "valueSustainability": "Uendelevu",
+                "sustainabilityDesc": "Kukuza mbinu za kilimo zinazohifadhi mazingira na kupunguza upotevu wa chakula kupitia minyororo ya usambazaji bora.",
+                "valueQuality": "Ubora",
+                "qualityDesc": "Kuhakikisha viwango vya juu katika ubora wa bidhaa, huduma kwa wateja, na ubunifu wa teknolojia.",
+                "valueCommunity": "Jamii",
+                "communityDesc": "Kujenga uhusiano imara kati ya wakulima, watumiaji, na jamii za karibu.",
+                "valueInnovation": "Ubunifu",
+                "innovationDesc": "Kuelekeza katika kuboresha na ubunifu wa teknolojia ili kutatua changamoto za kilimo.",
+                "footerDescription": "Agera imejitolea kuboresha kilimo kupitia teknolojia yenye akili, ukiwa na lengo la kulisha dunia kwa njia endelevu.",
+                "quickLinks": "Viungo vya Haraka",
+                "contactUs": "Wasiliana Nasi",
+                "copyright": "© 2025 Agera. Haki zote zimehifadhiwa.",
+                "allRightsReserved": "Haki zote zimehifadhiwa",
+                "testimonialsTitle": "Wateja Wetu Wasemaje",
+                "testimonialsSubtitle": "Hadithi halisi kutoka kwa wakulima, wamiliki wa biashara, na washirika wa usambazaji wanaowaamini Agera",
+                "aboutBadge": "Kuhusu Agera",
+                "aboutHeading1": "Kubadilisha",
+                "aboutHeading2": "Kilimo"
             }
         };
 
+        // Store original English text
+        const originalText = {};
+
+        // Update page content based on current language
         function updatePageContent() {
-            const lang = translations[currentLanguage];
+            const elements = document.querySelectorAll('[data-i18n]');
             
-            // Navigation
-            document.querySelectorAll('.nav-links a').forEach(link => {
-                const key = link.getAttribute('data-i18n');
-                if (key && lang.nav[key]) {
-                    link.textContent = lang.nav[key];
-                }
-            });
-
-            // Hero section
-            const heroTitle = document.querySelector('.hero h1');
-            const heroSubtitle = document.querySelector('.hero p');
-            const heroCta = document.querySelector('.cta-button');
-            if (heroTitle) heroTitle.textContent = lang.hero.title;
-            if (heroSubtitle) heroSubtitle.textContent = lang.hero.subtitle;
-            if (heroCta) heroCta.textContent = lang.hero.cta;
-
-            // How It Works section
-            const howItWorksTitle = document.querySelector('.how-it-works .section-title');
-            const howItWorksSubtitle = document.querySelector('.how-it-works .section-subtitle');
-            if (howItWorksTitle) howItWorksTitle.textContent = lang.howItWorks.title;
-            if (howItWorksSubtitle) howItWorksSubtitle.textContent = lang.howItWorks.subtitle;
-
-            // Update step cards
-            const steps = document.querySelectorAll('.step-card');
-            steps.forEach((step, index) => {
-                const stepKey = Object.keys(lang.howItWorks.steps)[index];
-                if (stepKey) {
-                    const stepData = lang.howItWorks.steps[stepKey];
-                    step.querySelector('.step-title').textContent = stepData.title;
-                    step.querySelector('.step-description').textContent = stepData.description;
-                }
-            });
-
-            // App Preview section
-            const appPreviewTitle = document.querySelector('.app-preview .section-title');
-            const appPreviewSubtitle = document.querySelector('.app-preview .section-subtitle');
-            if (appPreviewTitle) appPreviewTitle.textContent = lang.appPreview.title;
-            if (appPreviewSubtitle) appPreviewSubtitle.textContent = lang.appPreview.subtitle;
-
-            // Update feature items
-            const features = document.querySelectorAll('.feature-item');
-            features.forEach((feature, index) => {
-                const featureKey = Object.keys(lang.appPreview.features)[index];
-                if (featureKey) {
-                    const featureData = lang.appPreview.features[featureKey];
-                    feature.querySelector('h3').textContent = featureData.title;
-                    feature.querySelector('p').textContent = featureData.description;
-                }
-            });
-
-            // Partners section
-            const partnersTitle = document.querySelector('.partners .section-title');
-            const partnersSubtitle = document.querySelector('.partners .section-subtitle');
-            if (partnersTitle) partnersTitle.textContent = lang.partners.title;
-            if (partnersSubtitle) partnersSubtitle.textContent = lang.partners.subtitle;
-
-            // Testimonials section
-            const testimonialsTitle = document.querySelector('.testimonials .section-title');
-            const testimonialsSubtitle = document.querySelector('.testimonials .section-subtitle');
-            if (testimonialsTitle) testimonialsTitle.textContent = lang.testimonials.title;
-            if (testimonialsSubtitle) testimonialsSubtitle.textContent = lang.testimonials.subtitle;
-
-            // About Us section
-            if (lang.about) {
-                const aboutTitle = document.querySelector('#about h2');
-                const aboutSubtitle = document.querySelector('#about p');
-                const aboutDescription = document.querySelector('#about .about-text p');
+            if (currentLanguage === 'en') {
+                // Restore original English text
+                elements.forEach(element => {
+                    const key = element.getAttribute('data-i18n');
+                    if (originalText[key]) {
+                        element.textContent = originalText[key];
+                    }
+                });
+            } else if (currentLanguage === 'sw' && translations.sw) {
+                // Save original text if not already saved
+                elements.forEach(element => {
+                    const key = element.getAttribute('data-i18n');
+                    if (!originalText[key]) {
+                        originalText[key] = element.textContent;
+                    }
+                });
                 
-                if (aboutTitle) aboutTitle.textContent = lang.about.subtitle;
-                if (aboutSubtitle) aboutSubtitle.textContent = lang.about.description;
-                
-                // Update mission and vision
-                const missionTitle = document.querySelector('#about h3');
-                const missionDesc = document.querySelector('#about .about-text p');
-                if (missionTitle && lang.about.mission) missionTitle.textContent = lang.about.mission.title;
-                if (missionDesc && lang.about.mission) missionDesc.textContent = lang.about.mission.description;
-                
-                // Update founders title
-                const foundersTitle = document.querySelector('#about h3[style*="text-align: center"]');
-                if (foundersTitle && lang.about.founders) foundersTitle.textContent = lang.about.founders.title;
-                
-                // Update values title
-                const valuesTitle = document.querySelector('#about h3[style*="text-align: center"]:last-of-type');
-                if (valuesTitle && lang.about.values) valuesTitle.textContent = lang.about.values.title;
-                
-                // Update CTA section
-                const ctaTitle = document.querySelector('#about h3[style*="font-size: 2.5rem"]');
-                const ctaSubtitle = document.querySelector('#about p[style*="font-size: 1rem"]');
-                const getStartedBtn = document.querySelector('#about a[href="#contact"]');
-                const learnMoreBtn = document.querySelector('#about a[href="#faq"]');
-                
-                if (ctaTitle && lang.about.cta) ctaTitle.textContent = lang.about.cta.title;
-                if (ctaSubtitle && lang.about.cta) ctaSubtitle.textContent = lang.about.cta.subtitle;
-                if (getStartedBtn && lang.about.cta) getStartedBtn.textContent = lang.about.cta.getStarted;
-                if (learnMoreBtn && lang.about.cta) learnMoreBtn.textContent = lang.about.cta.learnMore;
+                // Apply Swahili translations
+                elements.forEach(element => {
+                    const key = element.getAttribute('data-i18n');
+                    if (translations.sw[key]) {
+                        element.textContent = translations.sw[key];
+                    }
+                });
             }
-
-            // FAQ section
-            if (lang.faq) {
-                const faqTitle = document.querySelector('#faq h2');
-                const faqSubtitle = document.querySelector('#faq p[style*="font-size: 1.1rem"]');
-                
-                if (faqTitle && lang.faq) faqTitle.textContent = lang.faq.title;
-                if (faqSubtitle && lang.faq) faqSubtitle.textContent = lang.faq.subtitle;
-                
-                // Update FAQ questions and answers
-                const faqQuestions = document.querySelectorAll('.faq-question span');
-                const faqAnswers = document.querySelectorAll('.faq-answer div');
-                
-                if (lang.faq.questions) {
-                    faqQuestions.forEach((question, index) => {
-                        const questionKey = `q${index + 1}`;
-                        if (lang.faq.questions[questionKey]) {
-                            question.textContent = lang.faq.questions[questionKey];
-                        }
-                    });
-                }
-                
-                if (lang.faq.answers) {
-                    faqAnswers.forEach((answer, index) => {
-                        const answerKey = `a${index + 1}`;
-                        if (lang.faq.answers[answerKey]) {
-                            answer.innerHTML = lang.faq.answers[answerKey];
-                        }
-                    });
-                }
-            }
-
-            // Footer
-            const footerDescription = document.querySelector('.footer-description');
-            const footerQuickLinks = document.querySelector('.footer-heading');
-            const footerContactUs = document.querySelectorAll('.footer-heading')[1];
-            const footerCopyright = document.querySelector('.footer-bottom p');
-            if (footerDescription) footerDescription.textContent = lang.footer.description;
-            if (footerQuickLinks) footerQuickLinks.textContent = lang.footer.quickLinks;
-            if (footerContactUs) footerContactUs.textContent = lang.footer.contactUs;
-            if (footerCopyright) footerCopyright.textContent = lang.footer.copyright;
         }
 
         // Language selector event listener
         document.getElementById('language-select').addEventListener('change', (e) => {
             currentLanguage = e.target.value;
-            updatePageContent();
-        });
-
-        // Load initial language
-        document.addEventListener('DOMContentLoaded', () => {
             updatePageContent();
         });
 
@@ -4650,7 +5796,7 @@
                 duration: 1, 
                 stagger: 0.2,
                 scrollTrigger: {
-                    trigger: '.values-grid',
+                    trigger: '.mission-stats',
                     start: 'top 80%',
                 }
             }
@@ -4674,7 +5820,6 @@
 
 
     <script>
-// ... existing code ...
 // Sliding Carousel functionality for App Preview
 (function() {
     const track = document.querySelector('.carousel-track');
@@ -4891,16 +6036,8 @@ setInterval(() => {
       transform: translateY(0px) rotate(0deg);
       opacity: 0.7;
     }
-    25% {
-      transform: translateY(-20px) rotate(90deg);
-      opacity: 1;
-    }
     50% {
-      transform: translateY(-40px) rotate(180deg);
-      opacity: 0.8;
-    }
-    75% {
-      transform: translateY(-20px) rotate(270deg);
+      transform: translateY(-20px) rotate(90deg);
       opacity: 1;
     }
   }
@@ -4958,6 +6095,3 @@ setInterval(() => {
     }
   }
 </style>
-
-</body>
-</html>
